@@ -40,14 +40,13 @@ async function generateRoast() {
 
     try {
 
-        const response = await fetch(
-            "http://localhost:5000/roast",
-            {
-                method: "POST",
-                body: formData
+       const response = await fetch(
+           "https://roastverse-api.onrender.com/roast",
+           {
+               method: "POST",
+               body: formData
             }
         );
-
         const data = await response.json();
 
         if (!response.ok) {
