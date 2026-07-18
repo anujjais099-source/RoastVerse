@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>🔥 RoastVerse | AI Roasts. Real Savage.</title>
+
+    <meta name="description"
+        content="Upload your friend's photo and let AI roast them with hilarious savage jokes.">
+
+    <meta name="theme-color" content="#ff4d9d">
+
+    <!-- Google Font -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/animations.css">
+
+    <link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body class="dark">
+
+    <!-- ===============================
+         Animated Background
+    ================================ -->
+
+    <div class="bgGlow glow1"></div>
+
+    <div class="bgGlow glow2"></div>
+
+    <div class="bgGlow glow3"></div>
+
+
+
+    <!-- ===============================
+         Sidebar
+    ================================ -->
+
+    <aside id="drawer" class="drawer">
+
+        <div class="drawerHeader">
+
+            <div class="brand">
+
+                🔥 RoastVerse
+
+            </div>
+
+            <button id="closeMenu" class="iconBtn">
+
+                ✕
+
+            </button>
+
+        </div>
+
+
+
+        <nav class="drawerMenu">
+
+            <button class="menuItem active">
+
+                🏠
+                <span data-lang="home">Home</span>
+
+            </button>
+
+            <button class="menuItem">
+
+                🔥
+                <span data-lang="roast">Roast</span>
+
+            </button>
+
+
+
+            <!-- Theme -->
+
+            <button id="themeToggle" class="menuItem">
+
+                <span id="themeIcon">🌙</span>
+
+                <span id="themeText">
+
+                    Dark Mode
+
+                </span>
+
+            </button>
+
+
+
+            <!-- Language -->
+
+            <div class="languageBox">
+
+                <button id="languageToggle" class="menuItem">
+
+                    🌎
+
+                    <span id="currentLanguage">
+
+                        English
+
+                    </span>
+
+                    ▼
+
+                </button>
+
+
+
+                <div id="languageMenu" class="languageMenu">
+
+                    <button data-language="en">
+
+                        🇺🇸 English
+
+                    </button>
+
+                    <button data-language="hi">
+
+                        🇮🇳 हिन्दी
+
+                    </button>
+
+                    <button data-language="es">
+
+                        🇪🇸 Español
+
+                    </button>
+
+                    <button data-language="fr">
+
+                        🇫🇷 Français
+
+                    </button>
+
+                    <button data-language="de">
+
+                        🇩🇪 Deutsch
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+
+        <div class="drawerFooter">
+
+            <small>
+
+                RoastVerse v5
+
+            </small>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- Overlay -->
+
+    <div id="overlay" class="overlay"></div>
+
+
+
+    <!-- ===============================
+         Hero
+    ================================ -->
+
+    <header class="hero">
+
+        <button id="menuToggle" class="menuBtn">
+
+            ☰
+
+        </button>
+
+
+
+        <h1 class="logo">
+
+            🔥 RoastVerse
+
+        </h1>
+
+
+
+        <p class="tagline" data-lang="tagline">
+
+            AI Roasts. Real Savage.
+
+        </p>
+
+    </header>
+
+
+
+    <!-- ===============================
+         Main
+    ================================ -->
+
+    <main class="container">
+
+    <!-- ===============================
+         Upload Card
+    ================================ -->
+
+    <section class="glassCard uploadCard fadeUp">
+
+        <div class="sectionTitle">
+
+            <span class="emoji">📷</span>
+
+            <h2 data-lang="uploadTitle">
+                Upload Your Friend
+            </h2>
+
+        </div>
+
+        <p class="sectionSubtitle" data-lang="uploadSubtitle">
+            Drop a photo and let AI deliver a legendary roast.
+        </p>
+
+
+        <!-- Upload Area -->
+
+        <label for="photoInput" id="uploadArea" class="uploadArea">
+
+            <input
+                type="file"
+                id="photoInput"
+                accept="image/*"
+                hidden>
+
+            <div id="uploadPlaceholder" class="uploadPlaceholder">
+
+                <div class="uploadIcon">
+
+                    📸
+
+                </div>
+
+                <h3 data-lang="dragPhoto">
+
+                    Click to Upload
+
+                </h3>
+
+                <p data-lang="uploadHint">
+
+                    JPG • PNG • WEBP
+
+                </p>
+
+            </div>
+
+
+            <!-- Preview -->
+
+            <div
+                id="previewContainer"
+                class="previewContainer hidden">
+
+                <img
+                    id="previewImage"
+                    src=""
+                    alt="Preview">
+
+                <button
+                    id="removePhoto"
+                    type="button"
+                    class="removePhoto">
+
+                    ✕
+
+                </button>
+
+            </div>
+
+        </label>
+
+
+        <!-- Friend Name -->
+
+        <div class="inputGroup">
+
+            <label
+                for="friendName"
+                data-lang="friendName">
+
+                Friend's Name
+
+            </label>
+
+            <input
+
+                id="friendName"
+
+                type="text"
+
+                maxlength="30"
+
+                autocomplete="off"
+
+                placeholder="Enter your friend's name">
+
+        </div>
+
+
+        <!-- Roast Button -->
+
+        <button
+            id="roastBtn"
+            class="primaryBtn">
+
+            🔥
+
+            <span data-lang="roastButton">
+
+                Roast Now
+
+            </span>
+
+        </button>
+
+    </section>
+
+
+
+    <!-- ===============================
+         Tips Card
+    ================================ -->
+
+    <section class="glassCard tipsCard fadeUp delay1">
+
+        <div class="tipsHeader">
+
+            💡
+
+            <span data-lang="tips">
+
+                Tips
+
+            </span>
+
+        </div>
+
+        <ul>
+
+            <li data-lang="tip1">
+
+                Upload a clear face photo.
+
+            </li>
+
+            <li data-lang="tip2">
+
+                AI generates funny but safe roasts.
+
+            </li>
+
+            <li data-lang="tip3">
+
+                Share your roast with friends.
+
+            </li>
+
+        </ul>
+
+    </section>
+
+    <!-- ==========================================
+            LOADING SECTION
+    =========================================== -->
+
+    <section
+        id="loadingSection"
+        class="glassCard loadingCard hidden">
+
+        <div class="loadingContent">
+
+            <div class="loaderRing">
+
+                <div class="ring"></div>
+
+                <div class="ring"></div>
+
+                <div class="ring"></div>
+
+                <div class="flame">
+
+                    🔥
+
+                </div>
+
+            </div>
+
+            <h2
+                id="loadingTitle"
+                data-lang="loadingTitle">
+
+                Cooking the Perfect Roast...
+
+            </h2>
+
+            <p
+                id="loadingText"
+                data-lang="loadingText">
+
+                AI is analyzing your friend's face and preparing something savage.
+
+            </p>
+
+            <!-- Progress -->
+
+            <div class="progressBar">
+
+                <div
+                    id="progressFill"
+                    class="progressFill">
+
+                </div>
+
+            </div>
+
+            <div
+                id="progressPercent"
+                class="progressPercent">
+
+                0%
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+            RESULT CARD
+    =========================================== -->
+
+    <section
+        id="resultCard"
+        class="glassCard resultCard hidden">
+
+        <div class="resultHeader">
+
+            <div class="resultBadge">
+
+                ☠️
+
+            </div>
+
+            <h2 data-lang="resultTitle">
+
+                DAMAGE DELIVERED
+
+            </h2>
+
+        </div>
+
+
+
+        <!-- Uploaded Photo -->
+
+        <div class="resultImage">
+
+            <img
+                id="resultPhoto"
+                src=""
+                alt="Friend">
+
+        </div>
+
+
+
+        <!-- Friend Name -->
+
+        <h3
+            id="resultName"
+            class="friendResultName">
+
+        </h3>
+
+
+
+        <!-- Roast -->
+
+        <div class="roastBox">
+
+            <p
+                id="roastText">
+
+            </p>
+
+        </div>
+
+
+
+        <!-- Roast Meter -->
+
+        <div class="meterSection">
+
+            <div class="meterHeader">
+
+                <span data-lang="roastLevel">
+
+                    Roast Level
+
+                </span>
+
+                <span
+                    id="roastPercent">
+
+                    95%
+
+                </span>
+
+            </div>
+
+            <div class="meterBar">
+
+                <div
+                    id="meterFill"
+                    class="meterFill">
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Action Buttons -->
+
+        <div class="actionButtons">
+
+            <button
+                id="copyBtn"
+                class="secondaryBtn">
+
+                📋
+
+                <span data-lang="copy">
+
+                    Copy
+
+                </span>
+
+            </button>
+
+
+
+            <button
+                id="shareBtn"
+                class="secondaryBtn">
+
+                📤
+
+                <span data-lang="share">
+
+                    Share
+
+                </span>
+
+            </button>
+
+
+
+            <button
+                id="againBtn"
+                class="primaryBtn">
+
+                🔥
+
+                <span data-lang="again">
+
+                    Roast Again
+
+                </span>
+
+            </button>
+
+        </div>
+
+    </section>
+  
+    <!-- ==========================================
+     RoastVerse Premium Share Card v6
+========================================== -->
+
+<div id="shareCard" class="shareCard hidden">
+
+    <!-- Background -->
+    <div class="shareGlow glow1"></div>
+    <div class="shareGlow glow2"></div>
+
+    <!-- Header -->
+    <header class="shareHeader">
+
+        <div class="shareBrand">
+
+            <div class="shareLogo">
+                🔥 RoastVerse
+            </div>
+
+            <div class="shareTagline">
+                AI Roasts. Real Savage.
+            </div>
+
+        </div>
+
+    </header>
+
+    <!-- Title -->
+    <section class="shareHero">
+
+        <h1 class="damageTitle">
+
+            ☠️ DAMAGE DELIVERED
+
+        </h1>
+
+    </section>
+
+    <!-- Avatar -->
+    <section class="avatarSection">
+
+        <div class="avatarWrapper">
+
+            <div class="avatarGlow"></div>
+
+            <img
+                id="sharePhoto"
+                class="shareAvatar"
+                src=""
+                alt="Friend">
+
+        </div>
+
+    </section>
+
+    <!-- Name -->
+    <h2
+        id="shareName"
+        class="shareName">
+
+        FRIEND
+
+    </h2>
+
+    <!-- Badge -->
+    <div
+        id="shareBadge"
+        class="shareBadge">
+
+        🏆 CERTIFIED DESTROYER
+
+    </div>
+
+    <!-- Verdict -->
+    <section class="verdictCard">
+
+        <div class="verdictTitle">
+
+            😂 AI Verdict
+
+        </div>
+
+        <div
+            id="shareRoast"
+            class="shareRoast">
+
+            Your roast will appear here...
+
+        </div>
+
+    </section>
+
+    <!-- Score -->
+    <section class="scoreSection">
+
+        <div class="scoreCircle">
+
+            <div id="shareScore">
+
+                95%
+
+            </div>
+
+            <span>
+
+                Roast Score
+
+            </span>
+
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="shareFooter">
+
+        🔥 roastverse.ai
+
+    </footer>
+
+    <!-- Floating Decorations -->
+
+    <div class="floating fire1">🔥</div>
+
+    <div class="floating fire2">😂</div>
+
+    <div class="floating fire3">⚡</div>
+
+    <div class="floating fire4">☠️</div>
+
+</div>
+
+    <!-- ==========================================
+            TOAST
+    =========================================== -->
+
+    <div
+        id="toast"
+        class="toast">
+
+        <span id="toastMessage">
+
+            Success
+
+        </span>
+
+    </div>
+
+    <!-- ===============================
+         Footer
+    ================================ -->
+
+    <footer class="footer">
+
+        <p>
+
+            Made with ❤️ and AI
+
+        </p>
+
+        <span>
+
+            RoastVerse v5
+
+        </span>
+
+    </footer>
+
+</main>
+
+
+<!-- ===============================
+     Scroll To Top
+================================ -->
+
+<button
+    id="scrollTopBtn"
+    class="scrollTopBtn"
+    aria-label="Scroll to top">
+
+    ↑
+
+</button>
+
+
+<!-- ===============================
+     Floating Decorations
+================================ -->
+
+<div class="floatingEmoji emoji1">
+
+    🔥
+
+</div>
+
+<div class="floatingEmoji emoji2">
+
+    😂
+
+</div>
+
+<div class="floatingEmoji emoji3">
+
+    ⚡
+
+</div>
+
+
+<!-- ===============================
+     JavaScript
+================================ -->
+
+    <!-- html2canvas Library -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+    <!-- Main App -->
+    <script type="module" src="js/app.js"></script>
+
+</body>
+</html>
+

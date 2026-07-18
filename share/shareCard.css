@@ -1,0 +1,426 @@
+/* =====================================================
+   RoastVerse Premium Share Card v6
+===================================================== */
+
+.shareCard{
+    position:fixed;
+    left:-99999px;
+    top:0;
+
+    width:1080px;
+    height:1920px;
+
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    padding:70px 70px 90px;
+
+    background:
+    linear-gradient(
+        180deg,
+        #220000 0%,
+        #520808 35%,
+        #931818 70%,
+        #ff4f4f 100%
+    );
+
+    color:#fff;
+
+    font-family:"Poppins",sans-serif;
+}
+
+/* =========================
+   Background
+========================= */
+
+.shareGlow{
+
+    position:absolute;
+
+    width:650px;
+    height:650px;
+
+    border-radius:50%;
+
+    filter:blur(150px);
+
+    opacity:.35;
+
+    z-index:0;
+
+}
+
+.glow1{
+
+    background:#ff4fa3;
+
+    top:-180px;
+
+    left:-180px;
+
+}
+
+.glow2{
+
+    background:#ffb300;
+
+    bottom:-200px;
+
+    right:-180px;
+
+}
+
+/* =========================
+   Bring content forward
+========================= */
+
+.shareHeader,
+.shareHero,
+.avatarSection,
+.shareName,
+.shareBadge,
+.verdictCard,
+.scoreSection,
+.shareFooter{
+
+    position:relative;
+
+    z-index:10;
+
+}
+
+/* =========================
+   Header
+========================= */
+
+.shareHeader{
+
+    width:100%;
+
+}
+
+.shareBrand{
+
+    text-align:left;
+
+}
+
+.shareLogo{
+
+    font-size:48px;
+
+    font-weight:800;
+
+}
+
+.shareTagline{
+
+    font-size:24px;
+
+    margin-top:8px;
+
+    opacity:.85;
+
+}
+
+/* =========================
+   Hero
+========================= */
+
+.shareHero{
+
+    margin-top:60px;
+
+}
+
+.damageTitle{
+
+    font-size:72px;
+
+    font-weight:800;
+
+    text-align:center;
+
+    letter-spacing:2px;
+
+}
+
+/* =========================
+   Avatar
+========================= */
+
+.avatarSection{
+
+    margin-top:70px;
+
+}
+
+.avatarWrapper{
+
+    position:relative;
+
+}
+
+.avatarGlow{
+
+    position:absolute;
+
+    inset:-35px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(circle,
+    rgba(255,255,255,.35),
+    transparent 70%);
+
+    filter:blur(35px);
+
+}
+
+.shareAvatar{
+
+    position:relative;
+
+    width:320px;
+
+    height:320px;
+
+    display:block;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    border:12px solid white;
+
+    box-shadow:
+    0 30px 70px rgba(0,0,0,.35);
+
+}
+
+/* =========================
+   Name
+========================= */
+
+.shareName{
+
+    margin-top:45px;
+
+    font-size:60px;
+
+    font-weight:800;
+
+    text-transform:uppercase;
+
+    letter-spacing:2px;
+
+}
+
+/* =========================
+   Badge
+========================= */
+
+.shareBadge{
+
+    margin-top:35px;
+
+    padding:20px 55px;
+
+    border-radius:999px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ffe27a,
+        #ffc93c,
+        #ffb300
+    );
+
+    color:#442400;
+
+    font-size:34px;
+
+    font-weight:700;
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.35);
+
+}
+
+/* =========================
+   Verdict
+========================= */
+
+.verdictCard{
+
+    width:100%;
+
+    margin-top:60px;
+
+    padding:45px;
+
+    border-radius:36px;
+
+    background:
+    rgba(255,255,255,.12);
+
+    border:2px solid rgba(255,255,255,.16);
+
+    backdrop-filter:blur(16px);
+
+}
+
+.verdictTitle{
+
+    font-size:34px;
+
+    font-weight:700;
+
+    margin-bottom:20px;
+
+}
+
+.shareRoast{
+
+    font-size:40px;
+
+    line-height:1.6;
+
+    text-align:center;
+
+    min-height:220px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+/* =========================
+   Score
+========================= */
+
+.scoreSection{
+
+    margin-top:55px;
+
+}
+
+.scoreCircle{
+
+    width:250px;
+
+    height:250px;
+
+    border-radius:50%;
+
+    border:8px solid rgba(255,255,255,.9);
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+    rgba(255,255,255,.10);
+
+    backdrop-filter:blur(14px);
+
+}
+
+#shareScore{
+
+    font-size:82px;
+
+    font-weight:800;
+
+}
+
+.scoreCircle span{
+
+    margin-top:10px;
+
+    font-size:26px;
+
+}
+
+/* =========================
+   Footer
+========================= */
+
+.shareFooter{
+
+    margin-top:auto;
+
+    font-size:30px;
+
+    opacity:.9;
+
+}
+
+/* =========================
+   Floating
+========================= */
+
+.floating{
+
+    position:absolute;
+
+    font-size:70px;
+
+    opacity:.08;
+
+    z-index:1;
+
+}
+
+.fire1{
+
+    top:180px;
+
+    right:120px;
+
+}
+
+.fire2{
+
+    top:650px;
+
+    left:90px;
+
+}
+
+.fire3{
+
+    bottom:300px;
+
+    right:100px;
+
+}
+
+.fire4{
+
+    bottom:180px;
+
+    left:120px;
+
+}
+
+/* =========================
+   Hidden
+========================= */
+
+.hidden{
+
+    display:none !important;
+
+}

@@ -1,0 +1,15 @@
+const canvas = await html2canvas(card, {
+
+    scale: window.devicePixelRatio > 2 ? 2 : 3,
+
+    useCORS: true,
+
+    backgroundColor: null,
+
+    logging: false,
+
+    imageTimeout: 0,
+
+    removeContainer: true
+
+});

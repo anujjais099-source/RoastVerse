@@ -1,0 +1,1645 @@
+/* =====================================================
+   RoastVerse v5
+   Main Stylesheet
+   Part 1
+   ===================================================== */
+
+/*==============================
+  RESET
+==============================*/
+
+*,
+*::before,
+*::after{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+    transition:
+        background .35s ease,
+        color .35s ease;
+}
+
+
+/*==============================
+  THEME VARIABLES
+==============================*/
+
+:root{
+
+    --primary:#ff4fa3;
+    --primary-dark:#ff2e8d;
+    --secondary:#7b61ff;
+
+    --success:#29d17d;
+    --warning:#ffb020;
+    --danger:#ff5c5c;
+
+    --white:#ffffff;
+    --black:#101114;
+
+    --text:#f6f6f7;
+    --text-light:#b9bcc8;
+
+    --glass:rgba(255,255,255,.08);
+    --glass-border:rgba(255,255,255,.12);
+
+    --shadow:
+        0 15px 40px rgba(0,0,0,.30);
+
+    --radius:22px;
+
+    --blur:18px;
+
+    --container:1200px;
+
+}
+
+
+/*==============================
+  LIGHT MODE
+==============================*/
+
+body.light{
+
+    --text:#1b1b1b;
+
+    --text-light:#666;
+
+    --glass:rgba(255,255,255,.82);
+
+    --glass-border:rgba(255,255,255,.65);
+
+    background:#f6f7fb;
+
+}
+
+
+/*==============================
+  DARK MODE
+==============================*/
+
+body.dark{
+
+    background:
+        radial-gradient(circle at top left,#2a0938 0%,transparent 35%),
+        radial-gradient(circle at bottom right,#11163b 0%,transparent 40%),
+        #09090d;
+
+}
+
+
+/*==============================
+  TYPOGRAPHY
+==============================*/
+
+h1,h2,h3,h4{
+
+    color:var(--text);
+
+    font-weight:700;
+
+    line-height:1.2;
+
+}
+
+p{
+
+    color:var(--text-light);
+
+    line-height:1.7;
+
+}
+
+a{
+
+    color:inherit;
+
+    text-decoration:none;
+
+}
+
+button{
+
+    font-family:inherit;
+
+    border:none;
+
+    outline:none;
+
+    cursor:pointer;
+
+}
+
+input{
+
+    font-family:inherit;
+
+    outline:none;
+
+}
+
+
+/*==============================
+  LAYOUT
+==============================*/
+
+.container{
+
+    width:min(92%,var(--container));
+
+    margin:auto;
+
+    padding:30px 0 80px;
+
+}
+
+.glassCard{
+
+    background:var(--glass);
+
+    backdrop-filter:blur(var(--blur));
+
+    -webkit-backdrop-filter:blur(var(--blur));
+
+    border:1px solid var(--glass-border);
+
+    border-radius:var(--radius);
+
+    box-shadow:var(--shadow);
+
+}
+
+
+/*==============================
+  HERO
+==============================*/
+
+.hero{
+
+    text-align:center;
+
+    padding:40px 20px 20px;
+
+    position:relative;
+
+}
+
+.logo{
+
+    font-size:3rem;
+
+    font-weight:800;
+
+    color:var(--white);
+
+    letter-spacing:.5px;
+
+}
+
+.tagline{
+
+    margin-top:12px;
+
+    font-size:1.05rem;
+
+    color:var(--text-light);
+
+}
+
+
+/*==============================
+  MENU BUTTON
+==============================*/
+
+.menuBtn{
+
+    position:absolute;
+
+    top:25px;
+
+    left:25px;
+
+    width:52px;
+
+    height:52px;
+
+    border-radius:16px;
+
+    background:var(--glass);
+
+    color:var(--white);
+
+    font-size:1.4rem;
+
+    border:1px solid var(--glass-border);
+
+    backdrop-filter:blur(10px);
+
+    transition:.25s;
+
+}
+
+.menuBtn:hover{
+
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.12);
+
+}
+
+
+/*==============================
+  SIDEBAR
+==============================*/
+
+.drawer{
+
+    position:fixed;
+
+    top:0;
+
+    left:-310px;
+
+    width:300px;
+
+    height:100vh;
+
+    background:#14151d;
+
+    border-right:1px solid rgba(255,255,255,.08);
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    transition:left .35s ease;
+
+    z-index:1000;
+
+    padding:24px;
+
+}
+
+.drawer.open{
+
+    left:0;
+
+}
+
+.drawerHeader{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+}
+
+.brand{
+
+    font-size:1.55rem;
+
+    font-weight:700;
+
+    color:#fff;
+
+}
+
+.iconBtn{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:12px;
+
+    background:transparent;
+
+    color:#fff;
+
+    font-size:1rem;
+
+}
+
+.drawerMenu{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+.menuItem{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    width:100%;
+
+    padding:14px 18px;
+
+    border-radius:14px;
+
+    background:transparent;
+
+    color:#ddd;
+
+    font-size:1rem;
+
+    transition:.25s;
+
+}
+
+.menuItem:hover{
+
+    background:rgba(255,255,255,.08);
+
+}
+
+.menuItem.active{
+
+    background:linear-gradient(
+        90deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    color:#fff;
+
+}
+
+
+/*==============================
+  OVERLAY
+==============================*/
+
+.overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.3s;
+
+    z-index:999;
+
+}
+
+.overlay.show{
+
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+
+/*==============================
+  BACKGROUND GLOWS
+==============================*/
+
+.bgGlow{
+
+    position:fixed;
+
+    border-radius:50%;
+
+    filter:blur(110px);
+
+    opacity:.25;
+
+    pointer-events:none;
+
+    z-index:-1;
+
+}
+
+.glow1{
+
+    width:300px;
+
+    height:300px;
+
+    background:#ff4fa3;
+
+    top:-120px;
+
+    left:-120px;
+
+}
+
+.glow2{
+
+    width:350px;
+
+    height:350px;
+
+    background:#7b61ff;
+
+    right:-100px;
+
+    top:25%;
+
+}
+
+.glow3{
+
+    width:260px;
+
+    height:260px;
+
+    background:#00d9ff;
+
+    bottom:-80px;
+
+    left:35%;
+
+}
+
+/*=====================================================
+  RoastVerse v5
+  STYLE.CSS
+  PART 2
+======================================================*/
+
+
+/*==============================
+  SECTION TITLES
+==============================*/
+
+.sectionTitle{
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:8px;
+
+}
+
+.sectionTitle h2{
+
+    font-size:1.45rem;
+
+}
+
+.emoji{
+
+    font-size:1.8rem;
+
+}
+
+.sectionSubtitle{
+
+    margin-bottom:28px;
+    color:var(--text-light);
+
+}
+
+
+/*==============================
+  UPLOAD CARD
+==============================*/
+
+.uploadCard{
+
+    max-width:720px;
+
+    margin:40px auto;
+
+    padding:35px;
+
+}
+
+
+/*==============================
+  UPLOAD AREA
+==============================*/
+
+.uploadArea{
+
+    width:100%;
+    min-height:280px;
+
+    border:2px dashed rgba(255,255,255,.18);
+
+    border-radius:22px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    overflow:hidden;
+
+    position:relative;
+
+    background:rgba(255,255,255,.03);
+
+}
+
+.uploadArea:hover{
+
+    border-color:var(--primary);
+
+    background:rgba(255,79,163,.05);
+
+}
+
+.uploadPlaceholder{
+
+    text-align:center;
+
+    padding:40px;
+
+}
+
+.uploadIcon{
+
+    font-size:4rem;
+
+    margin-bottom:20px;
+
+}
+
+.uploadPlaceholder h3{
+
+    margin-bottom:10px;
+
+}
+
+.uploadPlaceholder p{
+
+    color:var(--text-light);
+
+}
+
+
+/*==============================
+  IMAGE PREVIEW
+==============================*/
+
+.previewContainer{
+
+    width:100%;
+
+    height:100%;
+
+    position:relative;
+
+}
+
+.previewContainer img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    display:block;
+
+    border-radius:20px;
+
+}
+
+.removePhoto{
+
+    position:absolute;
+
+    top:15px;
+
+    right:15px;
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    background:rgba(0,0,0,.6);
+
+    color:#fff;
+
+    font-size:1rem;
+
+    transition:.25s;
+
+}
+
+.removePhoto:hover{
+
+    background:var(--danger);
+
+}
+
+
+/*==============================
+  INPUT GROUP
+==============================*/
+
+.inputGroup{
+
+    margin-top:28px;
+
+}
+
+.inputGroup label{
+
+    display:block;
+
+    margin-bottom:10px;
+
+    color:var(--text);
+
+    font-weight:600;
+
+}
+
+.inputGroup input{
+
+    width:100%;
+
+    height:60px;
+
+    padding:0 20px;
+
+    border-radius:16px;
+
+    border:1px solid rgba(255,255,255,.12);
+
+    background:rgba(255,255,255,.05);
+
+    color:var(--text);
+
+    font-size:1rem;
+
+    transition:.3s;
+
+}
+
+.inputGroup input::placeholder{
+
+    color:rgba(255,255,255,.45);
+
+}
+
+.inputGroup input:focus{
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 4px rgba(255,79,163,.18);
+
+}
+
+
+/*==============================
+  PRIMARY BUTTON
+==============================*/
+
+.primaryBtn{
+
+    width:100%;
+
+    height:62px;
+
+    margin-top:28px;
+
+    border-radius:16px;
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    color:#fff;
+
+    font-size:1.05rem;
+
+    font-weight:700;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    transition:.25s;
+
+}
+
+/*=====================================================
+  RoastVerse v5
+  STYLE.CSS
+  PART 3
+======================================================*/
+
+
+/*==============================
+  SECONDARY BUTTONS
+==============================*/
+
+.secondaryBtn{
+
+    flex:1;
+
+    height:56px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.10);
+
+    color:var(--text);
+
+    font-weight:600;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    transition:.3s;
+
+}
+
+.secondaryBtn:hover{
+
+    background:rgba(255,255,255,.14);
+
+    transform:translateY(-2px);
+
+}
+
+
+/*==============================
+  LOADING CARD
+==============================*/
+
+.loadingCard{
+
+    max-width:720px;
+
+    margin:40px auto;
+
+    padding:45px;
+
+    text-align:center;
+
+}
+
+.loadingContent{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+}
+
+.loaderRing{
+
+    position:relative;
+
+    width:120px;
+
+    height:120px;
+
+    margin-bottom:30px;
+
+}
+
+.ring{
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:50%;
+
+    border:4px solid transparent;
+
+    border-top-color:var(--primary);
+
+}
+
+.ring:nth-child(2){
+
+    inset:12px;
+
+    border-top-color:var(--secondary);
+
+}
+
+.ring:nth-child(3){
+
+    inset:24px;
+
+    border-top-color:#00d9ff;
+
+}
+
+.flame{
+
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:2rem;
+
+}
+
+.progressBar{
+
+    width:100%;
+
+    height:14px;
+
+    margin-top:30px;
+
+    border-radius:50px;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.08);
+
+}
+
+.progressFill{
+
+    width:0%;
+
+    height:100%;
+
+    border-radius:50px;
+
+    background:linear-gradient(
+        90deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    transition:width .4s ease;
+
+}
+
+.progressPercent{
+
+    margin-top:14px;
+
+    font-weight:700;
+
+    color:var(--primary);
+
+}
+
+
+/*==============================
+  RESULT CARD
+==============================*/
+
+.resultCard{
+
+    max-width:760px;
+
+    margin:40px auto;
+
+    padding:40px;
+
+}
+
+.resultHeader{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:14px;
+
+    margin-bottom:25px;
+
+}
+
+.resultBadge{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:50%;
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:1.5rem;
+
+    color:#fff;
+
+}
+
+.resultImage{
+
+    width:180px;
+
+    height:180px;
+
+    margin:0 auto 25px;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    border:4px solid rgba(255,255,255,.10);
+
+}
+
+.resultImage img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+.friendResultName{
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+    font-size:1.5rem;
+
+}
+
+
+/*==============================
+  ROAST BOX
+==============================*/
+
+.roastBox{
+
+    padding:28px;
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,.06);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    margin-bottom:28px;
+
+}
+
+.roastBox p{
+
+    text-align:center;
+
+    color:var(--text);
+
+    font-size:1.1rem;
+
+    line-height:1.8;
+
+}
+
+
+/*==============================
+  ROAST METER
+==============================*/
+
+.meterSection{
+
+    margin-bottom:30px;
+
+}
+
+.meterHeader{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:10px;
+
+    font-weight:600;
+
+    color:var(--text);
+
+}
+
+.meterBar{
+
+    height:14px;
+
+    border-radius:50px;
+
+    background:rgba(255,255,255,.08);
+
+    overflow:hidden;
+
+}
+
+.meterFill{
+
+    width:95%;
+
+    height:100%;
+
+    border-radius:50px;
+
+    background:linear-gradient(
+        90deg,
+        #ff5c5c,
+        #ff9d00,
+        #ffe600
+    );
+
+}
+
+
+/*==============================
+  ACTION BUTTONS
+==============================*/
+
+.actionButtons{
+
+    display:flex;
+
+    gap:16px;
+
+    flex-wrap:wrap;
+
+}
+
+
+/*==============================
+  TIPS CARD
+==============================*/
+
+.tipsCard{
+
+    max-width:720px;
+
+    margin:30px auto;
+
+    padding:28px;
+
+}
+
+.tipsHeader{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:1.2rem;
+
+    font-weight:700;
+
+    color:var(--text);
+
+    margin-bottom:18px;
+
+}
+
+.tipsCard ul{
+
+    list-style:none;
+
+}
+
+.tipsCard li{
+
+    position:relative;
+
+    padding-left:26px;
+
+    margin-bottom:14px;
+
+    color:var(--text-light);
+
+}
+
+.tipsCard li::before{
+
+    content:"✔";
+
+    position:absolute;
+
+    left:0;
+
+    color:var(--success);
+
+}
+
+
+/*==============================
+  FOOTER
+==============================*/
+
+.footer{
+
+    text-align:center;
+
+    padding:60px 20px 30px;
+
+}
+
+.footer span{
+
+    display:block;
+
+    margin-top:10px;
+
+    color:var(--text-light);
+
+}
+
+
+/*==============================
+  UTILITIES
+==============================*/
+
+.hidden{
+
+    display:none !important;
+
+}
+
+.textCenter{
+
+    text-align:center;
+
+}
+
+/*=====================================================
+  RoastVerse v5
+  STYLE.CSS
+  PART 4
+======================================================*/
+
+
+/*==============================
+  LANGUAGE DROPDOWN
+==============================*/
+
+.languageBox{
+
+    position:relative;
+
+}
+
+.languageMenu{
+
+    display:none;
+
+    flex-direction:column;
+
+    margin-top:10px;
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.06);
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+.languageMenu.show{
+
+    display:flex;
+
+}
+
+.languageMenu button{
+
+    padding:14px 18px;
+
+    background:transparent;
+
+    color:var(--text);
+
+    text-align:left;
+
+    transition:.25s;
+
+}
+
+.languageMenu button:hover{
+
+    background:rgba(255,255,255,.08);
+
+}
+
+
+/*==============================
+  DRAWER FOOTER
+==============================*/
+
+.drawerFooter{
+
+    padding-top:30px;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+    text-align:center;
+
+}
+
+.drawerFooter small{
+
+    color:rgba(255,255,255,.45);
+
+}
+
+
+/*==============================
+  TOAST
+==============================*/
+
+.toast{
+
+    position:fixed;
+
+    left:50%;
+
+    bottom:30px;
+
+    transform:translateX(-50%) translateY(100px);
+
+    padding:14px 22px;
+
+    border-radius:16px;
+
+    background:#1e1f26;
+
+    color:#fff;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    z-index:2000;
+
+    box-shadow:0 12px 35px rgba(0,0,0,.35);
+
+    transition:.35s;
+
+}
+
+.toast.show{
+
+    opacity:1;
+
+    visibility:visible;
+
+    transform:translateX(-50%) translateY(0);
+
+}
+
+
+/*==============================
+  SCROLL TO TOP
+==============================*/
+
+.scrollTopBtn{
+
+    position:fixed;
+
+    right:25px;
+
+    bottom:25px;
+
+    width:54px;
+
+    height:54px;
+
+    border-radius:50%;
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    color:#fff;
+
+    font-size:1.2rem;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.30);
+
+    transition:.3s;
+
+    z-index:1000;
+
+}
+
+.scrollTopBtn.show{
+
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+.scrollTopBtn:hover{
+
+    transform:translateY(-4px);
+
+}
+
+
+/*==============================
+  FLOATING EMOJIS
+==============================*/
+
+.floatingEmoji{
+
+    position:fixed;
+
+    font-size:2rem;
+
+    opacity:.08;
+
+    pointer-events:none;
+
+    z-index:-1;
+
+}
+
+.emoji1{
+
+    top:18%;
+
+    left:5%;
+
+}
+
+.emoji2{
+
+    right:7%;
+
+    top:42%;
+
+}
+
+.emoji3{
+
+    bottom:12%;
+
+    left:48%;
+
+}
+
+
+/*==============================
+  LIGHT MODE FIXES
+==============================*/
+
+body.light .logo{
+
+    color:#151515;
+
+}
+
+body.light .menuBtn{
+
+    color:#151515;
+
+}
+
+body.light .drawer{
+
+    background:#ffffff;
+
+}
+
+body.light .menuItem{
+
+    color:#222;
+
+}
+
+body.light .brand{
+
+    color:#111;
+
+}
+
+body.light .iconBtn{
+
+    color:#111;
+
+}
+
+body.light .roastBox{
+
+    background:#ffffff;
+
+}
+
+body.light .toast{
+
+    background:#111;
+
+}
+
+
+/*==============================
+  PREMIUM HOVER EFFECTS
+==============================*/
+
+.glassCard{
+
+    transition:
+        transform .30s ease,
+        box-shadow .30s ease,
+        border-color .30s ease;
+
+}
+
+.glassCard:hover{
+
+    transform:translateY(-5px);
+
+    border-color:rgba(255,79,163,.35);
+
+    box-shadow:
+        0 20px 45px rgba(0,0,0,.35);
+
+}
+
+.primaryBtn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 18px 35px rgba(255,79,163,.35);
+
+}
+
+.primaryBtn:active{
+
+    transform:scale(.98);
+
+}
+
+.menuBtn:active,
+
+.secondaryBtn:active,
+
+.iconBtn:active{
+
+    transform:scale(.95);
+
+}
+
+
+/*==============================
+  CUSTOM SCROLLBAR
+==============================*/
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#111;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:linear-gradient(
+        var(--primary),
+        var(--secondary)
+    );
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:var(--primary);
+
+}
+
+
+/*==============================
+  SELECTION
+==============================*/
+
+::selection{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+
+/*==============================
+  INPUT AUTOFILL
+==============================*/
+
+input:-webkit-autofill{
+
+    -webkit-box-shadow:0 0 0 1000px transparent inset;
+
+    -webkit-text-fill-color:var(--text);
+
+    transition:background-color 5000s ease-in-out 0s;
+
+}
+
+/* Upload Drag State */
+
+.uploadArea.dragging{
+
+    border-color:var(--primary);
+
+    background:rgba(255,79,163,.12);
+
+    transform:scale(1.02);
+
+}
+
+
+/*==============================
+  END OF STYLE.CSS
+==============================*/

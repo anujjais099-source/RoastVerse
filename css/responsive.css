@@ -1,0 +1,371 @@
+/*=====================================================
+  RoastVerse v5
+  RESPONSIVE.CSS
+======================================================*/
+
+
+/*========================================
+  LARGE LAPTOPS
+========================================*/
+
+@media (max-width:1200px){
+
+    .container{
+
+        width:94%;
+
+    }
+
+}
+
+
+/*========================================
+  LAPTOP
+========================================*/
+
+@media (max-width:992px){
+
+    .hero{
+
+        padding-top:80px;
+
+    }
+
+    .logo{
+
+        font-size:2.6rem;
+
+    }
+
+    .uploadCard,
+    .loadingCard,
+    .resultCard,
+    .tipsCard{
+
+        max-width:100%;
+
+    }
+
+}
+
+
+/*========================================
+  TABLET
+========================================*/
+
+@media (max-width:768px){
+
+    .menuBtn{
+
+        top:20px;
+        left:20px;
+
+    }
+
+    .logo{
+
+        font-size:2.2rem;
+
+    }
+
+    .tagline{
+
+        font-size:.95rem;
+
+        padding:0 20px;
+
+    }
+
+    .uploadCard,
+    .loadingCard,
+    .resultCard,
+    .tipsCard{
+
+        padding:25px;
+
+        margin:25px auto;
+
+    }
+
+    .uploadArea{
+
+        min-height:220px;
+
+    }
+
+    .resultImage{
+
+        width:150px;
+
+        height:150px;
+
+    }
+
+    .actionButtons{
+
+        flex-direction:column;
+
+    }
+
+    .primaryBtn,
+    .secondaryBtn{
+
+        width:100%;
+
+    }
+
+    .drawer{
+
+        width:280px;
+
+    }
+
+}
+
+
+/*========================================
+  MOBILE
+========================================*/
+
+@media (max-width:480px){
+
+    .container{
+
+        width:95%;
+
+        padding-bottom:60px;
+
+    }
+
+    .hero{
+
+        padding-top:75px;
+
+    }
+
+    .logo{
+
+        font-size:1.9rem;
+
+    }
+
+    .tagline{
+
+        font-size:.9rem;
+
+    }
+
+    .menuBtn{
+
+        width:46px;
+
+        height:46px;
+
+        border-radius:14px;
+
+    }
+
+    .uploadCard,
+    .loadingCard,
+    .resultCard,
+    .tipsCard{
+
+        padding:20px;
+
+        border-radius:18px;
+
+    }
+
+    .uploadArea{
+
+        min-height:190px;
+
+    }
+
+    .uploadIcon{
+
+        font-size:3rem;
+
+    }
+
+    .sectionTitle h2{
+
+        font-size:1.25rem;
+
+    }
+
+    .inputGroup input{
+
+        height:54px;
+
+        font-size:.95rem;
+
+    }
+
+    .primaryBtn{
+
+        height:56px;
+
+        font-size:1rem;
+
+    }
+
+    .secondaryBtn{
+
+        height:52px;
+
+    }
+
+    .resultImage{
+
+        width:130px;
+
+        height:130px;
+
+    }
+
+    .friendResultName{
+
+        font-size:1.25rem;
+
+    }
+
+    .roastBox{
+
+        padding:20px;
+
+    }
+
+    .roastBox p{
+
+        font-size:1rem;
+
+        line-height:1.6;
+
+    }
+
+    .drawer{
+
+        width:260px;
+
+    }
+
+    .drawerHeader{
+
+        margin-bottom:20px;
+
+    }
+
+    .brand{
+
+        font-size:1.3rem;
+
+    }
+
+    .languageMenu button{
+
+        font-size:.9rem;
+
+    }
+
+    .toast{
+
+        width:90%;
+
+        text-align:center;
+
+    }
+
+    .scrollTopBtn{
+
+        width:48px;
+
+        height:48px;
+
+        right:18px;
+
+        bottom:18px;
+
+    }
+
+}
+
+
+/*========================================
+  SMALL PHONES
+========================================*/
+
+@media (max-width:360px){
+
+    .logo{
+
+        font-size:1.6rem;
+
+    }
+
+    .tagline{
+
+        font-size:.82rem;
+
+    }
+
+    .uploadArea{
+
+        min-height:170px;
+
+    }
+
+    .uploadIcon{
+
+        font-size:2.6rem;
+
+    }
+
+    .sectionTitle{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .resultHeader{
+
+        flex-direction:column;
+
+    }
+
+    .resultBadge{
+
+        margin-bottom:10px;
+
+    }
+
+    .drawer{
+
+        width:240px;
+
+    }
+
+}
+
+
+/*========================================
+  VERY SHORT SCREENS
+========================================*/
+
+@media (max-height:650px){
+
+    .hero{
+
+        padding-top:60px;
+
+    }
+
+    .drawer{
+
+        overflow-y:auto;
+
+    }
+
+}

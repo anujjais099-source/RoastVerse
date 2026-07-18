@@ -1,0 +1,495 @@
+/*=====================================================
+  RoastVerse v5
+  ANIMATIONS.CSS
+======================================================*/
+
+
+/*==============================
+  PAGE FADE
+==============================*/
+
+@keyframes pageFade{
+
+    from{
+
+        opacity:0;
+
+    }
+
+    to{
+
+        opacity:1;
+
+    }
+
+}
+
+body{
+
+    animation:pageFade .6s ease;
+
+}
+
+
+/*==============================
+  FADE UP
+==============================*/
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+.fadeUp{
+
+    animation:fadeUp .8s ease forwards;
+
+}
+
+
+/*==============================
+  FADE SCALE
+==============================*/
+
+@keyframes fadeScale{
+
+    from{
+
+        opacity:0;
+
+        transform:scale(.92);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:scale(1);
+
+    }
+
+}
+
+.fadeScale{
+
+    animation:fadeScale .45s ease;
+
+}
+
+
+/*==============================
+  FLOAT
+==============================*/
+
+@keyframes floating{
+
+    0%{
+
+        transform:translateY(0px);
+
+    }
+
+    50%{
+
+        transform:translateY(-12px);
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+
+    }
+
+}
+
+.float{
+
+    animation:floating 4s ease-in-out infinite;
+
+}
+
+
+/*==============================
+  GLOW
+==============================*/
+
+@keyframes glow{
+
+    0%{
+
+        filter:drop-shadow(0 0 0 rgba(255,79,163,0));
+
+    }
+
+    50%{
+
+        filter:drop-shadow(0 0 18px rgba(255,79,163,.7));
+
+    }
+
+    100%{
+
+        filter:drop-shadow(0 0 0 rgba(255,79,163,0));
+
+    }
+
+}
+
+.glow{
+
+    animation:glow 2s infinite;
+
+}
+
+
+/*==============================
+  LOADER
+==============================*/
+
+@keyframes spin{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+.ring{
+
+    animation:spin 1.6s linear infinite;
+
+}
+
+.ring:nth-child(2){
+
+    animation-duration:2.2s;
+
+}
+
+.ring:nth-child(3){
+
+    animation-duration:3s;
+
+}
+
+
+/*==============================
+  SHIMMER
+==============================*/
+
+@keyframes shimmer{
+
+    from{
+
+        background-position:-300px 0;
+
+    }
+
+    to{
+
+        background-position:300px 0;
+
+    }
+
+}
+
+.shimmer{
+
+    background:linear-gradient(
+        90deg,
+        rgba(255,255,255,.04),
+        rgba(255,255,255,.15),
+        rgba(255,255,255,.04)
+    );
+
+    background-size:600px 100%;
+
+    animation:shimmer 2s infinite linear;
+
+}
+
+
+/*==============================
+  BUTTON PULSE
+==============================*/
+
+@keyframes pulse{
+
+    0%{
+
+        transform:scale(1);
+
+    }
+
+    50%{
+
+        transform:scale(1.05);
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+    }
+
+}
+
+.primaryBtn:hover{
+
+    animation:pulse .7s;
+
+}
+
+
+/*==============================
+  SHAKE
+==============================*/
+
+@keyframes shake{
+
+    0%,100%{
+
+        transform:translateX(0);
+
+    }
+
+    20%{
+
+        transform:translateX(-4px);
+
+    }
+
+    40%{
+
+        transform:translateX(4px);
+
+    }
+
+    60%{
+
+        transform:translateX(-4px);
+
+    }
+
+    80%{
+
+        transform:translateX(4px);
+
+    }
+
+}
+
+.shake{
+
+    animation:shake .45s;
+
+}
+
+
+/*==============================
+  TOAST
+==============================*/
+
+@keyframes toastIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translate(-50%,60px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translate(-50%,0);
+
+    }
+
+}
+
+.toast.show{
+
+    animation:toastIn .35s ease;
+
+}
+
+
+/*==============================
+  BACKGROUND GLOWS
+==============================*/
+
+@keyframes glowMove1{
+
+    0%{
+
+        transform:translate(0,0);
+
+    }
+
+    50%{
+
+        transform:translate(35px,-25px);
+
+    }
+
+    100%{
+
+        transform:translate(0,0);
+
+    }
+
+}
+
+@keyframes glowMove2{
+
+    0%{
+
+        transform:translate(0,0);
+
+    }
+
+    50%{
+
+        transform:translate(-25px,35px);
+
+    }
+
+    100%{
+
+        transform:translate(0,0);
+
+    }
+
+}
+
+.glow1{
+
+    animation:glowMove1 12s ease-in-out infinite;
+
+}
+
+.glow2{
+
+    animation:glowMove2 15s ease-in-out infinite;
+
+}
+
+.glow3{
+
+    animation:glowMove1 18s ease-in-out infinite;
+
+}
+
+
+/*==============================
+  FLOATING EMOJIS
+==============================*/
+
+.emoji1{
+
+    animation:floating 6s infinite;
+
+}
+
+.emoji2{
+
+    animation:floating 8s infinite;
+
+}
+
+.emoji3{
+
+    animation:floating 10s infinite;
+
+}
+
+
+/*==============================
+  DELAYS
+==============================*/
+
+.delay1{
+
+    animation-delay:.2s;
+
+}
+
+.delay2{
+
+    animation-delay:.4s;
+
+}
+
+.delay3{
+
+    animation-delay:.6s;
+
+}
+
+
+/*==============================
+  HOVER LIFT
+==============================*/
+
+.hoverLift{
+
+    transition:.3s;
+
+}
+
+.hoverLift:hover{
+
+    transform:translateY(-8px);
+
+}
+
+
+/*==============================
+  HOVER SCALE
+==============================*/
+
+.hoverScale{
+
+    transition:.3s;
+
+}
+
+.hoverScale:hover{
+
+    transform:scale(1.04);
+
+}
+
+
+/*==============================
+  END
+==============================*/
