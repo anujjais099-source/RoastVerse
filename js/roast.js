@@ -50,11 +50,7 @@ async function generateRoast() {
         const data = await response.json();
 
         if (!response.ok) {
-
-            throw new Error(
-                data.error || "Failed to generate roast."
-            );
-
+           throw new Error(data.message || "Failed to generate roast.");
         }
 
         hideLoading();
