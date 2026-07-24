@@ -6,15 +6,7 @@
 
 const GEMINI_MODEL = "gemini-3.5-flash-lite";
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
-
-// `content` is either:
-//   - a plain string (text-only prompt), or
-//   - an array of Claude-style content blocks, e.g.
-//     [{ type: "image", source: { type: "base64", media_type, data } }, { type: "text", text }]
-// Keeping that shape (rather than Gemini's native shape) throughout the app
-// means the rest of the codebase doesn't need to know which provider it's
-// talking to — only this file does the translation.
+const ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent";
 function toGeminiParts(content) {
   if (typeof content === "string") {
     return [{ text: content }];
@@ -38,9 +30,12 @@ export async function callGemini(content) {
     throw new Error("Missing Gemini API key — add VITE_GEMINI_API_KEY to your .env file");
   }
 
-  const response = await fetch(`${ENDPOINT}?key=${GEMINI_API_KEY}`, {
+  const response = await fetch(ENDPOINT, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "x-goog-api-key": GEMINI_API_KEY,
+    },
     body: JSON.stringify({
       contents: [{ role: "user", parts: toGeminiParts(content) }],
       generationConfig: { maxOutputTokens: 200 },

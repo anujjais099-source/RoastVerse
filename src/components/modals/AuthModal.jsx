@@ -1,4 +1,4 @@
-import { X, Flame, Eye, EyeOff, Check } from "lucide-react";
+import { X, Flame, Eye, EyeOff, Check, ChevronDown } from "lucide-react";
 import { useApp } from "../../context/AppContext";
 import { COUNTRIES } from "../../lib/constants";
 
