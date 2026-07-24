@@ -552,29 +552,40 @@ export function AppProvider({ children }) {
     showToast("Logged out — starting fresh as a guest");
   };
 
-  const handleDeleteAccount = async () => {
+ const handleDeleteAccount = async () => {
     if (!account) return;
     try {
       const { data: { session } } = await supabase.auth.getSession();
-      if (session?.access_token) {
-        await supabase.functions.invoke("delete-account", {
-          headers: { Authorization: `Bearer ${session.access_token}` },
-        });
+      if (!session?.access_token) {
+        showToast("Couldn't verify your session — try logging in again first.");
+        return;
       }
+
+      const { data, error } = await supabase.functions.invoke("delete-account", {
+        headers: { Authorization: "Bearer " + session.access_token },
+      });
+
+      if (error || data?.error) {
+        console.error("RoastVerse: delete-account failed", error || data.error);
+        showToast("Couldn't delete your account — try again in a moment.");
+        return; // don't clear local state — the account still exists
+      }
+
       await supabase.auth.signOut();
+      setAccount(null);
+      setPoints(0);
+      setRoastCount(0);
+      setBestScore(0);
+      setUsedSavage(false);
+      awardedChallengesRef.current = new Set();
+      setDeleteConfirmOpen(false);
+      goPage("home");
+      showToast("Account deleted");
     } catch (e) {
-      console.warn("RoastVerse: failed to delete account", e);
+      console.error("RoastVerse: failed to delete account", e);
+      showToast("Couldn't delete your account — try again in a moment.");
     }
-    setAccount(null);
-    setPoints(0);
-    setRoastCount(0);
-    setBestScore(0);
-    setUsedSavage(false);
-    awardedChallengesRef.current = new Set();
-    setDeleteConfirmOpen(false);
-    goPage("home");
-    showToast("Account deleted");
-  };
+ };
 
   const updateProfilePic = (dataUrl) => {
     setAccount((a) => (a ? { ...a, profilePic: dataUrl } : a));

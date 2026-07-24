@@ -11,7 +11,7 @@
 // (SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are provided automatically by
 // Supabase to every Edge Function — you don't need to set them yourself.)
 
-import { createClient } from "jsr:@supabase/supabase-js@2";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
