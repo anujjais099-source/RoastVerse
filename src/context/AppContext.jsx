@@ -465,6 +465,17 @@ export function AppProvider({ children }) {
         return setAuthError(signUpError.message || "Couldn't create your account — try again.");
       }
 
+       // Supabase deliberately doesn't always throw a clear error when the
+      // email is already registered (to prevent attackers from being able
+      // to guess which emails have accounts) — instead it returns success
+      // with an empty identities array. Without checking for this, the
+      // app would show a fake "Welcome!" without actually creating a new
+      // account, silently reusing the existing one instead.
+      if (signUpData?.user && Array.isArray(signUpData.user.identities) && signUpData.user.identities.length === 0) {
+        setAuthLoading(false);
+        return setAuthError("An account with that email already exists. Try logging in instead.");
+      }
+      
       // if email confirmation is required, there's no session yet — tell the
       // person to check their inbox instead of pretending they're logged in
       if (!signUpData.session) {
