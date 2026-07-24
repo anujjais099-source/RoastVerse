@@ -8,7 +8,7 @@ export default function AuthModal() {
     authUsername, setAuthUsername, authEmail, setAuthEmail,
     authCountry, setAuthCountry, authPassword, setAuthPassword,
     authConfirm, setAuthConfirm, authShowPw, setAuthShowPw,
-    authError, authLoading, authSuccess, usernameStatus,
+    authError, setAuthError, authLoading, authSuccess, usernameStatus,
     normalizeUsername, passwordStrength, handleSignup, handleLogin,
   } = useApp();
 
@@ -81,12 +81,14 @@ export default function AuthModal() {
                     </>
                   )}
 
-                  <label className="block text-xs font-600 c-text-text-2 mb-2">Username</label>
+                  <label className="block text-xs font-600 c-text-text-2 mb-2">
+                   {authMode === "login" ? "Username or Email" : "Username"}
+                  </label>
                   <div className="relative mb-4">
                     <input
                       value={authUsername}
                       onChange={(e) => setAuthUsername(e.target.value)}
-                      placeholder="e.g. roast_king"
+                      placeholder={authMode === "login" ? "roast_king or you@gmail.com" : "e.g. roast_king"}
                       autoComplete="username"
                       autoCapitalize="none"
                       autoCorrect="off"

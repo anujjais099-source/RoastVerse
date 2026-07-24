@@ -376,8 +376,8 @@ export function AppProvider({ children }) {
   };
 
   const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
   const normalizeUsername = (u) => u.trim().toLowerCase().replace(/[^a-z0-9_]/g, "");
+  const normalizeEmail = (e) => e.trim().toLowerCase();
 
   const passwordStrength = (pw) => {
     if (!pw) return 0;
@@ -448,6 +448,7 @@ export function AppProvider({ children }) {
         usedSavage,
       };
       await storage.set(`account:${uname}`, JSON.stringify(record), true);
+      await storage.set(`email:${normalizeEmail(authEmail)}`, uname, true);
       await storage.set("session", JSON.stringify({ username: uname }), false);
       skipNextSyncRef.current = true;
       setAccount({
@@ -470,24 +471,41 @@ export function AppProvider({ children }) {
   };
 
   const handleLogin = async () => {
-    const uname = normalizeUsername(authUsername);
-    if (!uname || !authPassword) return setAuthError("Enter your username and password.");
+    const raw = authUsername.trim();
+    if (!raw || !authPassword) return setAuthError("Enter your username or email, and password.");
     setAuthLoading(true);
     setAuthError("");
     try {
+      let uname = normalizeUsername(raw);
+
+      if (raw.includes("@")) {
+        const emailLookup = await storage.get(`email:${normalizeEmail(raw)}`, true);
+        if (!emailLookup?.value) {
+          setAuthLoading(false);
+          return setAuthError("No account with that email.");
+        }
+        uname = emailLookup.value;
+      }
+
       const existing = await storage.get(`account:${uname}`, true);
       if (!existing?.value) {
         setAuthLoading(false);
-        return setAuthError("No account with that username.");
+        return setAuthError(raw.includes("@") ? "No account with that email." : "No account with that username.");
       }
       const data = JSON.parse(existing.value);
       if (data.passwordHash !== simpleHash(authPassword)) {
         setAuthLoading(false);
         return setAuthError("Wrong password.");
       }
+      if (data.email) {
+        try {
+          const mapping = await storage.get(`email:${normalizeEmail(data.email)}`, true);
+          if (!mapping?.value) await storage.set(`email:${normalizeEmail(data.email)}`, uname, true);
+        } catch (e) {}
+      }
       await storage.set("session", JSON.stringify({ username: uname }), false);
       skipNextSyncRef.current = true;
-      setAccount({ username: data.username, email: data.email || "", country: data.country || "", passwordHash: data.passwordHash, profilePic: data.profilePic || null, createdAt: data.createdAt });
+      setAccount({ username: data.username, email: data.email , country: data.country , passwordHash: data.passwordHash, profilePic: data.profilePic || null, createdAt: data.createdAt });
       setPoints(data.points || 0);
       setRoastCount(data.roastCount || 0);
       setBestScore(data.bestScore || 0);
@@ -808,7 +826,7 @@ export function AppProvider({ children }) {
     account, sessionChecked, authOpen, setAuthOpen, authMode, setAuthMode,
     authUsername, setAuthUsername, authEmail, setAuthEmail, authCountry, setAuthCountry,
     authPassword, setAuthPassword, authConfirm, setAuthConfirm, authShowPw, setAuthShowPw,
-    authError, authLoading, authSuccess, usernameStatus, deleteConfirmOpen, setDeleteConfirmOpen,
+    authError, setAuthError, authLoading, authSuccess, usernameStatus, deleteConfirmOpen, setDeleteConfirmOpen,
     openAuth, normalizeUsername, passwordStrength, isValidEmail,
     handleSignup, handleLogin, handleLogout, handleDeleteAccount,
     updateProfilePic, copyProfileLink,
