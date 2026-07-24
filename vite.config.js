@@ -5,6 +5,6 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
-    strictPort: true,
+    strictPort: true, // fail with an error instead of silently jumping to another port
   },
 });

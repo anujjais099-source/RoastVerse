@@ -1,23 +1,8 @@
-// Wrapper around Google's Gemini API (generateContent), replacing the
-// Anthropic API bridge that was available inside the Claude artifact sandbox.
-//
-// Get a key from https://aistudio.google.com/apikey and put it in .env as
-// VITE_GEMINI_API_KEY=your_key_here (copy .env.example to .env first).
+// Calls the Gemini API through a Supabase Edge Function instead of calling
+// Google directly from the browser — this keeps the Gemini API key on the
+// server, out of the client bundle entirely. See supabase/functions/roast/.
 
-const GEMINI_MODEL = "gemini-3.5-flash-lite";
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-const ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent";
-function toGeminiParts(content) {
-  if (typeof content === "string") {
-    return [{ text: content }];
-  }
-  return content.map((block) => {
-    if (block.type === "image") {
-      return { inlineData: { mimeType: block.source.media_type, data: block.source.data } };
-    }
-    return { text: block.text };
-  });
-}
+import { supabase } from "./supabase";
 
 export function dataUrlToImageBlock(dataUrl) {
   const match = dataUrl.match(/^data:(image\/[a-zA-Z0-9.+-]+);base64,(.*)$/);
@@ -26,30 +11,18 @@ export function dataUrlToImageBlock(dataUrl) {
 }
 
 export async function callGemini(content) {
-  if (!GEMINI_API_KEY) {
-    throw new Error("Missing Gemini API key — add VITE_GEMINI_API_KEY to your .env file");
-  }
-
-  const response = await fetch(ENDPOINT, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-goog-api-key": GEMINI_API_KEY,
-    },
-    body: JSON.stringify({
-      contents: [{ role: "user", parts: toGeminiParts(content) }],
-      generationConfig: { maxOutputTokens: 200 },
-    }),
+  const { data, error } = await supabase.functions.invoke("roast", {
+    body: { content },
   });
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data?.error?.message || `Gemini API error ${response.status}`);
+  if (error) {
+    throw new Error(error.message || "Couldn't reach the roast function");
   }
-
-  const parts = data?.candidates?.[0]?.content?.parts || [];
-  const text = parts.map((p) => p.text).filter(Boolean).join("").trim();
-  if (!text) throw new Error("Empty response from Gemini");
-  return text;
+  if (data?.error) {
+    throw new Error(data.error);
+  }
+  if (!data?.text) {
+    throw new Error("Empty response from Gemini");
+  }
+  return data.text;
 }

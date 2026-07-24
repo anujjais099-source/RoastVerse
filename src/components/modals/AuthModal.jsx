@@ -82,7 +82,7 @@ export default function AuthModal() {
                   )}
 
                   <label className="block text-xs font-600 c-text-text-2 mb-2">
-                   {authMode === "login" ? "Username or Email" : "Username"}
+                    {authMode === "login" ? "Username or Email" : "Username"}
                   </label>
                   <div className="relative mb-4">
                     <input

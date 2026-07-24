@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useRef, useEffect } from "react";
 import { callGemini, dataUrlToImageBlock } from "../lib/gemini";
-import { storage } from "../lib/storage";
-import { simpleHash } from "../lib/auth";
+import { supabase } from "../lib/supabase";
 import { LEVELS, RELATIONS, getLocalRoast } from "../lib/roasts";
 import { TRANSLATIONS, LANGUAGES } from "../lib/i18n";
 import { COUNTRIES, NAV_ITEMS } from "../lib/constants";
@@ -293,71 +292,87 @@ export function AppProvider({ children }) {
     }
   }, [points, rewardShown]);
 
-  // ---- Account / auth logic ----
-  // Uses window.storage: accounts are shared (so the same username/password
-  // can log in from any session), the "which account am I" pointer is personal.
+  // ---- Account / auth logic (Supabase) ----
+  // Supabase Auth handles password hashing, sessions, and email verification
+  // server-side — the "profiles" table (see supabase/schema.sql) holds the
+  // app-specific data (points, roast count, etc.) linked to each auth user.
+
+  const loadProfile = async (userId) => {
+    const { data, error } = await supabase.from("profiles").select("*").eq("id", userId).single();
+    if (error || !data) return null;
+    return data;
+  };
+
+  const applyProfile = (profile) => {
+    setAccount({
+      id: profile.id,
+      username: profile.username,
+      email: profile.email || "",
+      country: profile.country || "",
+      profilePic: profile.profile_pic || null,
+      createdAt: profile.created_at,
+    });
+    setPoints(profile.points || 0);
+    setRoastCount(profile.roast_count || 0);
+    setBestScore(profile.best_score || 0);
+    setUsedSavage(!!profile.used_savage);
+  };
+
+  // restore session on load, and stay in sync with login/logout in other tabs
   useEffect(() => {
+    let cancelled = false;
+
     (async () => {
-      try {
-        const session = await storage.get("session", false);
-        if (session?.value) {
-          const uname = JSON.parse(session.value).username;
-          const acc = await storage.get(`account:${uname}`, true);
-          if (acc?.value) {
-            const data = JSON.parse(acc.value);
-            skipNextSyncRef.current = true;
-            setAccount({ username: data.username, email: data.email || "", country: data.country || "", passwordHash: data.passwordHash, profilePic: data.profilePic || null, createdAt: data.createdAt });
-            setPoints(data.points || 0);
-            setRoastCount(data.roastCount || 0);
-            setBestScore(data.bestScore || 0);
-            setUsedSavage(!!data.usedSavage);
-          }
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user && !cancelled) {
+        const profile = await loadProfile(session.user.id);
+        if (profile) {
+          skipNextSyncRef.current = true;
+          applyProfile(profile);
         }
-      } catch (e) {
-        // no saved session — that's fine, stay logged out
-      } finally {
-        setSessionChecked(true);
       }
+      if (!cancelled) setSessionChecked(true);
     })();
+
+    const { data: listener } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === "SIGNED_OUT") {
+        setAccount(null);
+        setPoints(0);
+        setRoastCount(0);
+        setBestScore(0);
+        setUsedSavage(false);
+        awardedChallengesRef.current = new Set();
+      }
+    });
+
+    return () => {
+      cancelled = true;
+      listener?.subscription?.unsubscribe();
+    };
   }, []);
 
-  // write-through: whenever stats change while logged in, persist to the account record
+  // write-through: whenever stats change while logged in, persist to the profile row
   useEffect(() => {
-    if (!account) return;
+    if (!account?.id) return;
     if (skipNextSyncRef.current) {
       skipNextSyncRef.current = false;
       return;
     }
     (async () => {
       try {
-        // preserve fields we don't keep in local state (like passwordHash)
-        let passwordHash = account.passwordHash;
-        if (!passwordHash) {
-          try {
-            const existing = await storage.get(`account:${account.username}`, true);
-            if (existing?.value) passwordHash = JSON.parse(existing.value).passwordHash;
-          } catch (e) {
-            /* ignore */
-          }
-        }
-        await storage.set(
-          `account:${account.username}`,
-          JSON.stringify({
-            username: account.username,
-            email: account.email || "",
+        await supabase
+          .from("profiles")
+          .update({
             country: account.country || "",
-            passwordHash,
-            profilePic: account.profilePic || null,
-            createdAt: account.createdAt,
+            profile_pic: account.profilePic || null,
             points,
-            roastCount,
-            bestScore,
-            usedSavage,
-          }),
-          true
-        );
+            roast_count: roastCount,
+            best_score: bestScore,
+            used_savage: usedSavage,
+          })
+          .eq("id", account.id);
       } catch (e) {
-        console.warn("RoastVerse: failed to sync account", e);
+        console.warn("RoastVerse: failed to sync profile", e);
       }
     })();
   }, [account, points, roastCount, bestScore, usedSavage]);
@@ -376,7 +391,9 @@ export function AppProvider({ children }) {
   };
 
   const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
   const normalizeUsername = (u) => u.trim().toLowerCase().replace(/[^a-z0-9_]/g, "");
+
   const normalizeEmail = (e) => e.trim().toLowerCase();
 
   const passwordStrength = (pw) => {
@@ -400,14 +417,9 @@ export function AppProvider({ children }) {
     setUsernameStatus("checking");
     const myCheck = ++usernameCheckRef.current;
     const timer = setTimeout(async () => {
-      try {
-        const existing = await storage.get(`account:${uname}`, true);
-        if (usernameCheckRef.current !== myCheck) return; // a newer check superseded this one
-        setUsernameStatus(existing?.value ? "taken" : "available");
-      } catch (e) {
-        if (usernameCheckRef.current !== myCheck) return;
-        setUsernameStatus("available"); // key doesn't exist — available
-      }
+      const { data } = await supabase.from("profiles").select("username").eq("username", uname).maybeSingle();
+      if (usernameCheckRef.current !== myCheck) return; // a newer check superseded this one
+      setUsernameStatus(data ? "taken" : "available");
     }, 400);
     return () => clearTimeout(timer);
   }, [authUsername, authMode, authOpen]);
@@ -418,56 +430,62 @@ export function AppProvider({ children }) {
     if (!authCountry) return setAuthError("Select your country.");
     if (uname.length < 3) return setAuthError("Username needs at least 3 characters.");
     if (usernameStatus === "taken") return setAuthError("That username is taken.");
-    if (authPassword.length < 4) return setAuthError("Password needs at least 4 characters.");
+    if (authPassword.length < 6) return setAuthError("Password needs at least 6 characters.");
+    if (!/[a-zA-Z]/.test(authPassword) || !/[0-9]/.test(authPassword)) {
+      return setAuthError("Password needs at least one letter and one number.");
+    }
     if (authPassword !== authConfirm) return setAuthError("Passwords don't match.");
     setAuthLoading(true);
     setAuthError("");
     try {
-      let taken = false;
-      try {
-        const existing = await storage.get(`account:${uname}`, true);
-        taken = !!existing?.value;
-      } catch (e) {
-        taken = false; // key doesn't exist — available
-      }
-      if (taken) {
+      const { data: existingUsername } = await supabase
+        .from("profiles")
+        .select("username")
+        .eq("username", uname)
+        .maybeSingle();
+      if (existingUsername) {
         setAuthLoading(false);
         setUsernameStatus("taken");
         return setAuthError("That username is taken.");
       }
-      const record = {
-        username: uname,
+
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email: authEmail.trim(),
-        country: authCountry,
-        passwordHash: simpleHash(authPassword),
-        profilePic: null,
-        createdAt: new Date().toISOString(),
-        points,
-        roastCount,
-        bestScore,
-        usedSavage,
-      };
-      await storage.set(`account:${uname}`, JSON.stringify(record), true);
-      await storage.set(`email:${normalizeEmail(authEmail)}`, uname, true);
-      await storage.set("session", JSON.stringify({ username: uname }), false);
-      skipNextSyncRef.current = true;
-      setAccount({
-        username: uname,
-        email: record.email,
-        country: record.country,
-        passwordHash: record.passwordHash,
-        profilePic: null,
-        createdAt: record.createdAt,
+        password: authPassword,
+        options: {
+          data: { username: uname, country: authCountry },
+        },
       });
+
+      if (signUpError) {
+        setAuthLoading(false);
+        if (signUpError.message?.toLowerCase().includes("already registered")) {
+          return setAuthError("An account with that email already exists.");
+        }
+        return setAuthError(signUpError.message || "Couldn't create your account — try again.");
+      }
+
+      // if email confirmation is required, there's no session yet — tell the
+      // person to check their inbox instead of pretending they're logged in
+      if (!signUpData.session) {
+        setAuthLoading(false);
+        setAuthSuccess(true);
+        showToast("Check your email to confirm your account, then log in.");
+        setTimeout(() => setAuthOpen(false), 1600);
+        return;
+      }
+
+      const profile = await loadProfile(signUpData.user.id);
+      skipNextSyncRef.current = true;
+      if (profile) applyProfile(profile);
       setAuthLoading(false);
       setAuthSuccess(true);
       showToast(`Welcome, ${uname}! Your points are now saved 🎉`);
       setTimeout(() => setAuthOpen(false), 1100);
-      return;
     } catch (e) {
       setAuthError("Couldn't create your account — try again.");
+      setAuthLoading(false);
     }
-    setAuthLoading(false);
   };
 
   const handleLogin = async () => {
@@ -476,57 +494,44 @@ export function AppProvider({ children }) {
     setAuthLoading(true);
     setAuthError("");
     try {
-      let uname = normalizeUsername(raw);
+      let email = raw;
 
-      if (raw.includes("@")) {
-        const emailLookup = await storage.get(`email:${normalizeEmail(raw)}`, true);
-        if (!emailLookup?.value) {
+      // if it looks like a username rather than an email, resolve it via the profiles table
+      if (!raw.includes("@")) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("email")
+          .eq("username", normalizeUsername(raw))
+          .maybeSingle();
+        if (!profile) {
           setAuthLoading(false);
-          return setAuthError("No account with that email.");
+          return setAuthError("No account with that username.");
         }
-        uname = emailLookup.value;
+        email = profile.email;
       }
 
-      const existing = await storage.get(`account:${uname}`, true);
-      if (!existing?.value) {
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password: authPassword });
+
+      if (error) {
         setAuthLoading(false);
-        return setAuthError(raw.includes("@") ? "No account with that email." : "No account with that username.");
+        return setAuthError(error.message?.toLowerCase().includes("invalid") ? "Wrong username/email or password." : error.message);
       }
-      const data = JSON.parse(existing.value);
-      if (data.passwordHash !== simpleHash(authPassword)) {
-        setAuthLoading(false);
-        return setAuthError("Wrong password.");
-      }
-      if (data.email) {
-        try {
-          const mapping = await storage.get(`email:${normalizeEmail(data.email)}`, true);
-          if (!mapping?.value) await storage.set(`email:${normalizeEmail(data.email)}`, uname, true);
-        } catch (e) {}
-      }
-      await storage.set("session", JSON.stringify({ username: uname }), false);
+
+      const profile = await loadProfile(data.user.id);
       skipNextSyncRef.current = true;
-      setAccount({ username: data.username, email: data.email , country: data.country , passwordHash: data.passwordHash, profilePic: data.profilePic || null, createdAt: data.createdAt });
-      setPoints(data.points || 0);
-      setRoastCount(data.roastCount || 0);
-      setBestScore(data.bestScore || 0);
-      setUsedSavage(!!data.usedSavage);
+      if (profile) applyProfile(profile);
       setAuthLoading(false);
       setAuthSuccess(true);
-      showToast(`Welcome back, ${uname}! 🔥`);
+      showToast(`Welcome back! 🔥`);
       setTimeout(() => setAuthOpen(false), 1100);
-      return;
     } catch (e) {
-      setAuthError("No account with that username.");
+      setAuthError("Something went wrong — try again.");
+      setAuthLoading(false);
     }
-    setAuthLoading(false);
   };
 
   const handleLogout = async () => {
-    try {
-      await storage.delete("session", false);
-    } catch (e) {
-      /* ignore */
-    }
+    await supabase.auth.signOut();
     setAccount(null);
     setPoints(0);
     setRoastCount(0);
@@ -539,10 +544,15 @@ export function AppProvider({ children }) {
   const handleDeleteAccount = async () => {
     if (!account) return;
     try {
-      await storage.delete(`account:${account.username}`, true);
-      await storage.delete("session", false);
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.access_token) {
+        await supabase.functions.invoke("delete-account", {
+          headers: { Authorization: `Bearer ${session.access_token}` },
+        });
+      }
+      await supabase.auth.signOut();
     } catch (e) {
-      /* ignore */
+      console.warn("RoastVerse: failed to delete account", e);
     }
     setAccount(null);
     setPoints(0);
@@ -569,6 +579,7 @@ export function AppProvider({ children }) {
       /* clipboard unavailable */
     }
   };
+
 
   const loadImage = (src) =>
     new Promise((resolve, reject) => {
