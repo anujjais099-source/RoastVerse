@@ -29,7 +29,7 @@ export default function RoastPage() {
           )}
 
           {(stage === "home" || stage === "form") && (
-            <div className="card-surface border c-border-border-10 rounded-3xl p-6 sm:p-7 shadow-xl shadow-[#7C3AED]/5">
+            <TiltCard glow className="tilt-glow card-surface border c-border-border-10 rounded-3xl p-6 sm:p-7 depth-shadow">
               <h2 className="font-display font-700 text-2xl mb-1 c-text-text-1">Roast your friend</h2>
               <p className="c-text-text-2 text-sm mb-6">Let the AI cook something savage 😈</p>
 
@@ -97,11 +97,11 @@ export default function RoastPage() {
               >
                 <Flame size={17} fill="white" /> Roast Now
               </button>
-            </div>
+            </TiltCard>
           )}
 
           {stage === "cooking" && (
-            <div className="card-surface border c-border-border-10 rounded-3xl p-10 flex flex-col items-center text-center shadow-xl shadow-[#7C3AED]/5">
+            <TiltCard glow className="tilt-glow card-surface border c-border-border-10 rounded-3xl p-10 depth-shadow flex flex-col items-center text-center">
               <div className="w-24 h-24 rounded-full flame-grad flex items-center justify-center floaty mb-6">
                 <Flame size={40} className="text-white pulse-slow" fill="white" />
               </div>
@@ -118,7 +118,7 @@ export default function RoastPage() {
                   <span className="w-4 h-4 rounded-full bg-[#FF4D8D]/70 flex-shrink-0 pulse-slow" /> Adding maximum savage power…
                 </div>
               </div>
-            </div>
+            </TiltCard>
           )}
 
           {stage === "result" && (

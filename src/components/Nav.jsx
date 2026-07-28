@@ -5,7 +5,7 @@ export default function Nav() {
   const { setDrawerOpen, goPage, points, account, openAuth, t } = useApp();
 
   return (
-      <nav className="sticky top-0 z-30 backdrop-blur-md c-bg-surface-a60 border-b c-border-border-10">
+      <nav className="sticky top-0 z-30 backdrop-blur-xl saturate-150 c-bg-surface-a60 border-b c-border-border-15">
         <div className="max-w-5xl mx-auto flex items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
             <button

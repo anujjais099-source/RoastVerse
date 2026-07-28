@@ -1,5 +1,6 @@
 import { Swords, Camera, Crown, RotateCcw } from "lucide-react";
 import { useApp } from "../context/AppContext";
+import TiltCard from "../components/TiltCard";
 
 export default function BattlePage() {
   const {
@@ -18,7 +19,7 @@ export default function BattlePage() {
             <p className="c-text-text-2 text-sm mb-6">Two names enter. One roast wins. 😈</p>
 
             {battleStage === "form" && (
-              <div className="card-surface border c-border-border-10 rounded-3xl p-6 shadow-xl shadow-[#7C3AED]/5 space-y-4">
+              <TiltCard glow className="tilt-glow card-surface border c-border-border-10 rounded-3xl p-6 depth-shadow space-y-4">
                 <div>
                   <label className="block text-xs font-600 c-text-text-2 mb-2">Fighter 1</label>
                   <div className="flex items-center gap-3 mb-2">
@@ -81,17 +82,17 @@ export default function BattlePage() {
                 >
                   <Swords size={17} /> Start Battle
                 </button>
-              </div>
+              </TiltCard>
             )}
 
             {battleStage === "cooking" && (
-              <div className="card-surface border c-border-border-10 rounded-3xl p-10 flex flex-col items-center text-center shadow-xl shadow-[#7C3AED]/5">
+              <TiltCard glow className="tilt-glow card-surface border c-border-border-10 rounded-3xl p-10 depth-shadow flex flex-col items-center text-center">
                 <div className="w-20 h-20 rounded-full flame-grad flex items-center justify-center floaty mb-5">
                   <Swords size={32} className="text-white" />
                 </div>
                 <h3 className="font-display font-700 text-lg c-text-text-1">Battle in progress…</h3>
                 <p className="c-text-text-2 text-sm mt-1">AI is loading both roasts 🔥</p>
-              </div>
+              </TiltCard>
             )}
 
             {battleStage === "result" && battleResult && (
@@ -100,7 +101,7 @@ export default function BattlePage() {
                   { n: battleName1, r: battleResult.r1, s: battleResult.s1, photo: battlePhoto1, src: battleResult.src1 },
                   { n: battleName2, r: battleResult.r2, s: battleResult.s2, photo: battlePhoto2, src: battleResult.src2 },
                 ].map((f, i) => (
-                  <div key={i} className="rounded-2xl overflow-hidden border c-border-border-10 shadow-lg">
+                  <TiltCard key={i} glow className="tilt-glow rounded-2xl overflow-hidden border c-border-border-10 depth-shadow">
                     <div className="flame-grad px-5 py-4 text-white relative flex items-start gap-3">
                       {battleResult.winner === f.n && (
                         <span className="absolute top-3 right-3 flex items-center gap-1 text-[10px] font-700 bg-white/20 px-2 py-1 rounded-full">
@@ -124,7 +125,7 @@ export default function BattlePage() {
                       <span className="text-xs c-text-text-2">Savage Score</span>
                       <span className="font-display font-700 text-lg c-text-text-1">{f.s}%</span>
                     </div>
-                  </div>
+                  </TiltCard>
                 ))}
                 {battleResult.winner === "tie" && (
                   <p className="text-center text-sm font-600 c-text-text-2">It's a tie — both equally savage 🤝</p>

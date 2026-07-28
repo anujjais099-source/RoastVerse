@@ -15,12 +15,12 @@ export default function ShareModal() {
             onClick={(e) => e.stopPropagation()}
             className="w-full max-w-sm c-bg-surface-solid rounded-3xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col"
           >
-            <div className="flex items-center justify-between px-5 py-4 border-b border-black/5">
+            <div className="flex items-center justify-between px-5 py-4 border-b c-border-border-10">
               <div>
                 <p className="font-display font-700 text-base c-text-text-1">Share Your Roast</p>
                 <p className="text-[11px] c-text-text-2-70">Let the world laugh 😄</p>
               </div>
-              <button onClick={() => setShareOpen(false)} className="w-8 h-8 rounded-full bg-black/5 hover:bg-black/10 flex items-center justify-center">
+              <button onClick={() => setShareOpen(false)} className="w-8 h-8 rounded-full hv-surface2 flex items-center justify-center">
                 <X size={16} className="c-text-text-1" />
               </button>
             </div>

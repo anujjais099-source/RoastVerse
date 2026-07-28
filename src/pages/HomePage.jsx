@@ -3,18 +3,10 @@ import { useApp } from "../context/AppContext";
 import TiltCard from "../components/TiltCard";
 
 export default function HomePage() {
-  const { parallax, t, goPage } = useApp();
+  const { t, goPage } = useApp();
 
   return (
-      <section className="relative grain">
-        <div
-          className="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-[#7C3AED]/20 blur-[100px] drift-1"
-          style={{ translate: `${parallax.x * -18}px ${parallax.y * -18}px`, transition: "translate 0.3s ease-out" }}
-        />
-        <div
-          className="absolute top-40 -right-10 w-72 h-72 rounded-full bg-[#FF4D8D]/20 blur-[100px] drift-2"
-          style={{ translate: `${parallax.x * 22}px ${parallax.y * 22}px`, transition: "translate 0.3s ease-out" }}
-        />
+      <section className="relative">
         <div className="max-w-5xl mx-auto px-6 pt-16 pb-20 relative">
           <div className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full c-bg-surface-a70 border border-[#FF4D8D]/20 text-[#C0268F] mb-6">
             <Sparkles size={13} /> AI POWERED

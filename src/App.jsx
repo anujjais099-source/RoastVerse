@@ -1,5 +1,6 @@
 import { Flame } from "lucide-react";
 import { AppProvider, useApp } from "./context/AppContext";
+import BackgroundLayers from "./components/BackgroundLayers";
 import Nav from "./components/Nav";
 import Drawer from "./components/Drawer";
 import Toasts from "./components/Toasts";
@@ -16,6 +17,7 @@ import LeaderboardPage from "./pages/LeaderboardPage";
 import RewardsPage from "./pages/RewardsPage";
 import ProfilePage from "./pages/ProfilePage";
 import SettingsPage from "./pages/SettingsPage";
+import { Analytics } from "@vercel/analytics/react";
 
 const PAGES = {
   home: HomePage,
@@ -38,7 +40,7 @@ function Shell() {
       onMouseMove={handlePagePointerMove}
       className="min-h-screen w-full c-text-text-1 font-[Manrope,sans-serif] overflow-x-hidden relative transition-colors duration-300"
     >
-      <div className="page-bg fixed inset-0 -z-10" />
+      <BackgroundLayers />
 
       {!sessionChecked && (
         <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center page-bg">
@@ -70,6 +72,7 @@ export default function App() {
   return (
     <AppProvider>
       <Shell />
+      <Analytics />
     </AppProvider>
   );
 }

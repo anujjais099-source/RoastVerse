@@ -4,51 +4,54 @@
 
 .font-display { font-family: 'Fredoka', sans-serif; }
 
+/* Glass-over-photo theme: the real background is the fire photo (BackgroundLayers),
+   so both themes stay dark underneath — "light" is a warmer/brighter frost, "dark" is
+   a deeper, moodier frost. Text stays light in both since it always sits over the photo. */
 [data-theme="light"] {
-  --bg-grad: radial-gradient(circle at 12% 8%, rgba(255,77,141,0.16), transparent 42%),
-    radial-gradient(circle at 88% 18%, rgba(124,58,237,0.18), transparent 45%),
-    radial-gradient(circle at 20% 85%, rgba(192,38,211,0.14), transparent 40%),
-    linear-gradient(180deg, #FFEFF6 0%, #FBEAF9 35%, #F1E6FB 70%, #EDE3FA 100%);
-  --surface: rgba(255,255,255,0.72);
-  --surface-solid: #ffffff;
-  --surface-solid-hover: #ffffff;
-  --surface-a60: rgba(255,255,255,0.6);
-  --surface-a70: rgba(255,255,255,0.7);
-  --surface2: #FDF0FA;
-  --surface2-60: rgba(253,240,250,0.6);
-  --surface2-70: rgba(253,240,250,0.7);
-  --text-1: #241533;
-  --text-2: #5B4B6B;
-  --text-2-40: rgba(91,75,107,0.4);
-  --text-2-50: rgba(91,75,107,0.5);
-  --text-2-60: rgba(91,75,107,0.6);
-  --text-2-70: rgba(91,75,107,0.7);
-  --text-2-80: rgba(91,75,107,0.8);
-  --border-10: rgba(124,58,237,0.1);
-  --border-15: rgba(124,58,237,0.15);
-  --border-20: rgba(124,58,237,0.2);
-  --border-25: rgba(124,58,237,0.25);
+  --bg-grad: radial-gradient(circle at 15% 10%, rgba(255,120,60,0.20), transparent 45%),
+    radial-gradient(circle at 85% 20%, rgba(255,77,141,0.14), transparent 45%),
+    radial-gradient(circle at 30% 90%, rgba(124,58,237,0.16), transparent 45%),
+    linear-gradient(180deg, #150B08 0%, #1F0E09 40%, #180A10 70%, #100608 100%);
+  --surface: rgba(255,244,230,0.14);
+  --surface-solid: rgba(30,15,14,0.82);
+  --surface-solid-hover: rgba(40,21,19,0.88);
+  --surface-a60: rgba(255,244,230,0.18);
+  --surface-a70: rgba(255,244,230,0.24);
+  --surface2: rgba(255,244,230,0.10);
+  --surface2-60: rgba(255,244,230,0.14);
+  --surface2-70: rgba(255,244,230,0.18);
+  --text-1: #FFF8F2;
+  --text-2: rgba(255,238,224,0.80);
+  --text-2-40: rgba(255,238,224,0.40);
+  --text-2-50: rgba(255,238,224,0.50);
+  --text-2-60: rgba(255,238,224,0.60);
+  --text-2-70: rgba(255,238,224,0.70);
+  --text-2-80: rgba(255,238,224,0.82);
+  --border-10: rgba(255,244,230,0.14);
+  --border-15: rgba(255,244,230,0.20);
+  --border-20: rgba(255,244,230,0.26);
+  --border-25: rgba(255,244,230,0.32);
 }
 [data-theme="dark"] {
-  --bg-grad: radial-gradient(circle at 12% 8%, rgba(255,77,141,0.14), transparent 42%),
-    radial-gradient(circle at 88% 18%, rgba(124,58,237,0.22), transparent 45%),
-    radial-gradient(circle at 20% 85%, rgba(192,38,211,0.14), transparent 40%),
-    linear-gradient(180deg, #17101F 0%, #1C1327 35%, #1A1224 70%, #150E1D 100%);
-  --surface: rgba(40,28,54,0.65);
-  --surface-solid: #241a30;
-  --surface-solid-hover: #2c2039;
-  --surface-a60: rgba(30,21,40,0.6);
-  --surface-a70: rgba(30,21,40,0.7);
-  --surface2: #2A1E38;
-  --surface2-60: rgba(42,30,56,0.6);
-  --surface2-70: rgba(42,30,56,0.7);
-  --text-1: #F3EAFB;
-  --text-2: #C3B3D9;
-  --text-2-40: rgba(195,179,217,0.4);
-  --text-2-50: rgba(195,179,217,0.5);
-  --text-2-60: rgba(195,179,217,0.6);
-  --text-2-70: rgba(195,179,217,0.7);
-  --text-2-80: rgba(195,179,217,0.8);
+  --bg-grad: radial-gradient(circle at 12% 8%, rgba(192,38,211,0.16), transparent 45%),
+    radial-gradient(circle at 88% 18%, rgba(124,58,237,0.20), transparent 45%),
+    radial-gradient(circle at 20% 85%, rgba(255,61,141,0.10), transparent 40%),
+    linear-gradient(180deg, #0A0508 0%, #0F070A 35%, #0C0509 70%, #080304 100%);
+  --surface: rgba(20,10,16,0.42);
+  --surface-solid: rgba(14,8,12,0.90);
+  --surface-solid-hover: rgba(22,13,19,0.94);
+  --surface-a60: rgba(16,8,14,0.50);
+  --surface-a70: rgba(16,8,14,0.62);
+  --surface2: rgba(255,255,255,0.05);
+  --surface2-60: rgba(30,16,24,0.5);
+  --surface2-70: rgba(30,16,24,0.62);
+  --text-1: #F7ECF3;
+  --text-2: rgba(232,212,226,0.74);
+  --text-2-40: rgba(232,212,226,0.40);
+  --text-2-50: rgba(232,212,226,0.50);
+  --text-2-60: rgba(232,212,226,0.60);
+  --text-2-70: rgba(232,212,226,0.70);
+  --text-2-80: rgba(232,212,226,0.82);
   --border-10: rgba(255,255,255,0.08);
   --border-15: rgba(255,255,255,0.12);
   --border-20: rgba(255,255,255,0.16);
@@ -58,10 +61,23 @@
 body { margin: 0; }
 
 .page-bg { background: var(--bg-grad); }
-.grain { background-image: radial-gradient(circle at 1px 1px, rgba(124,58,237,0.06) 1px, transparent 0); background-size: 22px 22px; }
+.grain { background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0); background-size: 22px 22px; }
 .glow-pink { box-shadow: 0 12px 34px -10px rgba(255,61,141,0.45); }
 .flame-grad { background: linear-gradient(135deg, #FF4D8D 0%, #C026D3 50%, #7C3AED 100%); }
-.card-surface { background: var(--surface); backdrop-filter: blur(6px); }
+.card-surface { background: var(--surface); backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); }
+
+/* movable fire-photo background layers (see BackgroundLayers.jsx) */
+.bg-photo {
+  background-image: url('/hero-bg.png');
+  background-size: cover;
+  background-position: center 60%;
+  transition: translate 0.6s cubic-bezier(0.22,1,0.36,1), rotate 0.6s cubic-bezier(0.22,1,0.36,1);
+  will-change: translate, rotate;
+}
+@keyframes bgBreathe { 0%,100% { transform: scale(1.06); } 50% { transform: scale(1.11); } }
+.bg-breathe { animation: bgBreathe 16s ease-in-out infinite; }
+.bg-wash { background: linear-gradient(180deg, rgba(5,2,4,0.55) 0%, rgba(5,2,4,0.12) 30%, rgba(5,2,4,0.18) 65%, rgba(5,2,4,0.6) 100%); }
+.parallax-drift { transition: translate 0.5s ease-out; will-change: translate; }
 @keyframes floaty { 0%,100%{ transform: translateY(0px) rotate(0deg);} 50%{ transform: translateY(-14px) rotate(3deg);} }
 .floaty { animation: floaty 6s ease-in-out infinite; }
 @keyframes pulseSlow { 0%,100%{opacity:.5} 50%{opacity:1} }
