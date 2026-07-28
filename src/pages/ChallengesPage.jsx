@@ -9,7 +9,7 @@ export default function ChallengesPage() {
           <div className="max-w-md mx-auto">
             <div className="flex items-center justify-between mb-1">
               <div className="flex items-center gap-2">
-                <Target size={20} className="text-[#FF4D8D]" />
+                <Target size={20} className="text-[#FF6A00]" />
                 <h2 className="font-display font-700 text-2xl c-text-text-1">Challenges</h2>
               </div>
               <span className="flex items-center gap-1.5 text-xs font-700 px-3 py-1.5 rounded-full flame-grad text-white">
@@ -22,7 +22,7 @@ export default function ChallengesPage() {
               {getChallenges().map((c) => {
                 const complete = c.done >= c.total;
                 return (
-                  <div key={c.id} className={`card-surface border rounded-2xl p-4 shadow-sm ${complete ? "border-[#FF4D8D]/30" : "c-border-border-10"}`}>
+                  <div key={c.id} className={`card-surface border rounded-2xl p-4 shadow-sm ${complete ? "border-[#FF6A00]/30" : "c-border-border-10"}`}>
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-sm font-600 c-text-text-1">{c.label}</span>
                       {complete ? (

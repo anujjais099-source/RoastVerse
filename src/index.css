@@ -9,8 +9,8 @@
    a deeper, moodier frost. Text stays light in both since it always sits over the photo. */
 [data-theme="light"] {
   --bg-grad: radial-gradient(circle at 15% 10%, rgba(255,120,60,0.20), transparent 45%),
-    radial-gradient(circle at 85% 20%, rgba(255,77,141,0.14), transparent 45%),
-    radial-gradient(circle at 30% 90%, rgba(124,58,237,0.16), transparent 45%),
+    radial-gradient(circle at 85% 20%, rgba(255,106,0,0.14), transparent 45%),
+    radial-gradient(circle at 30% 90%, rgba(185,28,28,0.16), transparent 45%),
     linear-gradient(180deg, #150B08 0%, #1F0E09 40%, #180A10 70%, #100608 100%);
   --surface: rgba(255,244,230,0.14);
   --surface-solid: rgba(30,15,14,0.82);
@@ -33,9 +33,9 @@
   --border-25: rgba(255,244,230,0.32);
 }
 [data-theme="dark"] {
-  --bg-grad: radial-gradient(circle at 12% 8%, rgba(192,38,211,0.16), transparent 45%),
-    radial-gradient(circle at 88% 18%, rgba(124,58,237,0.20), transparent 45%),
-    radial-gradient(circle at 20% 85%, rgba(255,61,141,0.10), transparent 40%),
+  --bg-grad: radial-gradient(circle at 12% 8%, rgba(255,61,31,0.16), transparent 45%),
+    radial-gradient(circle at 88% 18%, rgba(185,28,28,0.20), transparent 45%),
+    radial-gradient(circle at 20% 85%, rgba(255,106,0,0.10), transparent 40%),
     linear-gradient(180deg, #0A0508 0%, #0F070A 35%, #0C0509 70%, #080304 100%);
   --surface: rgba(20,10,16,0.42);
   --surface-solid: rgba(14,8,12,0.90);
@@ -62,21 +62,22 @@ body { margin: 0; }
 
 .page-bg { background: var(--bg-grad); }
 .grain { background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0); background-size: 22px 22px; }
-.glow-pink { box-shadow: 0 12px 34px -10px rgba(255,61,141,0.45); }
-.flame-grad { background: linear-gradient(135deg, #FF4D8D 0%, #C026D3 50%, #7C3AED 100%); }
+.glow-pink { box-shadow: 0 12px 34px -10px rgba(255,106,0,0.45); }
+.flame-grad { background: linear-gradient(135deg, #FF6A00 0%, #FF3D1F 50%, #B91C1C 100%); }
 .card-surface { background: var(--surface); backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); }
 
 /* movable fire-photo background layers (see BackgroundLayers.jsx) */
 .bg-photo {
-  background-image: url('/hero-bg.png');
+  background-image: url('/hero-bg.jpg');
   background-size: cover;
   background-position: center 60%;
+  filter: contrast(1.07) saturate(1.18) brightness(1.04);
   transition: translate 0.6s cubic-bezier(0.22,1,0.36,1), rotate 0.6s cubic-bezier(0.22,1,0.36,1);
   will-change: translate, rotate;
 }
-@keyframes bgBreathe { 0%,100% { transform: scale(1.06); } 50% { transform: scale(1.11); } }
-.bg-breathe { animation: bgBreathe 16s ease-in-out infinite; }
-.bg-wash { background: linear-gradient(180deg, rgba(5,2,4,0.55) 0%, rgba(5,2,4,0.12) 30%, rgba(5,2,4,0.18) 65%, rgba(5,2,4,0.6) 100%); }
+@keyframes bgBreathe { 0%,100% { transform: scale(1.02); } 50% { transform: scale(1.05); } }
+.bg-breathe { animation: bgBreathe 18s ease-in-out infinite; }
+.bg-wash { background: linear-gradient(180deg, rgba(5,2,4,0.38) 0%, rgba(5,2,4,0.05) 30%, rgba(5,2,4,0.10) 65%, rgba(5,2,4,0.42) 100%); }
 .parallax-drift { transition: translate 0.5s ease-out; will-change: translate; }
 @keyframes floaty { 0%,100%{ transform: translateY(0px) rotate(0deg);} 50%{ transform: translateY(-14px) rotate(3deg);} }
 .floaty { animation: floaty 6s ease-in-out infinite; }
@@ -132,7 +133,7 @@ body { margin: 0; }
   animation: shine 3.2s ease-in-out infinite;
 }
 
-.depth-shadow { box-shadow: 0 2px 4px rgba(124,58,237,0.08), 0 12px 24px -8px rgba(255,61,141,0.18), 0 24px 48px -16px rgba(124,58,237,0.16); }
+.depth-shadow { box-shadow: 0 2px 4px rgba(185,28,28,0.08), 0 12px 24px -8px rgba(255,106,0,0.18), 0 24px 48px -16px rgba(185,28,28,0.16); }
 
 @keyframes gradShift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 .grad-text-anim { background-size: 200% auto; animation: gradShift 4s ease-in-out infinite; }

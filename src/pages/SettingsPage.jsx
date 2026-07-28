@@ -9,7 +9,7 @@ export default function SettingsPage() {
         <section className="max-w-5xl mx-auto px-6 pt-10 pb-28">
           <div className="max-w-md mx-auto">
             <div className="flex items-center gap-2 mb-1">
-              <Settings size={20} className="text-[#FF4D8D]" />
+              <Settings size={20} className="text-[#FF6A00]" />
               <h2 className="font-display font-700 text-2xl c-text-text-1">Settings</h2>
             </div>
             <p className="c-text-text-2 text-sm mb-6">Make RoastVerse yours ⚙️</p>
@@ -21,7 +21,7 @@ export default function SettingsPage() {
                 </span>
                 <button
                   onClick={() => setDarkMode((d) => !d)}
-                  className={`w-11 h-6 rounded-full flex items-center px-0.5 transition ${darkMode ? "bg-[#7C3AED] justify-end" : "c-bg-border-25 justify-start"}`}
+                  className={`w-11 h-6 rounded-full flex items-center px-0.5 transition ${darkMode ? "bg-[#B91C1C] justify-end" : "c-bg-border-25 justify-start"}`}
                 >
                   <span className="w-5 h-5 rounded-full bg-white shadow" />
                 </button>
@@ -51,7 +51,7 @@ export default function SettingsPage() {
               </div>
               <div className="px-5 py-4 flex items-center justify-between">
                 <span className="text-sm font-600 c-text-text-1">Total Points</span>
-                <span className="text-sm font-700 text-[#FF4D8D]">{points.toLocaleString()} / 10,000</span>
+                <span className="text-sm font-700 text-[#FF6A00]">{points.toLocaleString()} / 10,000</span>
               </div>
             </div>
           </div>

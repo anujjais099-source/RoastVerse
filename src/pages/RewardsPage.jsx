@@ -9,7 +9,7 @@ export default function RewardsPage() {
         <section className="max-w-5xl mx-auto px-6 pt-10 pb-28">
           <div className="max-w-md mx-auto">
             <div className="flex items-center gap-2 mb-1">
-              <Gift size={20} className="text-[#FF4D8D]" />
+              <Gift size={20} className="text-[#FF6A00]" />
               <h2 className="font-display font-700 text-2xl c-text-text-1">Weekly Rewards</h2>
             </div>
             <p className="c-text-text-2 text-sm mb-6">Check in daily to unlock roast perks 🎁</p>
@@ -35,11 +35,11 @@ export default function RewardsPage() {
                         ? "flame-grad text-white border-transparent"
                         : locked
                         ? "c-border-border-10 card-surface opacity-50"
-                        : "c-border-border-15 card-surface hover:border-[#FF4D8D]/40"
+                        : "c-border-border-15 card-surface hover:border-[#FF6A00]/40"
                     }`}
                   >
                     <div className="flex items-center justify-between mb-3">
-                      <span className={claimed ? "text-white" : "text-[#FF4D8D]"}>{locked ? <Lock size={16} /> : r.icon}</span>
+                      <span className={claimed ? "text-white" : "text-[#FF6A00]"}>{locked ? <Lock size={16} /> : r.icon}</span>
                       {claimed && <Check size={14} />}
                     </div>
                     <p className={`text-xs font-600 ${claimed ? "text-white/85" : "c-text-text-2"}`}>{r.day}</p>

@@ -36,7 +36,7 @@ export default function LeaderboardPage() {
     <section className="max-w-5xl mx-auto px-6 pt-10 pb-28">
       <div className="max-w-md mx-auto">
         <div className="flex items-center gap-2 mb-1">
-          <Trophy size={20} className="text-[#FF4D8D]" />
+          <Trophy size={20} className="text-[#FF6A00]" />
           <h2 className="font-display font-700 text-2xl c-text-text-1">Leaderboard</h2>
         </div>
         <p className="c-text-text-2 text-sm mb-6">Top roasters, ranked by points 🏆</p>
@@ -56,7 +56,7 @@ export default function LeaderboardPage() {
                   key={u.username}
                   glow
                   className={`tilt-glow flex items-center gap-3 rounded-2xl px-4 py-3 border ${
-                    isYou ? "border-[#FF4D8D]/40 c-bg-surface2 depth-shadow" : "c-border-border-10 card-surface"
+                    isYou ? "border-[#FF6A00]/40 c-bg-surface2 depth-shadow" : "c-border-border-10 card-surface"
                   }`}
                 >
                   <span className="w-6 text-center font-display font-700 text-sm c-text-text-2">{MEDALS[i] || `#${i + 1}`}</span>
@@ -73,7 +73,7 @@ export default function LeaderboardPage() {
             })}
 
             {account && !youInTop10 && (
-              <TiltCard glow className="tilt-glow flex items-center gap-3 rounded-2xl px-4 py-3 border border-[#FF4D8D]/40 c-bg-surface2 depth-shadow mt-4">
+              <TiltCard glow className="tilt-glow flex items-center gap-3 rounded-2xl px-4 py-3 border border-[#FF6A00]/40 c-bg-surface2 depth-shadow mt-4">
                 <span className="w-6 text-center font-display font-700 text-sm c-text-text-2">—</span>
                 <span className="w-9 h-9 rounded-full flame-grad flex items-center justify-center text-white font-display font-700 text-sm">
                   {account.username.charAt(0).toUpperCase()}

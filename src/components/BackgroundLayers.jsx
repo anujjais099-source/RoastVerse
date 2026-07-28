@@ -11,7 +11,7 @@ export default function BackgroundLayers() {
       <div className="absolute inset-0 page-bg" />
 
       <div
-        className="absolute -inset-[8%] bg-photo bg-breathe"
+        className="absolute -inset-[3%] bg-photo bg-breathe"
         style={{
           translate: `${parallax.x * -22}px ${parallax.y * -16}px`,
           rotate: `${parallax.x * 1.1}deg`,
@@ -21,15 +21,15 @@ export default function BackgroundLayers() {
       <div className="absolute inset-0 bg-wash" />
 
       <div
-        className="absolute w-[34rem] h-[34rem] -top-32 -left-24 rounded-full bg-[#7C3AED]/25 blur-[110px] drift-1 parallax-drift"
+        className="absolute w-[26rem] h-[26rem] -top-32 -left-24 rounded-full bg-[#B91C1C]/14 blur-[110px] drift-1 parallax-drift"
         style={{ translate: `${parallax.x * 55}px ${parallax.y * 40}px` }}
       />
       <div
-        className="absolute w-[30rem] h-[30rem] -bottom-28 -right-16 rounded-full bg-[#FF4D8D]/22 blur-[100px] drift-2 parallax-drift"
+        className="absolute w-[24rem] h-[24rem] -bottom-28 -right-16 rounded-full bg-[#FF6A00]/12 blur-[100px] drift-2 parallax-drift"
         style={{ translate: `${parallax.x * -65}px ${parallax.y * -45}px` }}
       />
 
-      <div className="absolute inset-0 grain opacity-30" />
+      <div className="absolute inset-0 grain opacity-10" />
     </div>
   );
 }

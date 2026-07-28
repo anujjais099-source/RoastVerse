@@ -37,10 +37,10 @@ export default function Drawer() {
                     key={item.key}
                     onClick={() => goPage(item.key)}
                     className={`w-full flex items-center gap-3 px-5 py-3 text-sm font-600 transition ${
-                      active ? "c-bg-surface2 text-[#E11D74]" : "c-text-text-1 hv-surface2"
+                      active ? "c-bg-surface2 text-[#FF3B3B]" : "c-text-text-1 hv-surface2"
                     }`}
                   >
-                    <Icon size={17} className={active ? "text-[#FF4D8D]" : "c-text-text-2"} />
+                    <Icon size={17} className={active ? "text-[#FF6A00]" : "c-text-text-2"} />
                     {t(item.labelKey)}
                   </button>
                 );
@@ -69,7 +69,7 @@ export default function Drawer() {
                 </span>
                 <button
                   onClick={() => setDarkMode((d) => !d)}
-                  className={`w-11 h-6 rounded-full flex items-center px-0.5 transition ${darkMode ? "bg-[#7C3AED] justify-end" : "c-bg-border-25 justify-start"}`}
+                  className={`w-11 h-6 rounded-full flex items-center px-0.5 transition ${darkMode ? "bg-[#B91C1C] justify-end" : "c-bg-border-25 justify-start"}`}
                 >
                   <span className="w-5 h-5 rounded-full bg-white shadow" />
                 </button>

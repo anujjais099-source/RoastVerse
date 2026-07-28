@@ -13,7 +13,7 @@ export default function BattlePage() {
         <section className="max-w-5xl mx-auto px-6 pt-10 pb-28">
           <div className="max-w-md mx-auto">
             <div className="flex items-center gap-2 mb-1">
-              <Swords size={20} className="text-[#FF4D8D]" />
+              <Swords size={20} className="text-[#FF6A00]" />
               <h2 className="font-display font-700 text-2xl c-text-text-1">Roast Battle</h2>
             </div>
             <p className="c-text-text-2 text-sm mb-6">Two names enter. One roast wins. 😈</p>
@@ -25,7 +25,7 @@ export default function BattlePage() {
                   <div className="flex items-center gap-3 mb-2">
                     <label
                       htmlFor="battle-photo-1"
-                      className="w-14 h-14 rounded-2xl border-2 border-dashed c-border-border-25 hover:border-[#FF4D8D]/60 flex items-center justify-center overflow-hidden c-bg-surface2 cursor-pointer flex-shrink-0 transition"
+                      className="w-14 h-14 rounded-2xl border-2 border-dashed c-border-border-25 hover:border-[#FF6A00]/60 flex items-center justify-center overflow-hidden c-bg-surface2 cursor-pointer flex-shrink-0 transition"
                     >
                       {battlePhoto1 ? (
                         <img src={battlePhoto1} alt="" className="w-full h-full object-cover" />
@@ -43,7 +43,7 @@ export default function BattlePage() {
                         if (file) processPhotoFile(file, setBattlePhoto1);
                       }}
                     />
-                    <input value={battleName1} onChange={(e) => setBattleName1(e.target.value)} placeholder="Enter name" className="flex-1 c-bg-surface-solid border c-border-border-15 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#FF4D8D]/60 c-text-text-1" />
+                    <input value={battleName1} onChange={(e) => setBattleName1(e.target.value)} placeholder="Enter name" className="flex-1 c-bg-surface-solid border c-border-border-15 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#FF6A00]/60 c-text-text-1" />
                   </div>
                 </div>
                 <div className="flex items-center justify-center">
@@ -54,7 +54,7 @@ export default function BattlePage() {
                   <div className="flex items-center gap-3">
                     <label
                       htmlFor="battle-photo-2"
-                      className="w-14 h-14 rounded-2xl border-2 border-dashed c-border-border-25 hover:border-[#FF4D8D]/60 flex items-center justify-center overflow-hidden c-bg-surface2 cursor-pointer flex-shrink-0 transition"
+                      className="w-14 h-14 rounded-2xl border-2 border-dashed c-border-border-25 hover:border-[#FF6A00]/60 flex items-center justify-center overflow-hidden c-bg-surface2 cursor-pointer flex-shrink-0 transition"
                     >
                       {battlePhoto2 ? (
                         <img src={battlePhoto2} alt="" className="w-full h-full object-cover" />
@@ -72,7 +72,7 @@ export default function BattlePage() {
                         if (file) processPhotoFile(file, setBattlePhoto2);
                       }}
                     />
-                    <input value={battleName2} onChange={(e) => setBattleName2(e.target.value)} placeholder="Enter name" className="flex-1 c-bg-surface-solid border c-border-border-15 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#FF4D8D]/60 c-text-text-1" />
+                    <input value={battleName2} onChange={(e) => setBattleName2(e.target.value)} placeholder="Enter name" className="flex-1 c-bg-surface-solid border c-border-border-15 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#FF6A00]/60 c-text-text-1" />
                   </div>
                 </div>
                 <button

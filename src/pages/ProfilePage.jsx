@@ -12,12 +12,12 @@ export default function ProfilePage() {
         <section className="max-w-5xl mx-auto px-6 pt-10 pb-28">
           <div className="max-w-md mx-auto">
             <div className="flex items-center gap-2 mb-6">
-              <User size={20} className="text-[#FF4D8D]" />
+              <User size={20} className="text-[#FF6A00]" />
               <h2 className="font-display font-700 text-2xl c-text-text-1">Profile</h2>
             </div>
 
             {!account ? (
-              <div className="card-surface border c-border-border-10 rounded-3xl p-8 text-center shadow-xl shadow-[#7C3AED]/5">
+              <div className="card-surface border c-border-border-10 rounded-3xl p-8 text-center shadow-xl shadow-[#B91C1C]/5">
                 <div className="w-16 h-16 rounded-full flame-grad flex items-center justify-center mx-auto mb-4">
                   <User size={26} className="text-white" />
                 </div>

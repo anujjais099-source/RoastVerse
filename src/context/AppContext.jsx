@@ -652,18 +652,29 @@ export function AppProvider({ children }) {
     const ctx = canvas.getContext("2d");
 
     const bgGrad = ctx.createLinearGradient(0, 0, W, H);
-    bgGrad.addColorStop(0, "#FFEFF6");
-    bgGrad.addColorStop(0.5, "#FBEAF9");
-    bgGrad.addColorStop(1, "#EDE3FA");
+    bgGrad.addColorStop(0, "#150B08");
+    bgGrad.addColorStop(0.5, "#1F0E09");
+    bgGrad.addColorStop(1, "#0A0508");
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, W, H);
 
+    try {
+      const fireImg = await loadImage("/hero-bg.jpg");
+      const scale = Math.max(W / fireImg.width, H / fireImg.height);
+      const iw = fireImg.width * scale, ih = fireImg.height * scale;
+      ctx.drawImage(fireImg, (W - iw) / 2, (H - ih) / 2, iw, ih);
+      ctx.fillStyle = "rgba(8,4,6,0.42)";
+      ctx.fillRect(0, 0, W, H);
+    } catch (e) {
+      /* fire photo unavailable — flat gradient above is still fine */
+    }
+
     ctx.globalAlpha = 0.22;
-    ctx.fillStyle = "#7C3AED";
+    ctx.fillStyle = "#B91C1C";
     ctx.beginPath();
     ctx.arc(90, 160, 260, 0, Math.PI * 2);
     ctx.fill();
-    ctx.fillStyle = "#FF4D8D";
+    ctx.fillStyle = "#FF6A00";
     ctx.beginPath();
     ctx.arc(W - 90, H - 200, 280, 0, Math.PI * 2);
     ctx.fill();
@@ -671,7 +682,7 @@ export function AppProvider({ children }) {
 
     // top brand mark
     ctx.textAlign = "center";
-    ctx.fillStyle = "#241533";
+    ctx.fillStyle = "#FFF8F2";
     ctx.font = "700 46px Fredoka, sans-serif";
     ctx.fillText("🔥 RoastVerse", W / 2, 150);
 
@@ -685,12 +696,12 @@ export function AppProvider({ children }) {
     ctx.clip();
 
     const headerGrad = ctx.createLinearGradient(cardX, cardY, cardX + cardW, cardY + headerH);
-    headerGrad.addColorStop(0, "#FF4D8D");
-    headerGrad.addColorStop(0.5, "#C026D3");
-    headerGrad.addColorStop(1, "#7C3AED");
+    headerGrad.addColorStop(0, "#FF6A00");
+    headerGrad.addColorStop(0.5, "#FF3D1F");
+    headerGrad.addColorStop(1, "#B91C1C");
     ctx.fillStyle = headerGrad;
     ctx.fillRect(cardX, cardY, cardW, headerH);
-    ctx.fillStyle = "rgba(255,255,255,0.94)";
+    ctx.fillStyle = "rgba(18,10,14,0.88)";
     ctx.fillRect(cardX, cardY + headerH, cardW, cardH - headerH);
 
     const avR = 72, avX = cardX + cardW / 2, avY = cardY + 110;
@@ -739,26 +750,26 @@ export function AppProvider({ children }) {
     wrapText(ctx, `"${roast}"`, cardX + cardW / 2, avY + avR + 135, cardW - 150, 48);
 
     const scoreY = cardY + headerH + 85;
-    ctx.fillStyle = "#5B4B6B";
+    ctx.fillStyle = "rgba(255,238,224,0.75)";
     ctx.font = "600 24px Manrope, sans-serif";
     ctx.fillText("Friendship Score", cardX + cardW / 2, scoreY);
 
-    ctx.fillStyle = "#241533";
+    ctx.fillStyle = "#FFF8F2";
     ctx.font = "700 76px Fredoka, sans-serif";
     ctx.fillText(`${score}%`, cardX + cardW / 2, scoreY + 80);
 
     const barW = cardW - 140, barH = 16, barX = cardX + 70, barY = scoreY + 115;
-    ctx.fillStyle = "rgba(124,58,237,0.12)";
+    ctx.fillStyle = "rgba(255,255,255,0.14)";
     roundRect(ctx, barX, barY, barW, barH, 8);
     ctx.fill();
     const fillGrad = ctx.createLinearGradient(barX, 0, barX + barW, 0);
-    fillGrad.addColorStop(0, "#FF4D8D");
-    fillGrad.addColorStop(1, "#7C3AED");
+    fillGrad.addColorStop(0, "#FF6A00");
+    fillGrad.addColorStop(1, "#B91C1C");
     ctx.fillStyle = fillGrad;
     roundRect(ctx, barX, barY, barW * (score / 100), barH, 8);
     ctx.fill();
 
-    ctx.fillStyle = "#C0268F";
+    ctx.fillStyle = "#FF7FB0";
     ctx.font = "600 24px Manrope, sans-serif";
     ctx.fillText("Strong bond 🤝", cardX + cardW / 2, barY + 58);
 
@@ -766,11 +777,11 @@ export function AppProvider({ children }) {
 
     roundRect(ctx, cardX, cardY, cardW, cardH, 44);
     ctx.lineWidth = 2;
-    ctx.strokeStyle = "rgba(124,58,237,0.15)";
+    ctx.strokeStyle = "rgba(210,175,255,0.25)";
     ctx.stroke();
 
     ctx.textAlign = "center";
-    ctx.fillStyle = "#5B4B6B";
+    ctx.fillStyle = "rgba(255,238,224,0.65)";
     ctx.font = "600 32px Manrope, sans-serif";
     ctx.fillText("#RoastVerse — Roast responsibly", W / 2, cardY + cardH + 90);
 

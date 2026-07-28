@@ -21,12 +21,12 @@ export default function Nav() {
                   <Flame size={18} className="text-white" fill="white" />
                 </div>
               </div>
-              <span className="font-display font-700 text-lg tracking-tight">Roast<span className="text-[#FF4D8D]">Verse</span></span>
+              <span className="font-display font-700 text-lg tracking-tight">Roast<span className="text-[#FF6A00]">Verse</span></span>
             </button>
           </div>
           <div className="flex items-center gap-2">
             <button onClick={() => goPage("challenges")} className="hidden sm:flex items-center gap-1.5 text-xs font-700 px-3 py-2 rounded-full c-bg-surface2 c-text-text-1">
-              <Gem size={13} className="text-[#7C3AED]" /> {points.toLocaleString()}
+              <Gem size={13} className="text-[#B91C1C]" /> {points.toLocaleString()}
             </button>
             {account ? (
               <button onClick={() => goPage("profile")} className="w-9 h-9 rounded-full overflow-hidden flame-grad flex items-center justify-center border-2 border-white/40 flex-shrink-0">
@@ -37,7 +37,7 @@ export default function Nav() {
                 )}
               </button>
             ) : (
-              <button onClick={() => openAuth("signup")} className="hidden sm:block text-xs font-700 px-3 py-2 rounded-full border border-[#FF4D8D]/30 c-text-text-1 hv-surface2 transition">
+              <button onClick={() => openAuth("signup")} className="hidden sm:block text-xs font-700 px-3 py-2 rounded-full border border-[#FF6A00]/30 c-text-text-1 hv-surface2 transition">
                 Sign Up
               </button>
             )}
