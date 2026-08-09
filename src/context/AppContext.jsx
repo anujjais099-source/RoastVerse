@@ -643,6 +643,41 @@ export function AppProvider({ children }) {
     ctx.closePath();
   };
 
+  const softCircle = (ctx, x, y, r, color, alpha) => {
+    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, `${color}${Math.round(alpha * 255).toString(16).padStart(2, "0")}`);
+    g.addColorStop(1, `${color}00`);
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+  };
+
+  const marble = (ctx, x, y, r, c1, c2, c3) => {
+    const g = ctx.createRadialGradient(x - r * 0.3, y - r * 0.3, r * 0.1, x, y, r);
+    g.addColorStop(0, c1);
+    g.addColorStop(0.6, c2);
+    g.addColorStop(1, c3);
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+  };
+
+  const purpleMarble = (ctx, x, y, r) => marble(ctx, x, y, r, "#E9D8FD", "#B794F6", "#8B5CF6");
+  const blueMarble = (ctx, x, y, r) => marble(ctx, x, y, r, "#DBEAFE", "#93C5FD", "#3B82F6");
+
+  const dotGrid = (ctx, x, y, cols, rows, gap, color) => {
+    ctx.fillStyle = color;
+    for (let i = 0; i < cols; i++) {
+      for (let j = 0; j < rows; j++) {
+        ctx.beginPath();
+        ctx.arc(x + i * gap, y + j * gap, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  };
+
   const generateCard = async () => {
     setGeneratingCard(true);
     const W = 1080, H = 1920;
@@ -652,59 +687,62 @@ export function AppProvider({ children }) {
     const ctx = canvas.getContext("2d");
 
     const bgGrad = ctx.createLinearGradient(0, 0, W, H);
-    bgGrad.addColorStop(0, "#150B08");
-    bgGrad.addColorStop(0.5, "#1F0E09");
-    bgGrad.addColorStop(1, "#0A0508");
+    bgGrad.addColorStop(0, "#F8F7FC");
+    bgGrad.addColorStop(0.5, "#F4F2F9");
+    bgGrad.addColorStop(1, "#F7F5FB");
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, W, H);
 
-    try {
-      const fireImg = await loadImage("/hero-bg.jpg");
-      const scale = Math.max(W / fireImg.width, H / fireImg.height);
-      const iw = fireImg.width * scale, ih = fireImg.height * scale;
-      ctx.drawImage(fireImg, (W - iw) / 2, (H - ih) / 2, iw, ih);
-      ctx.fillStyle = "rgba(8,4,6,0.42)";
-      ctx.fillRect(0, 0, W, H);
-    } catch (e) {
-      /* fire photo unavailable — flat gradient above is still fine */
-    }
+    // decorative background blobs (behind the card)
+    softCircle(ctx, 40, 60, 340, "#8B5CF6", 0.32);
+    softCircle(ctx, W - 30, H * 0.62, 260, "#3B82F6", 0.14);
+    purpleMarble(ctx, 305, 400, 26);
+    blueMarble(ctx, W - 155, 375, 22);
+    purpleMarble(ctx, 45, 445, 16);
 
-    ctx.globalAlpha = 0.22;
-    ctx.fillStyle = "#F97316";
-    ctx.beginPath();
-    ctx.arc(90, 160, 260, 0, Math.PI * 2);
+    const pad = 105;
+    const cardW = W - pad * 2, cardH = 1130;
+    const cardX = pad, cardY = 90;
+
+    ctx.save();
+    ctx.shadowColor = "rgba(139,92,246,0.28)";
+    ctx.shadowBlur = 90;
+    ctx.shadowOffsetY = 30;
+    roundRect(ctx, cardX, cardY, cardW, cardH, 44);
+    ctx.fillStyle = "#FFFFFF";
     ctx.fill();
-    ctx.fillStyle = "#8B5CF6";
-    ctx.beginPath();
-    ctx.arc(W - 90, H - 200, 280, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.globalAlpha = 1;
-
-    // top brand mark
-    ctx.textAlign = "center";
-    ctx.fillStyle = "#FFF8F2";
-    ctx.font = "700 46px Fredoka, sans-serif";
-    ctx.fillText("🔥 RoastVerse", W / 2, 150);
-
-    const pad = 100;
-    const cardW = W - pad * 2, cardH = 1120;
-    const cardX = pad, cardY = 240;
-    const headerH = cardH * 0.56;
+    ctx.restore();
 
     ctx.save();
     roundRect(ctx, cardX, cardY, cardW, cardH, 44);
     ctx.clip();
 
-    const headerGrad = ctx.createLinearGradient(cardX, cardY, cardX + cardW, cardY + headerH);
-    headerGrad.addColorStop(0, "#8B5CF6");
-    headerGrad.addColorStop(0.5, "#EC4899");
-    headerGrad.addColorStop(1, "#F97316");
-    ctx.fillStyle = headerGrad;
-    ctx.fillRect(cardX, cardY, cardW, headerH);
-    ctx.fillStyle = "rgba(18,10,14,0.88)";
-    ctx.fillRect(cardX, cardY + headerH, cardW, cardH - headerH);
+    // dotted grid decoration, top-right of the card
+    dotGrid(ctx, cardX + cardW - 210, cardY + 55, 6, 6, 26, "rgba(139,92,246,0.35)");
 
-    const avR = 72, avX = cardX + cardW / 2, avY = cardY + 110;
+    // brand mark
+    const logoR = 34, logoX = cardX + cardW / 2 - 150, logoY = cardY + 78;
+    roundRect(ctx, logoX - logoR, logoY - logoR, logoR * 2, logoR * 2, logoR * 0.34);
+    const logoGrad = ctx.createLinearGradient(logoX - logoR, logoY - logoR, logoX + logoR, logoY + logoR);
+    logoGrad.addColorStop(0, "#8B5CF6");
+    logoGrad.addColorStop(1, "#EC4899");
+    ctx.fillStyle = logoGrad;
+    ctx.fill();
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = "38px sans-serif";
+    ctx.fillText("🔥", logoX, logoY + 3);
+
+    ctx.textAlign = "left";
+    ctx.textBaseline = "alphabetic";
+    ctx.font = "700 44px Fredoka, sans-serif";
+    ctx.fillStyle = "#15121C";
+    const roastW = ctx.measureText("Roast").width;
+    ctx.fillText("Roast", logoX + logoR + 20, logoY + 14);
+    ctx.fillStyle = "#8B5CF6";
+    ctx.fillText("Verse", logoX + logoR + 20 + roastW, logoY + 14);
+
+    const avR = 72, avX = cardX + cardW / 2, avY = cardY + 210;
     ctx.save();
     ctx.beginPath();
     ctx.arc(avX, avY, avR, 0, Math.PI * 2);
@@ -717,22 +755,22 @@ export function AppProvider({ children }) {
         const iw = img.width * scale, ih = img.height * scale;
         ctx.drawImage(img, avX - iw / 2, avY - ih / 2, iw, ih);
       } catch (e) {
-        ctx.fillStyle = "rgba(255,255,255,0.25)";
+        ctx.fillStyle = "rgba(139,92,246,0.18)";
         ctx.fillRect(avX - avR, avY - avR, avR * 2, avR * 2);
       }
     } else {
-      ctx.fillStyle = "rgba(255,255,255,0.25)";
+      ctx.fillStyle = "rgba(139,92,246,0.18)";
       ctx.fillRect(avX - avR, avY - avR, avR * 2, avR * 2);
     }
     ctx.restore();
     ctx.lineWidth = 5;
-    ctx.strokeStyle = "rgba(255,255,255,0.65)";
+    ctx.strokeStyle = "rgba(139,92,246,0.45)";
     ctx.beginPath();
     ctx.arc(avX, avY, avR, 0, Math.PI * 2);
     ctx.stroke();
 
     if (!photoUrl) {
-      ctx.fillStyle = "white";
+      ctx.fillStyle = "#8B5CF6";
       ctx.font = "700 54px Fredoka, sans-serif";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
@@ -741,49 +779,74 @@ export function AppProvider({ children }) {
 
     ctx.textAlign = "center";
     ctx.textBaseline = "alphabetic";
-    ctx.fillStyle = "rgba(255,255,255,0.9)";
-    ctx.font = "600 26px Manrope, sans-serif";
-    ctx.fillText(`Roast for ${name}`, cardX + cardW / 2, avY + avR + 48);
+    ctx.font = "600 28px Manrope, sans-serif";
+    const prefix = "Roast for ";
+    const prefixW = ctx.measureText(prefix).width;
+    const nameW = (() => { ctx.font = "700 28px Manrope, sans-serif"; return ctx.measureText(name).width; })();
+    const lineY = avY + avR + 56;
+    ctx.font = "600 28px Manrope, sans-serif";
+    ctx.fillStyle = "#4B4558";
+    ctx.textAlign = "left";
+    ctx.fillText(prefix, cardX + cardW / 2 - (prefixW + nameW) / 2, lineY);
+    ctx.font = "700 28px Manrope, sans-serif";
+    ctx.fillStyle = "#8B5CF6";
+    ctx.fillText(name, cardX + cardW / 2 - (prefixW + nameW) / 2 + prefixW, lineY);
+    ctx.textAlign = "center";
 
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "600 38px Fredoka, sans-serif";
-    wrapText(ctx, `"${roast}"`, cardX + cardW / 2, avY + avR + 135, cardW - 150, 48);
+    ctx.fillStyle = "#15121C";
+    ctx.font = "700 42px Fredoka, sans-serif";
+    wrapText(ctx, `"${roast}"`, cardX + cardW / 2, avY + avR + 150, cardW - 150, 54);
 
-    const scoreY = cardY + headerH + 85;
-    ctx.fillStyle = "rgba(255,238,224,0.75)";
-    ctx.font = "600 24px Manrope, sans-serif";
+    const dividerY = cardY + 640;
+    ctx.strokeStyle = "rgba(21,18,28,0.10)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(cardX + 70, dividerY);
+    ctx.lineTo(cardX + cardW - 70, dividerY);
+    ctx.stroke();
+
+    const scoreY = dividerY + 85;
+    ctx.fillStyle = "#6B6478";
+    ctx.font = "600 28px Manrope, sans-serif";
     ctx.fillText("Friendship Score", cardX + cardW / 2, scoreY);
 
-    ctx.fillStyle = "#FFF8F2";
-    ctx.font = "700 76px Fredoka, sans-serif";
-    ctx.fillText(`${score}%`, cardX + cardW / 2, scoreY + 80);
+    ctx.font = "700 108px Fredoka, sans-serif";
+    const scoreText = `${score}%`;
+    const scoreTextW = ctx.measureText(scoreText).width;
+    const scoreGrad = ctx.createLinearGradient(
+      cardX + cardW / 2 - scoreTextW / 2, 0,
+      cardX + cardW / 2 + scoreTextW / 2, 0
+    );
+    scoreGrad.addColorStop(0, "#8B5CF6");
+    scoreGrad.addColorStop(1, "#3B82F6");
+    ctx.fillStyle = scoreGrad;
+    ctx.fillText(scoreText, cardX + cardW / 2, scoreY + 105);
 
-    const barW = cardW - 140, barH = 16, barX = cardX + 70, barY = scoreY + 115;
-    ctx.fillStyle = "rgba(255,255,255,0.14)";
-    roundRect(ctx, barX, barY, barW, barH, 8);
+    const barW = cardW - 140, barH = 18, barX = cardX + 70, barY = scoreY + 150;
+    ctx.fillStyle = "rgba(21,18,28,0.08)";
+    roundRect(ctx, barX, barY, barW, barH, 9);
     ctx.fill();
     const fillGrad = ctx.createLinearGradient(barX, 0, barX + barW, 0);
     fillGrad.addColorStop(0, "#8B5CF6");
-    fillGrad.addColorStop(1, "#F97316");
+    fillGrad.addColorStop(1, "#3B82F6");
     ctx.fillStyle = fillGrad;
-    roundRect(ctx, barX, barY, barW * (score / 100), barH, 8);
+    roundRect(ctx, barX, barY, barW * (score / 100), barH, 9);
     ctx.fill();
 
-    ctx.fillStyle = "#FF7FB0";
-    ctx.font = "600 24px Manrope, sans-serif";
-    ctx.fillText("Strong bond 🤝", cardX + cardW / 2, barY + 58);
+    ctx.fillStyle = "#8B5CF6";
+    ctx.font = "600 28px Manrope, sans-serif";
+    ctx.fillText("Strong bond 💜", cardX + cardW / 2, barY + 66);
 
     ctx.restore();
 
-    roundRect(ctx, cardX, cardY, cardW, cardH, 44);
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = "rgba(210,175,255,0.25)";
-    ctx.stroke();
+    // marbles overlapping the card edges (drawn in front)
+    purpleMarble(ctx, cardX + cardW - 25, cardY + cardH - 40, 68);
+    purpleMarble(ctx, cardX - 20, cardY + cardH - 175, 20);
 
     ctx.textAlign = "center";
-    ctx.fillStyle = "rgba(255,238,224,0.65)";
-    ctx.font = "600 32px Manrope, sans-serif";
-    ctx.fillText("#RoastVerse — Roast responsibly", W / 2, cardY + cardH + 90);
+    ctx.fillStyle = "#6B6478";
+    ctx.font = "600 30px Manrope, sans-serif";
+    ctx.fillText("#RoastVerse — Roast responsibly", W / 2, cardY + cardH + 70);
 
     return new Promise((resolve) => {
       canvas.toBlob((blob) => {
