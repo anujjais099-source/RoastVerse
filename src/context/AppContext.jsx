@@ -638,30 +638,35 @@ export function AppProvider({ children }) {
       return;
     }
     setFriendsLoading(true);
-    const { data, error } = await supabase
-      .from("friendships")
-      .select("id, requester_id, recipient_id, status, requester:requester_id(id, username, profile_pic), recipient:recipient_id(id, username, profile_pic)")
-      .or(`requester_id.eq.${account.id},recipient_id.eq.${account.id}`);
-    if (!error && data) {
-      const accepted = [];
-      const incoming = [];
-      const outgoing = new Set();
-      data.forEach((row) => {
-        const iAmRequester = row.requester_id === account.id;
-        const other = iAmRequester ? row.recipient : row.requester;
-        if (!other) return;
-        const otherEntry = { friendshipId: row.id, id: other.id, username: other.username, profilePic: other.profile_pic };
-        if (row.status === "accepted") accepted.push(otherEntry);
-        else if (row.status === "pending") {
-          if (iAmRequester) outgoing.add(row.recipient_id);
-          else incoming.push(otherEntry);
-        }
-      });
-      setFriends(accepted);
-      setIncomingRequests(incoming);
-      setOutgoingRequestIds(outgoing);
+    try {
+      const { data, error } = await supabase
+        .from("friendships")
+        .select("id, requester_id, recipient_id, status, requester:requester_id(id, username, profile_pic), recipient:recipient_id(id, username, profile_pic)")
+        .or(`requester_id.eq.${account.id},recipient_id.eq.${account.id}`);
+      if (!error && data) {
+        const accepted = [];
+        const incoming = [];
+        const outgoing = new Set();
+        data.forEach((row) => {
+          const iAmRequester = row.requester_id === account.id;
+          const other = iAmRequester ? row.recipient : row.requester;
+          if (!other) return;
+          const otherEntry = { friendshipId: row.id, id: other.id, username: other.username, profilePic: other.profile_pic };
+          if (row.status === "accepted") accepted.push(otherEntry);
+          else if (row.status === "pending") {
+            if (iAmRequester) outgoing.add(row.recipient_id);
+            else incoming.push(otherEntry);
+          }
+        });
+        setFriends(accepted);
+        setIncomingRequests(incoming);
+        setOutgoingRequestIds(outgoing);
+      }
+    } catch (e) {
+      console.warn("RoastVerse: failed to load friends", e);
+    } finally {
+      setFriendsLoading(false);
     }
-    setFriendsLoading(false);
   };
 
   useEffect(() => {
@@ -677,33 +682,43 @@ export function AppProvider({ children }) {
       return;
     }
     setSearching(true);
-    let req = supabase.from("profiles").select("id, username, profile_pic").ilike("username", `%${q}%`).limit(20);
-    if (account?.id) req = req.neq("id", account.id);
-    const { data } = await req;
-    setSearchResults(data || []);
-    setSearching(false);
+    try {
+      let req = supabase.from("profiles").select("id, username, profile_pic").ilike("username", `%${q}%`).limit(20);
+      if (account?.id) req = req.neq("id", account.id);
+      const { data } = await req;
+      setSearchResults(data || []);
+    } catch (e) {
+      console.warn("RoastVerse: search failed", e);
+      showToast("Search failed — check your connection");
+    } finally {
+      setSearching(false);
+    }
   };
 
   const sendFriendRequest = async (userId) => {
     if (!account?.id) return openAuth("signup");
-    const { error } = await supabase.from("friendships").insert({ requester_id: account.id, recipient_id: userId });
-    if (!error) {
+    try {
+      const { error } = await supabase.from("friendships").insert({ requester_id: account.id, recipient_id: userId });
+      if (error) throw error;
       setOutgoingRequestIds((s) => new Set(s).add(userId));
       showToast("Friend request sent");
-    } else {
+    } catch (e) {
+      console.warn("RoastVerse: failed to send friend request", e);
       showToast("Couldn't send request — try again");
     }
   };
 
   const respondToRequest = async (friendshipId, accept) => {
-    const { error } = await supabase
-      .from("friendships")
-      .update({ status: accept ? "accepted" : "declined" })
-      .eq("id", friendshipId);
-    if (!error) {
+    try {
+      const { error } = await supabase
+        .from("friendships")
+        .update({ status: accept ? "accepted" : "declined" })
+        .eq("id", friendshipId);
+      if (error) throw error;
       showToast(accept ? "Friend request accepted 🎉" : "Request declined");
       loadFriendsData();
-    } else {
+    } catch (e) {
+      console.warn("RoastVerse: failed to respond to friend request", e);
       showToast("Something went wrong — try again");
     }
   };
@@ -716,13 +731,19 @@ export function AppProvider({ children }) {
   const loadChatMessages = async () => {
     if (!account?.id || !chatFriend?.id) return;
     setChatLoading(true);
-    const { data } = await supabase
-      .from("messages")
-      .select("*")
-      .or(`and(sender_id.eq.${account.id},recipient_id.eq.${chatFriend.id}),and(sender_id.eq.${chatFriend.id},recipient_id.eq.${account.id})`)
-      .order("created_at", { ascending: true });
-    setChatMessages(data || []);
-    setChatLoading(false);
+    try {
+      const { data } = await supabase
+        .from("messages")
+        .select("*")
+        .or(`and(sender_id.eq.${account.id},recipient_id.eq.${chatFriend.id}),and(sender_id.eq.${chatFriend.id},recipient_id.eq.${account.id})`)
+        .order("created_at", { ascending: true });
+      setChatMessages(data || []);
+    } catch (e) {
+      console.warn("RoastVerse: failed to load messages", e);
+      showToast("Couldn't load messages — check your connection");
+    } finally {
+      setChatLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -748,8 +769,13 @@ export function AppProvider({ children }) {
     const text = chatInput.trim();
     if (!text || !account?.id || !chatFriend?.id) return;
     setChatInput("");
-    const { error } = await supabase.from("messages").insert({ sender_id: account.id, recipient_id: chatFriend.id, content: text });
-    if (error) showToast("Message failed to send");
+    try {
+      const { error } = await supabase.from("messages").insert({ sender_id: account.id, recipient_id: chatFriend.id, content: text });
+      if (error) throw error;
+    } catch (e) {
+      console.warn("RoastVerse: failed to send message", e);
+      showToast("Message failed to send");
+    }
   };
 
   const loadFeed = async () => {
@@ -758,15 +784,21 @@ export function AppProvider({ children }) {
       return;
     }
     setPostsLoading(true);
-    const ids = [account.id, ...friends.map((f) => f.id)];
-    const { data } = await supabase
-      .from("posts")
-      .select("*, author:author_id(username, profile_pic)")
-      .in("author_id", ids)
-      .order("created_at", { ascending: false })
-      .limit(50);
-    setPosts(data || []);
-    setPostsLoading(false);
+    try {
+      const ids = [account.id, ...friends.map((f) => f.id)];
+      const { data } = await supabase
+        .from("posts")
+        .select("*, author:author_id(username, profile_pic)")
+        .in("author_id", ids)
+        .order("created_at", { ascending: false })
+        .limit(50);
+      setPosts(data || []);
+    } catch (e) {
+      console.warn("RoastVerse: failed to load feed", e);
+      showToast("Couldn't load feed — check your connection");
+    } finally {
+      setPostsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -778,17 +810,20 @@ export function AppProvider({ children }) {
     if (!account?.id) return openAuth("signup");
     if (!postCaption.trim() && !postPhoto) return;
     setPosting(true);
-    const { error } = await supabase
-      .from("posts")
-      .insert({ author_id: account.id, caption: postCaption.trim() || null, photo: postPhoto || null });
-    setPosting(false);
-    if (!error) {
+    try {
+      const { error } = await supabase
+        .from("posts")
+        .insert({ author_id: account.id, caption: postCaption.trim() || null, photo: postPhoto || null });
+      if (error) throw error;
       setPostCaption("");
       setPostPhoto(null);
       showToast("Posted!");
       loadFeed();
-    } else {
+    } catch (e) {
+      console.warn("RoastVerse: failed to create post", e);
       showToast("Couldn't post — try again");
+    } finally {
+      setPosting(false);
     }
   };
 
@@ -798,22 +833,28 @@ export function AppProvider({ children }) {
       return;
     }
     setStoriesLoading(true);
-    const ids = [account.id, ...friends.map((f) => f.id)];
-    const { data } = await supabase
-      .from("stories")
-      .select("*, author:author_id(username, profile_pic)")
-      .in("author_id", ids)
-      .order("created_at", { ascending: true });
-    const groups = {};
-    (data || []).forEach((s) => {
-      if (!groups[s.author_id]) {
-        groups[s.author_id] = { authorId: s.author_id, username: s.author?.username, profilePic: s.author?.profile_pic, items: [] };
-      }
-      groups[s.author_id].items.push(s);
-    });
-    const ordered = Object.values(groups).sort((a, b) => (a.authorId === account.id ? -1 : b.authorId === account.id ? 1 : 0));
-    setStories(ordered);
-    setStoriesLoading(false);
+    try {
+      const ids = [account.id, ...friends.map((f) => f.id)];
+      const { data } = await supabase
+        .from("stories")
+        .select("*, author:author_id(username, profile_pic)")
+        .in("author_id", ids)
+        .order("created_at", { ascending: true });
+      const groups = {};
+      (data || []).forEach((s) => {
+        if (!groups[s.author_id]) {
+          groups[s.author_id] = { authorId: s.author_id, username: s.author?.username, profilePic: s.author?.profile_pic, items: [] };
+        }
+        groups[s.author_id].items.push(s);
+      });
+      const ordered = Object.values(groups).sort((a, b) => (a.authorId === account.id ? -1 : b.authorId === account.id ? 1 : 0));
+      setStories(ordered);
+    } catch (e) {
+      console.warn("RoastVerse: failed to load stories", e);
+      showToast("Couldn't load stories — check your connection");
+    } finally {
+      setStoriesLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -825,14 +866,17 @@ export function AppProvider({ children }) {
     if (!account?.id) return openAuth("signup");
     if (!storyPhoto) return;
     setPostingStory(true);
-    const { error } = await supabase.from("stories").insert({ author_id: account.id, photo: storyPhoto });
-    setPostingStory(false);
-    if (!error) {
-      setStoryPhoto(null);
+    try {
+      const { error } = await supabase.from("stories").insert({ author_id: account.id, photo: storyPhoto });
+      if (error) throw error;
       showToast("Story added — visible for 24h");
       loadStories();
-    } else {
+    } catch (e) {
+      console.warn("RoastVerse: failed to add story", e);
       showToast("Couldn't add story — try again");
+    } finally {
+      setStoryPhoto(null);
+      setPostingStory(false);
     }
   };
 
