@@ -65,6 +65,11 @@ body { margin: 0; }
 .glow-pink { box-shadow: 0 12px 34px -10px rgba(255,106,0,0.45); }
 .flame-grad { background: linear-gradient(135deg, #FF6A00 0%, #FF3D1F 50%, #B91C1C 100%); }
 .card-surface { background: var(--surface); backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); }
+.score-surface {
+  background: linear-gradient(180deg, rgba(255,106,0,0.16) 0%, rgba(255,61,31,0.07) 45%, var(--surface) 100%);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
 
 .parallax-drift { transition: translate 0.5s ease-out; will-change: translate; }
 @keyframes floaty { 0%,100%{ transform: translateY(0px) rotate(0deg);} 50%{ transform: translateY(-14px) rotate(3deg);} }

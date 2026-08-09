@@ -123,7 +123,7 @@ export default function BattlePage() {
                         <p className="text-[9px] text-white/55 mt-1.5">{f.src === "ai" ? "✨ AI generated" : "⚡ Offline"}</p>
                       </div>
                     </div>
-                    <div className="card-surface px-5 py-3 flex items-center justify-between">
+                    <div className="score-surface px-5 py-3 flex items-center justify-between">
                       <span className="flex items-center gap-1.5 text-xs c-text-text-2">
                         <Flame size={12} className="text-[#FF6A00]" fill="#FF6A00" /> Savage Score
                       </span>

@@ -138,7 +138,7 @@ export default function RoastPage() {
                     {roastSource === "ai" ? "✨ AI generated" : "⚡ Generated offline (AI unreachable)"}
                   </span>
                 </div>
-                <div className="card-surface px-7 py-6">
+                <div className="score-surface px-7 py-6">
                   <p className="flex items-center justify-center gap-1.5 text-center text-xs c-text-text-2 mb-2">
                     <Heart size={12} className="text-[#FF3D1F]" fill="#FF3D1F" /> Friendship Score
                   </p>
