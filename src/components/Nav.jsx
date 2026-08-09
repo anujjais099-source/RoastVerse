@@ -21,7 +21,7 @@ export default function Nav() {
                   <Flame size={18} className="text-white" fill="white" />
                 </div>
               </div>
-              <span className="font-display font-700 text-lg tracking-tight">Roast<span className="text-[#FF6A00]">Verse</span></span>
+              <span className="font-display font-700 text-lg tracking-tight">Roast<span className="text-[#8B5CF6]">Verse</span></span>
             </button>
           </div>
           <div className="flex items-center gap-2">
@@ -37,7 +37,7 @@ export default function Nav() {
                 )}
               </button>
             ) : (
-              <button onClick={() => openAuth("signup")} className="hidden sm:block text-xs font-700 px-3 py-2 rounded-full border border-[#FF6A00]/30 c-text-text-1 hv-surface2 transition">
+              <button onClick={() => openAuth("signup")} className="hidden sm:block text-xs font-700 px-3 py-2 rounded-full border border-[#8B5CF6]/30 c-text-text-1 hv-surface2 transition">
                 Sign Up
               </button>
             )}

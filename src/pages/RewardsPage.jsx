@@ -9,8 +9,8 @@ export default function RewardsPage() {
         <section className="max-w-5xl mx-auto px-6 pt-10 pb-28">
           <div className="max-w-md mx-auto">
             <div className="flex items-center gap-2.5 mb-1">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#7C3AED]/12">
-                <Gift size={18} className="text-[#7C3AED]" />
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#3B82F6]/12">
+                <Gift size={18} className="text-[#3B82F6]" />
               </div>
               <h2 className="font-display font-700 text-2xl c-text-text-1">Weekly Rewards</h2>
             </div>
@@ -18,13 +18,13 @@ export default function RewardsPage() {
 
             <div className="grid grid-cols-2 gap-3">
               {[
-                { day: "Day 1", reward: "Mild pack", icon: <Sparkles size={16} />, color: "#7C3AED" },
-                { day: "Day 2", reward: "1 Extra Roast", icon: <Flame size={16} />, color: "#FF6A00" },
+                { day: "Day 1", reward: "Mild pack", icon: <Sparkles size={16} />, color: "#3B82F6" },
+                { day: "Day 2", reward: "1 Extra Roast", icon: <Flame size={16} />, color: "#8B5CF6" },
                 { day: "Day 3", reward: "Savage unlock", icon: <Gem size={16} />, color: "#F59E0B" },
-                { day: "Day 4", reward: "Custom card", icon: <ImageIcon size={16} />, color: "#FF3D1F" },
-                { day: "Day 5", reward: "Battle boost", icon: <Swords size={16} />, color: "#7C3AED" },
+                { day: "Day 4", reward: "Custom card", icon: <ImageIcon size={16} />, color: "#EC4899" },
+                { day: "Day 5", reward: "Battle boost", icon: <Swords size={16} />, color: "#3B82F6" },
                 { day: "Day 6", reward: "Gold frame", icon: <Crown size={16} />, color: "#F59E0B" },
-                { day: "Day 7", reward: "Legendary roast", icon: <Trophy size={16} />, color: "#FF6A00" },
+                { day: "Day 7", reward: "Legendary roast", icon: <Trophy size={16} />, color: "#8B5CF6" },
               ].map((r, i) => {
                 const claimed = claimedDays.includes(i);
                 const locked = i > claimedDays.length;
@@ -37,7 +37,7 @@ export default function RewardsPage() {
                         ? "flame-grad text-white border-transparent"
                         : locked
                         ? "c-border-border-10 card-surface opacity-50"
-                        : "c-border-border-15 card-surface hover:border-[#FF6A00]/40"
+                        : "c-border-border-15 card-surface hover:border-[#8B5CF6]/40"
                     }`}
                   >
                     <div className="flex items-center justify-between mb-3">

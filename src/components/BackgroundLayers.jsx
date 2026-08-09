@@ -21,7 +21,7 @@ export default function BackgroundLayers() {
         style={{ translate: `${parallax.x * -30}px ${parallax.y * 22}px` }}
       />
       <div
-        className="absolute w-9 h-9 top-[38%] right-[26%] rounded-full orb-purple orb-float-a parallax-drift"
+        className="absolute w-9 h-9 top-[38%] right-[26%] rounded-full orb-blue orb-float-a parallax-drift"
         style={{ translate: `${parallax.x * 34}px ${parallax.y * -18}px`, animationDelay: "1.4s" }}
       />
       <div
@@ -29,12 +29,12 @@ export default function BackgroundLayers() {
         style={{ translate: `${parallax.x * -24}px ${parallax.y * 16}px` }}
       />
       <div
-        className="absolute w-6 h-6 bottom-[24%] left-[4%] rounded-full orb-purple orb-float-c parallax-drift"
+        className="absolute w-6 h-6 bottom-[24%] left-[4%] rounded-full orb-orange orb-float-c parallax-drift"
         style={{ translate: `${parallax.x * 26}px ${parallax.y * -20}px`, animationDelay: "2s" }}
       />
 
       {/* blinking colored dot grids */}
-      <div className="absolute w-40 h-32 top-[12%] right-[10%] dot-grid-purple dot-blink" />
+      <div className="absolute w-40 h-32 top-[12%] right-[10%] dot-grid-rainbow dot-blink" />
       <div className="absolute w-44 h-40 bottom-[4%] right-[1%] dot-grid-orange dot-blink-slow" />
 
       {darkMode && <div className="absolute inset-0 grain opacity-10" />}

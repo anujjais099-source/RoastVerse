@@ -4,14 +4,14 @@ import { NAV_ITEMS } from "../lib/constants";
 import { LANGUAGES } from "../lib/i18n";
 
 const NAV_COLORS = {
-  home: "#FF6A00",
-  roast: "#FF3D1F",
-  battle: "#FF3D1F",
-  challenges: "#FF6A00",
+  home: "#8B5CF6",
+  roast: "#EC4899",
+  battle: "#EC4899",
+  challenges: "#8B5CF6",
   leaderboard: "#F59E0B",
-  rewards: "#7C3AED",
-  profile: "#7C3AED",
-  settings: "#FF6A00",
+  rewards: "#3B82F6",
+  profile: "#3B82F6",
+  settings: "#8B5CF6",
 };
 
 export default function Drawer() {
@@ -84,7 +84,7 @@ export default function Drawer() {
                 </span>
                 <button
                   onClick={() => setDarkMode((d) => !d)}
-                  className={`w-11 h-6 rounded-full flex items-center px-0.5 transition ${darkMode ? "bg-[#B91C1C] justify-end" : "c-bg-border-25 justify-start"}`}
+                  className={`w-11 h-6 rounded-full flex items-center px-0.5 transition ${darkMode ? "bg-[#F97316] justify-end" : "c-bg-border-25 justify-start"}`}
                 >
                   <span className="w-5 h-5 rounded-full bg-white shadow" />
                 </button>

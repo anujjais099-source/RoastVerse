@@ -20,7 +20,7 @@ export default function RoastPage() {
                   <div
                     key={s}
                     className={`h-1.5 rounded-full transition-all ${
-                      stage === s ? "w-8 bg-[#FF6A00]" : "w-1.5 c-bg-border-20"
+                      stage === s ? "w-8 bg-[#8B5CF6]" : "w-1.5 c-bg-border-20"
                     }`}
                   />
                 ))}
@@ -35,7 +35,7 @@ export default function RoastPage() {
 
               <label
                 htmlFor="friend-photo-input"
-                className="w-full aspect-[16/9] rounded-2xl border-2 border-dashed c-border-border-25 hover:border-[#FF6A00]/60 flex flex-col items-center justify-center gap-3 mb-6 transition overflow-hidden c-bg-surface2-60 cursor-pointer"
+                className="w-full aspect-[16/9] rounded-2xl border-2 border-dashed c-border-border-25 hover:border-[#8B5CF6]/60 flex flex-col items-center justify-center gap-3 mb-6 transition overflow-hidden c-bg-surface2-60 cursor-pointer"
               >
                 {photoUrl ? (
                   <img src={photoUrl} alt="preview" className="w-full h-full object-cover" />
@@ -58,7 +58,7 @@ export default function RoastPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter friend name"
-                className="w-full c-bg-surface-solid border c-border-border-15 rounded-xl px-4 py-3 text-sm mb-5 outline-none focus:border-[#FF6A00]/60 placeholder:c-text-text-2-40 c-text-text-1"
+                className="w-full c-bg-surface-solid border c-border-border-15 rounded-xl px-4 py-3 text-sm mb-5 outline-none focus:border-[#8B5CF6]/60 placeholder:c-text-text-2-40 c-text-text-1"
               />
 
               <label className="block text-xs font-600 c-text-text-2 mb-2">Relationship</label>
@@ -66,7 +66,7 @@ export default function RoastPage() {
                 <select
                   value={relation}
                   onChange={(e) => setRelation(e.target.value)}
-                  className="w-full appearance-none c-bg-surface-solid border c-border-border-15 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#FF6A00]/60 c-text-text-1"
+                  className="w-full appearance-none c-bg-surface-solid border c-border-border-15 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#8B5CF6]/60 c-text-text-1"
                 >
                   {RELATIONS.map((r) => (
                     <option key={r} value={r}>{r}</option>
@@ -80,7 +80,7 @@ export default function RoastPage() {
                 <select
                   value={level}
                   onChange={(e) => setLevel(e.target.value)}
-                  className="w-full appearance-none c-bg-surface-solid border c-border-border-15 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#FF6A00]/60 c-text-text-1"
+                  className="w-full appearance-none c-bg-surface-solid border c-border-border-15 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#8B5CF6]/60 c-text-text-1"
                 >
                   {LEVELS.map((l) => (
                     <option key={l} value={l}>{l}</option>
@@ -109,13 +109,13 @@ export default function RoastPage() {
               <p className="c-text-text-2 text-sm mb-8">AI is preparing something spicy 🌶️</p>
               <div className="w-full space-y-3 text-left text-sm">
                 <div className="flex items-center gap-3 c-bg-surface2-70 rounded-xl px-4 py-3 c-text-text-1">
-                  <span className="w-4 h-4 rounded-full bg-[#FF6A00]/40 flex-shrink-0" /> Studying the photo…
+                  <span className="w-4 h-4 rounded-full bg-[#8B5CF6]/40 flex-shrink-0" /> Studying the photo…
                 </div>
                 <div className="flex items-center gap-3 c-bg-surface2-70 rounded-xl px-4 py-3 c-text-text-1">
-                  <span className="w-4 h-4 rounded-full bg-[#FF6A00]/40 flex-shrink-0" /> Finding the perfect roast…
+                  <span className="w-4 h-4 rounded-full bg-[#8B5CF6]/40 flex-shrink-0" /> Finding the perfect roast…
                 </div>
                 <div className="flex items-center gap-3 c-bg-surface2-70 rounded-xl px-4 py-3 c-text-text-1">
-                  <span className="w-4 h-4 rounded-full bg-[#FF6A00]/70 flex-shrink-0 pulse-slow" /> Adding maximum savage power…
+                  <span className="w-4 h-4 rounded-full bg-[#8B5CF6]/70 flex-shrink-0 pulse-slow" /> Adding maximum savage power…
                 </div>
               </div>
             </TiltCard>
@@ -140,13 +140,13 @@ export default function RoastPage() {
                 </div>
                 <div className="score-surface px-7 py-6">
                   <p className="flex items-center justify-center gap-1.5 text-center text-xs c-text-text-2 mb-2">
-                    <Heart size={12} className="text-[#FF3D1F]" fill="#FF3D1F" /> Friendship Score
+                    <Heart size={12} className="text-[#EC4899]" fill="#EC4899" /> Friendship Score
                   </p>
-                  <p className="text-center font-display font-700 text-3xl mb-3 bg-gradient-to-r from-[#FF6A00] via-[#FF3D1F] to-[#B91C1C] bg-clip-text text-transparent">{score}%</p>
+                  <p className="text-center font-display font-700 text-3xl mb-3 bg-gradient-to-r from-[#8B5CF6] via-[#EC4899] to-[#F97316] bg-clip-text text-transparent">{score}%</p>
                   <div className="w-full h-2 rounded-full c-bg-border-10 overflow-hidden mb-2">
                     <div className="h-full flame-grad" style={{ width: `${score}%` }} />
                   </div>
-                  <p className="text-center text-xs text-[#FF3D1F]">Strong bond 🤝</p>
+                  <p className="text-center text-xs text-[#EC4899]">Strong bond 🤝</p>
                 </div>
               </TiltCard>
 

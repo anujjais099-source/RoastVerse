@@ -61,7 +61,7 @@ export default function AuthModal() {
                         placeholder="you@gmail.com"
                         autoComplete="email"
                         autoCapitalize="none"
-                        className="w-full c-bg-surface2 border c-border-border-15 rounded-xl px-4 py-3 text-sm mb-4 outline-none focus:border-[#FF6A00]/60 c-text-text-1"
+                        className="w-full c-bg-surface2 border c-border-border-15 rounded-xl px-4 py-3 text-sm mb-4 outline-none focus:border-[#8B5CF6]/60 c-text-text-1"
                       />
 
                       <label className="block text-xs font-600 c-text-text-2 mb-2">Country</label>
@@ -69,7 +69,7 @@ export default function AuthModal() {
                         <select
                           value={authCountry}
                           onChange={(e) => setAuthCountry(e.target.value)}
-                          className="w-full appearance-none c-bg-surface2 border c-border-border-15 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#FF6A00]/60 c-text-text-1"
+                          className="w-full appearance-none c-bg-surface2 border c-border-border-15 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#8B5CF6]/60 c-text-text-1"
                         >
                           <option value="">Select country</option>
                           {COUNTRIES.map((c) => (
@@ -92,11 +92,11 @@ export default function AuthModal() {
                       autoComplete="username"
                       autoCapitalize="none"
                       autoCorrect="off"
-                      className="w-full c-bg-surface2 border c-border-border-15 rounded-xl px-4 py-3 pr-10 text-sm outline-none focus:border-[#FF6A00]/60 c-text-text-1"
+                      className="w-full c-bg-surface2 border c-border-border-15 rounded-xl px-4 py-3 pr-10 text-sm outline-none focus:border-[#8B5CF6]/60 c-text-text-1"
                     />
                     {authMode === "signup" && authUsername.length >= 3 && (
                       <span className="absolute right-3 top-1/2 -translate-y-1/2">
-                        {usernameStatus === "checking" && <span className="block w-4 h-4 rounded-full border-2 border-[#FF6A00]/30 border-t-[#FF6A00] spin" />}
+                        {usernameStatus === "checking" && <span className="block w-4 h-4 rounded-full border-2 border-[#8B5CF6]/30 border-t-[#8B5CF6] spin" />}
                         {usernameStatus === "available" && <Check size={16} className="text-green-500" />}
                         {usernameStatus === "taken" && <X size={16} className="text-red-500" />}
                       </span>
@@ -117,7 +117,7 @@ export default function AuthModal() {
                       onChange={(e) => setAuthPassword(e.target.value)}
                       placeholder="••••••••"
                       autoComplete={authMode === "signup" ? "new-password" : "current-password"}
-                      className="w-full c-bg-surface2 border c-border-border-15 rounded-xl px-4 py-3 pr-11 text-sm outline-none focus:border-[#FF6A00]/60 c-text-text-1"
+                      className="w-full c-bg-surface2 border c-border-border-15 rounded-xl px-4 py-3 pr-11 text-sm outline-none focus:border-[#8B5CF6]/60 c-text-text-1"
                     />
                     <button type="button" onClick={() => setAuthShowPw((s) => !s)} className="absolute right-3 top-1/2 -translate-y-1/2 c-text-text-2">
                       {authShowPw ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -141,7 +141,7 @@ export default function AuthModal() {
                         onChange={(e) => setAuthConfirm(e.target.value)}
                         placeholder="••••••••"
                         autoComplete="new-password"
-                        className="w-full c-bg-surface2 border c-border-border-15 rounded-xl px-4 py-3 text-sm mb-4 outline-none focus:border-[#FF6A00]/60 c-text-text-1"
+                        className="w-full c-bg-surface2 border c-border-border-15 rounded-xl px-4 py-3 text-sm mb-4 outline-none focus:border-[#8B5CF6]/60 c-text-text-1"
                       />
                     </>
                   )}

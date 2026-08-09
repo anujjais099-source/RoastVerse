@@ -9,8 +9,8 @@ export default function ChallengesPage() {
           <div className="max-w-md mx-auto">
             <div className="flex items-center justify-between mb-1">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#FF6A00]/12">
-                  <Target size={18} className="text-[#FF6A00]" />
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#8B5CF6]/12">
+                  <Target size={18} className="text-[#8B5CF6]" />
                 </div>
                 <h2 className="font-display font-700 text-2xl c-text-text-1">Challenges</h2>
               </div>
@@ -24,7 +24,7 @@ export default function ChallengesPage() {
               {getChallenges().map((c) => {
                 const complete = c.done >= c.total;
                 return (
-                  <div key={c.id} className={`card-surface border rounded-2xl p-4 shadow-sm ${complete ? "border-[#FF6A00]/30" : "c-border-border-10"}`}>
+                  <div key={c.id} className={`card-surface border rounded-2xl p-4 shadow-sm ${complete ? "border-[#8B5CF6]/30" : "c-border-border-10"}`}>
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-sm font-600 c-text-text-1">{c.label}</span>
                       {complete ? (

@@ -9,8 +9,8 @@ export default function SettingsPage() {
         <section className="max-w-5xl mx-auto px-6 pt-10 pb-28">
           <div className="max-w-md mx-auto">
             <div className="flex items-center gap-2.5 mb-1">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#FF6A00]/12">
-                <Settings size={18} className="text-[#FF6A00]" />
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#8B5CF6]/12">
+                <Settings size={18} className="text-[#8B5CF6]" />
               </div>
               <h2 className="font-display font-700 text-2xl c-text-text-1">Settings</h2>
             </div>
@@ -23,7 +23,7 @@ export default function SettingsPage() {
                 </span>
                 <button
                   onClick={() => setDarkMode((d) => !d)}
-                  className={`w-11 h-6 rounded-full flex items-center px-0.5 transition ${darkMode ? "bg-[#B91C1C] justify-end" : "c-bg-border-25 justify-start"}`}
+                  className={`w-11 h-6 rounded-full flex items-center px-0.5 transition ${darkMode ? "bg-[#F97316] justify-end" : "c-bg-border-25 justify-start"}`}
                 >
                   <span className="w-5 h-5 rounded-full bg-white shadow" />
                 </button>
@@ -53,7 +53,7 @@ export default function SettingsPage() {
               </div>
               <div className="px-5 py-4 flex items-center justify-between">
                 <span className="text-sm font-600 c-text-text-1">Total Points</span>
-                <span className="text-sm font-700 text-[#FF6A00]">{points.toLocaleString()} / 10,000</span>
+                <span className="text-sm font-700 text-[#8B5CF6]">{points.toLocaleString()} / 10,000</span>
               </div>
             </div>
           </div>

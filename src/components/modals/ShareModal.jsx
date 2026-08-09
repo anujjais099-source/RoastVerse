@@ -29,7 +29,7 @@ export default function ShareModal() {
               <div className="rounded-2xl overflow-hidden border c-border-border-10 c-bg-surface2 aspect-[9/16] max-h-[52vh] mx-auto flex items-center justify-center">
                 {generatingCard && (
                   <div className="flex flex-col items-center gap-2 c-text-text-2">
-                    <Flame size={26} className="text-[#FF6A00] pulse-slow" fill="#FF6A00" />
+                    <Flame size={26} className="text-[#8B5CF6] pulse-slow" fill="#8B5CF6" />
                     <span className="text-xs">Rendering card…</span>
                   </div>
                 )}
@@ -52,8 +52,8 @@ export default function ShareModal() {
                   <span className="text-[11px] font-600 c-text-text-1 text-center leading-tight">WhatsApp</span>
                 </button>
                 <button onClick={shareNative} className="flex flex-col items-center gap-1.5 group">
-                  <span className="w-12 h-12 rounded-full flex items-center justify-center bg-[#B91C1C]/10 border c-border-border-15 group-active:scale-95 transition">
-                    <Share2 size={18} className="text-[#B91C1C]" />
+                  <span className="w-12 h-12 rounded-full flex items-center justify-center bg-[#F97316]/10 border c-border-border-15 group-active:scale-95 transition">
+                    <Share2 size={18} className="text-[#F97316]" />
                   </span>
                   <span className="text-[11px] font-600 c-text-text-1 text-center leading-tight">More<br />Options</span>
                 </button>

@@ -670,11 +670,11 @@ export function AppProvider({ children }) {
     }
 
     ctx.globalAlpha = 0.22;
-    ctx.fillStyle = "#B91C1C";
+    ctx.fillStyle = "#F97316";
     ctx.beginPath();
     ctx.arc(90, 160, 260, 0, Math.PI * 2);
     ctx.fill();
-    ctx.fillStyle = "#FF6A00";
+    ctx.fillStyle = "#8B5CF6";
     ctx.beginPath();
     ctx.arc(W - 90, H - 200, 280, 0, Math.PI * 2);
     ctx.fill();
@@ -696,9 +696,9 @@ export function AppProvider({ children }) {
     ctx.clip();
 
     const headerGrad = ctx.createLinearGradient(cardX, cardY, cardX + cardW, cardY + headerH);
-    headerGrad.addColorStop(0, "#FF6A00");
-    headerGrad.addColorStop(0.5, "#FF3D1F");
-    headerGrad.addColorStop(1, "#B91C1C");
+    headerGrad.addColorStop(0, "#8B5CF6");
+    headerGrad.addColorStop(0.5, "#EC4899");
+    headerGrad.addColorStop(1, "#F97316");
     ctx.fillStyle = headerGrad;
     ctx.fillRect(cardX, cardY, cardW, headerH);
     ctx.fillStyle = "rgba(18,10,14,0.88)";
@@ -763,8 +763,8 @@ export function AppProvider({ children }) {
     roundRect(ctx, barX, barY, barW, barH, 8);
     ctx.fill();
     const fillGrad = ctx.createLinearGradient(barX, 0, barX + barW, 0);
-    fillGrad.addColorStop(0, "#FF6A00");
-    fillGrad.addColorStop(1, "#B91C1C");
+    fillGrad.addColorStop(0, "#8B5CF6");
+    fillGrad.addColorStop(1, "#F97316");
     ctx.fillStyle = fillGrad;
     roundRect(ctx, barX, barY, barW * (score / 100), barH, 8);
     ctx.fill();

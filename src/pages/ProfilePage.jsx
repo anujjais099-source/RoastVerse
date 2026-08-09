@@ -12,14 +12,14 @@ export default function ProfilePage() {
         <section className="max-w-5xl mx-auto px-6 pt-10 pb-28">
           <div className="max-w-md mx-auto">
             <div className="flex items-center gap-2.5 mb-6">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#7C3AED]/12">
-                <User size={18} className="text-[#7C3AED]" />
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#3B82F6]/12">
+                <User size={18} className="text-[#3B82F6]" />
               </div>
               <h2 className="font-display font-700 text-2xl c-text-text-1">Profile</h2>
             </div>
 
             {!account ? (
-              <div className="card-surface border c-border-border-10 rounded-3xl p-8 text-center shadow-xl shadow-[#B91C1C]/5">
+              <div className="card-surface border c-border-border-10 rounded-3xl p-8 text-center shadow-xl shadow-[#F97316]/5">
                 <div className="w-16 h-16 rounded-full flame-grad flex items-center justify-center mx-auto mb-4">
                   <User size={26} className="text-white" />
                 </div>
@@ -62,8 +62,8 @@ export default function ProfilePage() {
                   <div className="card-surface px-6 py-5 grid grid-cols-3 gap-2 text-center">
                     {[
                       { icon: <Gem size={14} className="text-[#F59E0B]" />, chip: "bg-[#F59E0B]/14", val: points.toLocaleString(), label: "Points" },
-                      { icon: <Flame size={14} className="text-[#FF6A00]" fill="#FF6A00" />, chip: "bg-[#FF6A00]/12", val: roastCount, label: "Roasts" },
-                      { icon: <Star size={14} className="text-[#7C3AED]" fill="#7C3AED" />, chip: "bg-[#7C3AED]/12", val: bestScore || "—", label: "Best Score" },
+                      { icon: <Flame size={14} className="text-[#8B5CF6]" fill="#8B5CF6" />, chip: "bg-[#8B5CF6]/12", val: roastCount, label: "Roasts" },
+                      { icon: <Star size={14} className="text-[#3B82F6]" fill="#3B82F6" />, chip: "bg-[#3B82F6]/12", val: bestScore || "—", label: "Best Score" },
                     ].map((s, i) => (
                       <div key={i}>
                         <div className={`w-7 h-7 rounded-lg flex items-center justify-center mx-auto mb-1.5 ${s.chip}`}>{s.icon}</div>
