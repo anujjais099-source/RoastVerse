@@ -37,7 +37,7 @@ export default function Drawer() {
                     key={item.key}
                     onClick={() => goPage(item.key)}
                     className={`w-full flex items-center gap-3 px-5 py-3 text-sm font-600 transition ${
-                      active ? "c-bg-surface2 text-[#FF3B3B]" : "c-text-text-1 hv-surface2"
+                      active ? "bg-[#FF6A00]/10 text-[#FF3D1F]" : "c-text-text-1 hv-surface2"
                     }`}
                   >
                     <Icon size={17} className={active ? "text-[#FF6A00]" : "c-text-text-2"} />

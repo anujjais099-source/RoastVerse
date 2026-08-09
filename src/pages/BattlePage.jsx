@@ -12,8 +12,10 @@ export default function BattlePage() {
   return (
         <section className="max-w-5xl mx-auto px-6 pt-10 pb-28">
           <div className="max-w-md mx-auto">
-            <div className="flex items-center gap-2 mb-1">
-              <Swords size={20} className="text-[#FF6A00]" />
+            <div className="flex items-center gap-2.5 mb-1">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#FF3D1F]/12">
+                <Swords size={18} className="text-[#FF3D1F]" />
+              </div>
               <h2 className="font-display font-700 text-2xl c-text-text-1">Roast Battle</h2>
             </div>
             <p className="c-text-text-2 text-sm mb-6">Two names enter. One roast wins. 😈</p>
@@ -123,7 +125,7 @@ export default function BattlePage() {
                     </div>
                     <div className="card-surface px-5 py-3 flex items-center justify-between">
                       <span className="text-xs c-text-text-2">Savage Score</span>
-                      <span className="font-display font-700 text-lg c-text-text-1">{f.s}%</span>
+                      <span className="font-display font-700 text-lg bg-gradient-to-r from-[#FF6A00] via-[#FF3D1F] to-[#B91C1C] bg-clip-text text-transparent">{f.s}%</span>
                     </div>
                   </TiltCard>
                 ))}

@@ -8,8 +8,10 @@ export default function ChallengesPage() {
         <section className="max-w-5xl mx-auto px-6 pt-10 pb-28">
           <div className="max-w-md mx-auto">
             <div className="flex items-center justify-between mb-1">
-              <div className="flex items-center gap-2">
-                <Target size={20} className="text-[#FF6A00]" />
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#FF6A00]/12">
+                  <Target size={18} className="text-[#FF6A00]" />
+                </div>
                 <h2 className="font-display font-700 text-2xl c-text-text-1">Challenges</h2>
               </div>
               <span className="flex items-center gap-1.5 text-xs font-700 px-3 py-1.5 rounded-full flame-grad text-white">

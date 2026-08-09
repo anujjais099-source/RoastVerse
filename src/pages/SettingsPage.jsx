@@ -8,8 +8,10 @@ export default function SettingsPage() {
   return (
         <section className="max-w-5xl mx-auto px-6 pt-10 pb-28">
           <div className="max-w-md mx-auto">
-            <div className="flex items-center gap-2 mb-1">
-              <Settings size={20} className="text-[#FF6A00]" />
+            <div className="flex items-center gap-2.5 mb-1">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#FF6A00]/12">
+                <Settings size={18} className="text-[#FF6A00]" />
+              </div>
               <h2 className="font-display font-700 text-2xl c-text-text-1">Settings</h2>
             </div>
             <p className="c-text-text-2 text-sm mb-6">Make RoastVerse yours ⚙️</p>

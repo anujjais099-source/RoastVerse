@@ -1,4 +1,4 @@
-import { User, Camera, Link as LinkIcon, LogOut, Trash2 } from "lucide-react";
+import { User, Camera, Link as LinkIcon, LogOut, Trash2, Gem, Flame, Star } from "lucide-react";
 import { useApp } from "../context/AppContext";
 import TiltCard from "../components/TiltCard";
 
@@ -11,8 +11,10 @@ export default function ProfilePage() {
   return (
         <section className="max-w-5xl mx-auto px-6 pt-10 pb-28">
           <div className="max-w-md mx-auto">
-            <div className="flex items-center gap-2 mb-6">
-              <User size={20} className="text-[#FF6A00]" />
+            <div className="flex items-center gap-2.5 mb-6">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#7C3AED]/12">
+                <User size={18} className="text-[#7C3AED]" />
+              </div>
               <h2 className="font-display font-700 text-2xl c-text-text-1">Profile</h2>
             </div>
 
@@ -58,18 +60,17 @@ export default function ProfilePage() {
                     <p className="text-xs text-white/70 mt-1">{account.country || ""}</p>
                   </div>
                   <div className="card-surface px-6 py-5 grid grid-cols-3 gap-2 text-center">
-                    <div>
-                      <p className="font-display font-700 text-lg c-text-text-1">{points.toLocaleString()}</p>
-                      <p className="text-[10px] c-text-text-2">Points</p>
-                    </div>
-                    <div>
-                      <p className="font-display font-700 text-lg c-text-text-1">{roastCount}</p>
-                      <p className="text-[10px] c-text-text-2">Roasts</p>
-                    </div>
-                    <div>
-                      <p className="font-display font-700 text-lg c-text-text-1">{bestScore || "—"}</p>
-                      <p className="text-[10px] c-text-text-2">Best Score</p>
-                    </div>
+                    {[
+                      { icon: <Gem size={14} className="text-[#F59E0B]" />, chip: "bg-[#F59E0B]/14", val: points.toLocaleString(), label: "Points" },
+                      { icon: <Flame size={14} className="text-[#FF6A00]" fill="#FF6A00" />, chip: "bg-[#FF6A00]/12", val: roastCount, label: "Roasts" },
+                      { icon: <Star size={14} className="text-[#7C3AED]" fill="#7C3AED" />, chip: "bg-[#7C3AED]/12", val: bestScore || "—", label: "Best Score" },
+                    ].map((s, i) => (
+                      <div key={i}>
+                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center mx-auto mb-1.5 ${s.chip}`}>{s.icon}</div>
+                        <p className="font-display font-700 text-lg c-text-text-1">{s.val}</p>
+                        <p className="text-[10px] c-text-text-2">{s.label}</p>
+                      </div>
+                    ))}
                   </div>
                 </TiltCard>
 

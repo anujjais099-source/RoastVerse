@@ -25,8 +25,8 @@ export default function Nav() {
             </button>
           </div>
           <div className="flex items-center gap-2">
-            <button onClick={() => goPage("challenges")} className="hidden sm:flex items-center gap-1.5 text-xs font-700 px-3 py-2 rounded-full c-bg-surface2 c-text-text-1">
-              <Gem size={13} className="text-[#B91C1C]" /> {points.toLocaleString()}
+            <button onClick={() => goPage("challenges")} className="hidden sm:flex items-center gap-1.5 text-xs font-700 px-3 py-2 rounded-full bg-[#F59E0B]/12 text-[#F59E0B]">
+              <Gem size={13} /> {points.toLocaleString()}
             </button>
             {account ? (
               <button onClick={() => goPage("profile")} className="w-9 h-9 rounded-full overflow-hidden flame-grad flex items-center justify-center border-2 border-white/40 flex-shrink-0">

@@ -8,8 +8,10 @@ export default function RewardsPage() {
   return (
         <section className="max-w-5xl mx-auto px-6 pt-10 pb-28">
           <div className="max-w-md mx-auto">
-            <div className="flex items-center gap-2 mb-1">
-              <Gift size={20} className="text-[#FF6A00]" />
+            <div className="flex items-center gap-2.5 mb-1">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#7C3AED]/12">
+                <Gift size={18} className="text-[#7C3AED]" />
+              </div>
               <h2 className="font-display font-700 text-2xl c-text-text-1">Weekly Rewards</h2>
             </div>
             <p className="c-text-text-2 text-sm mb-6">Check in daily to unlock roast perks 🎁</p>

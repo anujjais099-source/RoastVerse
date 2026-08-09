@@ -20,7 +20,7 @@ export default function RoastPage() {
                   <div
                     key={s}
                     className={`h-1.5 rounded-full transition-all ${
-                      stage === s ? "w-8 bg-[#FF6A00]" : i === 0 ? "w-1.5 bg-white/20" : "w-1.5 bg-white/20"
+                      stage === s ? "w-8 bg-[#FF6A00]" : "w-1.5 c-bg-border-20"
                     }`}
                   />
                 ))}
@@ -140,8 +140,8 @@ export default function RoastPage() {
                 </div>
                 <div className="card-surface px-7 py-6">
                   <p className="text-center text-xs c-text-text-2 mb-2">Friendship Score</p>
-                  <p className="text-center font-display font-700 text-3xl mb-3 c-text-text-1">{score}%</p>
-                  <div className="w-full h-2 rounded-full bg-[#B91C1C]/10 overflow-hidden mb-2">
+                  <p className="text-center font-display font-700 text-3xl mb-3 bg-gradient-to-r from-[#FF6A00] via-[#FF3D1F] to-[#B91C1C] bg-clip-text text-transparent">{score}%</p>
+                  <div className="w-full h-2 rounded-full c-bg-border-10 overflow-hidden mb-2">
                     <div className="h-full flame-grad" style={{ width: `${score}%` }} />
                   </div>
                   <p className="text-center text-xs text-[#FF3D1F]">Strong bond 🤝</p>
