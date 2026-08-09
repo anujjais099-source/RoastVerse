@@ -8,7 +8,7 @@ export default function HomePage() {
   return (
       <section className="relative">
         <div className="max-w-5xl mx-auto px-6 pt-16 pb-20 relative">
-          <div className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full c-bg-surface-a70 border border-[#FF6A00]/20 text-[#FF3D1F] mb-6">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full c-bg-surface-a70 border border-[#7C3AED]/25 text-[#7C3AED] mb-6">
             <Sparkles size={13} /> AI POWERED
           </div>
           <h1 className="font-display text-5xl sm:text-6xl leading-[1.05] font-700 tracking-tight max-w-2xl c-text-text-1">
@@ -32,13 +32,13 @@ export default function HomePage() {
           {/* stat cards */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-12 max-w-2xl">
             {[
-              { icon: <Flame size={16} className="text-[#FF6A00]" fill="#FF6A00" />, val: "12,842", label: "Roasts today" },
-              { icon: <Users size={16} className="text-[#B91C1C]" />, val: "4,281", label: "Online now" },
-              { icon: <Star size={16} className="text-[#F59E0B]" fill="#F59E0B" />, val: "4.9", label: "Avg rating" },
-              { icon: <Laugh size={16} className="text-[#FF3D1F]" />, val: "98%", label: "Laugh rate" },
+              { icon: <Flame size={16} className="text-[#FF6A00]" fill="#FF6A00" />, chip: "bg-[#FF6A00]/12", val: "12,842", label: "Roasts today" },
+              { icon: <Users size={16} className="text-[#7C3AED]" />, chip: "bg-[#7C3AED]/12", val: "4,281", label: "Online now" },
+              { icon: <Star size={16} className="text-[#F59E0B]" fill="#F59E0B" />, chip: "bg-[#F59E0B]/14", val: "4.9", label: "Avg rating" },
+              { icon: <Laugh size={16} className="text-[#FF3D1F]" />, chip: "bg-[#FF3D1F]/12", val: "98%", label: "Laugh rate" },
             ].map((s, i) => (
               <TiltCard key={i} glow className="tilt-glow rounded-2xl border c-border-border-10 card-surface px-4 py-3.5 depth-shadow">
-                <div className="flex items-center gap-2 mb-1.5">{s.icon}</div>
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center mb-2 ${s.chip}`}>{s.icon}</div>
                 <div className="font-display font-700 text-xl c-text-text-1">{s.val}</div>
                 <div className="text-[11px] c-text-text-2-80 mt-0.5">{s.label}</div>
               </TiltCard>

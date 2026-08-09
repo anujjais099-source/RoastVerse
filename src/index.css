@@ -4,33 +4,33 @@
 
 .font-display { font-family: 'Fredoka', sans-serif; }
 
-/* Glass-over-photo theme: the real background is the fire photo (BackgroundLayers),
-   so both themes stay dark underneath — "light" is a warmer/brighter frost, "dark" is
-   a deeper, moodier frost. Text stays light in both since it always sits over the photo. */
+/* Light theme: soft lavender/white background with floating gradient orbs
+   (see BackgroundLayers.jsx), dark text for real contrast on the light backdrop.
+   Dark theme keeps the older moody fire-photo look. */
 [data-theme="light"] {
-  --bg-grad: radial-gradient(circle at 15% 10%, rgba(255,120,60,0.20), transparent 45%),
-    radial-gradient(circle at 85% 20%, rgba(255,106,0,0.14), transparent 45%),
-    radial-gradient(circle at 30% 90%, rgba(185,28,28,0.16), transparent 45%),
-    linear-gradient(180deg, #150B08 0%, #1F0E09 40%, #180A10 70%, #100608 100%);
-  --surface: rgba(255,244,230,0.14);
-  --surface-solid: rgba(30,15,14,0.82);
-  --surface-solid-hover: rgba(40,21,19,0.88);
-  --surface-a60: rgba(255,244,230,0.18);
-  --surface-a70: rgba(255,244,230,0.24);
-  --surface2: rgba(255,244,230,0.10);
-  --surface2-60: rgba(255,244,230,0.14);
-  --surface2-70: rgba(255,244,230,0.18);
-  --text-1: #FFF8F2;
-  --text-2: rgba(255,238,224,0.80);
-  --text-2-40: rgba(255,238,224,0.40);
-  --text-2-50: rgba(255,238,224,0.50);
-  --text-2-60: rgba(255,238,224,0.60);
-  --text-2-70: rgba(255,238,224,0.70);
-  --text-2-80: rgba(255,238,224,0.82);
-  --border-10: rgba(255,244,230,0.14);
-  --border-15: rgba(255,244,230,0.20);
-  --border-20: rgba(255,244,230,0.26);
-  --border-25: rgba(255,244,230,0.32);
+  --bg-grad: radial-gradient(circle at 88% 8%, rgba(196,181,253,0.40), transparent 45%),
+    radial-gradient(circle at 72% 32%, rgba(216,180,254,0.28), transparent 42%),
+    radial-gradient(circle at 8% 92%, rgba(255,150,120,0.14), transparent 42%),
+    linear-gradient(180deg, #F8F7FC 0%, #F4F2F9 45%, #F7F5FB 100%);
+  --surface: rgba(255,255,255,0.68);
+  --surface-solid: rgba(255,255,255,0.97);
+  --surface-solid-hover: rgba(255,255,255,1);
+  --surface-a60: rgba(255,255,255,0.62);
+  --surface-a70: rgba(255,255,255,0.78);
+  --surface2: rgba(21,18,28,0.045);
+  --surface2-60: rgba(21,18,28,0.05);
+  --surface2-70: rgba(21,18,28,0.065);
+  --text-1: #15121C;
+  --text-2: rgba(21,18,28,0.62);
+  --text-2-40: rgba(21,18,28,0.35);
+  --text-2-50: rgba(21,18,28,0.45);
+  --text-2-60: rgba(21,18,28,0.55);
+  --text-2-70: rgba(21,18,28,0.65);
+  --text-2-80: rgba(21,18,28,0.75);
+  --border-10: rgba(21,18,28,0.07);
+  --border-15: rgba(21,18,28,0.09);
+  --border-20: rgba(21,18,28,0.12);
+  --border-25: rgba(21,18,28,0.16);
 }
 [data-theme="dark"] {
   --bg-grad: radial-gradient(circle at 12% 8%, rgba(255,61,31,0.16), transparent 45%),
@@ -124,6 +124,33 @@ body { margin: 0; }
 @keyframes drift2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-25px,25px) scale(1.05); } }
 .drift-1 { animation: drift1 9s ease-in-out infinite; }
 .drift-2 { animation: drift2 11s ease-in-out infinite; }
+
+/* --- light-theme decorative orbs + dots (see BackgroundLayers.jsx) --- */
+.orb-white {
+  background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.95), rgba(224,216,240,0.55) 55%, rgba(224,216,240,0.10) 100%);
+  box-shadow: 0 50px 100px -30px rgba(124,58,237,0.22), inset -14px -14px 40px rgba(150,120,200,0.14);
+}
+.orb-purple {
+  background: radial-gradient(circle at 34% 28%, #D6C4FF 0%, #9F75F5 55%, #7C3AED 100%);
+  box-shadow: 0 18px 40px -10px rgba(124,58,237,0.45);
+}
+.orb-pink {
+  background: radial-gradient(circle at 34% 28%, #FFC9D8 0%, #FF7A9B 60%, #FF3D6E 100%);
+  box-shadow: 0 12px 28px -8px rgba(255,61,110,0.45);
+}
+
+@keyframes orbFloatA { 0%,100% { transform: translate(0,0); } 50% { transform: translate(18px,-24px); } }
+@keyframes orbFloatB { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-16px,20px); } }
+@keyframes orbFloatC { 0%,100% { transform: translate(0,0); } 50% { transform: translate(14px,16px); } }
+.orb-float-a { animation: orbFloatA 8s ease-in-out infinite; will-change: transform; }
+.orb-float-b { animation: orbFloatB 10s ease-in-out infinite; will-change: transform; }
+.orb-float-c { animation: orbFloatC 7s ease-in-out infinite; will-change: transform; }
+
+.dot-grid-purple { background-image: radial-gradient(circle, rgba(124,58,237,0.45) 1.6px, transparent 1.6px); background-size: 20px 20px; }
+.dot-grid-orange { background-image: radial-gradient(circle, rgba(255,106,0,0.4) 1.6px, transparent 1.6px); background-size: 20px 20px; }
+@keyframes dotBlink { 0%,100% { opacity: 0.2; } 50% { opacity: 0.85; } }
+.dot-blink { animation: dotBlink 2.6s ease-in-out infinite; }
+.dot-blink-slow { animation: dotBlink 3.4s ease-in-out infinite 0.6s; }
 
 @keyframes shine { 0% { transform: translateX(-120%) skewX(-20deg); } 100% { transform: translateX(220%) skewX(-20deg); } }
 .shine-btn { position: relative; overflow: hidden; }
