@@ -1,10 +1,12 @@
-import { Flame, X, Home, Swords, Target, Trophy, Gift, Settings, User, ChevronDown, Moon, Sun } from "lucide-react";
+import { Flame, X, Home, Swords, Target, Trophy, Gift, Settings, User, ChevronDown, Moon, Sun, Image, UserPlus } from "lucide-react";
 import { useApp } from "../context/AppContext";
 import { NAV_ITEMS } from "../lib/constants";
 import { LANGUAGES } from "../lib/i18n";
 
 const NAV_COLORS = {
   home: "#8B5CF6",
+  feed: "#EC4899",
+  friends: "#3B82F6",
   roast: "#EC4899",
   battle: "#EC4899",
   challenges: "#8B5CF6",
@@ -41,7 +43,7 @@ export default function Drawer() {
 
             <div className="flex-1 overflow-y-auto py-3">
               {NAV_ITEMS.map((item) => {
-                const Icon = { home: Home, flame: Flame, swords: Swords, target: Target, trophy: Trophy, gift: Gift, settings: Settings, user: User }[item.icon];
+                const Icon = { home: Home, flame: Flame, swords: Swords, target: Target, trophy: Trophy, gift: Gift, settings: Settings, user: User, image: Image, userplus: UserPlus }[item.icon];
                 const color = NAV_COLORS[item.key];
                 const active = page === item.key;
                 return (

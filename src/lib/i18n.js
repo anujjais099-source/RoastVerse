@@ -6,6 +6,8 @@ export const TRANSLATIONS = {
     roastMe: "Roast Me",
     surpriseMe: "Surprise Me",
     navHome: "Home",
+    navFeed: "Feed",
+    navFriends: "Friends",
     navRoast: "Roast",
     navBattle: "Battle",
     navChallenges: "Challenges",

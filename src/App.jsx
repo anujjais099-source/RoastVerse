@@ -9,6 +9,7 @@ import ShareModal from "./components/modals/ShareModal";
 import RewardModal from "./components/modals/RewardModal";
 import AuthModal from "./components/modals/AuthModal";
 import DeleteConfirmModal from "./components/modals/DeleteConfirmModal";
+import StoryViewer from "./components/modals/StoryViewer";
 import HomePage from "./pages/HomePage";
 import RoastPage from "./pages/RoastPage";
 import BattlePage from "./pages/BattlePage";
@@ -17,6 +18,9 @@ import LeaderboardPage from "./pages/LeaderboardPage";
 import RewardsPage from "./pages/RewardsPage";
 import ProfilePage from "./pages/ProfilePage";
 import SettingsPage from "./pages/SettingsPage";
+import FriendsPage from "./pages/FriendsPage";
+import FeedPage from "./pages/FeedPage";
+import ChatPage from "./pages/ChatPage";
 import { Analytics } from "@vercel/analytics/react";
 
 const PAGES = {
@@ -28,6 +32,9 @@ const PAGES = {
   rewards: RewardsPage,
   profile: ProfilePage,
   settings: SettingsPage,
+  friends: FriendsPage,
+  feed: FeedPage,
+  chat: ChatPage,
 };
 
 function Shell() {
@@ -64,6 +71,7 @@ function Shell() {
       <ShareModal />
       <AuthModal />
       <DeleteConfirmModal />
+      <StoryViewer />
     </div>
   );
 }

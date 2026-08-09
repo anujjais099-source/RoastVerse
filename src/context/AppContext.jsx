@@ -603,6 +603,253 @@ export function AppProvider({ children }) {
   };
 
 
+  // ---- Social: search, friend requests, chat, posts, stories ----
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [searching, setSearching] = useState(false);
+  const [friends, setFriends] = useState([]); // [{ friendshipId, id, username, profilePic }]
+  const [incomingRequests, setIncomingRequests] = useState([]); // same shape, pending & addressed to me
+  const [outgoingRequestIds, setOutgoingRequestIds] = useState(new Set());
+  const [friendsLoading, setFriendsLoading] = useState(false);
+
+  const [chatFriend, setChatFriend] = useState(null); // { id, username, profilePic }
+  const [chatMessages, setChatMessages] = useState([]);
+  const [chatInput, setChatInput] = useState("");
+  const [chatLoading, setChatLoading] = useState(false);
+
+  const [posts, setPosts] = useState([]);
+  const [postsLoading, setPostsLoading] = useState(false);
+  const [postCaption, setPostCaption] = useState("");
+  const [postPhoto, setPostPhoto] = useState(null);
+  const [posting, setPosting] = useState(false);
+
+  const [stories, setStories] = useState([]); // grouped by author: [{ authorId, username, profilePic, items }]
+  const [storiesLoading, setStoriesLoading] = useState(false);
+  const [storyPhoto, setStoryPhoto] = useState(null);
+  const [postingStory, setPostingStory] = useState(false);
+  const [activeStoryGroup, setActiveStoryGroup] = useState(null);
+  const [activeStoryIndex, setActiveStoryIndex] = useState(0);
+
+  const loadFriendsData = async () => {
+    if (!account?.id) {
+      setFriends([]);
+      setIncomingRequests([]);
+      setOutgoingRequestIds(new Set());
+      return;
+    }
+    setFriendsLoading(true);
+    const { data, error } = await supabase
+      .from("friendships")
+      .select("id, requester_id, recipient_id, status, requester:requester_id(id, username, profile_pic), recipient:recipient_id(id, username, profile_pic)")
+      .or(`requester_id.eq.${account.id},recipient_id.eq.${account.id}`);
+    if (!error && data) {
+      const accepted = [];
+      const incoming = [];
+      const outgoing = new Set();
+      data.forEach((row) => {
+        const iAmRequester = row.requester_id === account.id;
+        const other = iAmRequester ? row.recipient : row.requester;
+        if (!other) return;
+        const otherEntry = { friendshipId: row.id, id: other.id, username: other.username, profilePic: other.profile_pic };
+        if (row.status === "accepted") accepted.push(otherEntry);
+        else if (row.status === "pending") {
+          if (iAmRequester) outgoing.add(row.recipient_id);
+          else incoming.push(otherEntry);
+        }
+      });
+      setFriends(accepted);
+      setIncomingRequests(incoming);
+      setOutgoingRequestIds(outgoing);
+    }
+    setFriendsLoading(false);
+  };
+
+  useEffect(() => {
+    loadFriendsData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account?.id]);
+
+  const searchUsers = async (query) => {
+    setSearchQuery(query);
+    const q = normalizeUsername(query);
+    if (q.length < 2) {
+      setSearchResults([]);
+      return;
+    }
+    setSearching(true);
+    let req = supabase.from("profiles").select("id, username, profile_pic").ilike("username", `%${q}%`).limit(20);
+    if (account?.id) req = req.neq("id", account.id);
+    const { data } = await req;
+    setSearchResults(data || []);
+    setSearching(false);
+  };
+
+  const sendFriendRequest = async (userId) => {
+    if (!account?.id) return openAuth("signup");
+    const { error } = await supabase.from("friendships").insert({ requester_id: account.id, recipient_id: userId });
+    if (!error) {
+      setOutgoingRequestIds((s) => new Set(s).add(userId));
+      showToast("Friend request sent");
+    } else {
+      showToast("Couldn't send request — try again");
+    }
+  };
+
+  const respondToRequest = async (friendshipId, accept) => {
+    const { error } = await supabase
+      .from("friendships")
+      .update({ status: accept ? "accepted" : "declined" })
+      .eq("id", friendshipId);
+    if (!error) {
+      showToast(accept ? "Friend request accepted 🎉" : "Request declined");
+      loadFriendsData();
+    } else {
+      showToast("Something went wrong — try again");
+    }
+  };
+
+  const openChat = (friend) => {
+    setChatFriend(friend);
+    goPage("chat");
+  };
+
+  const loadChatMessages = async () => {
+    if (!account?.id || !chatFriend?.id) return;
+    setChatLoading(true);
+    const { data } = await supabase
+      .from("messages")
+      .select("*")
+      .or(`and(sender_id.eq.${account.id},recipient_id.eq.${chatFriend.id}),and(sender_id.eq.${chatFriend.id},recipient_id.eq.${account.id})`)
+      .order("created_at", { ascending: true });
+    setChatMessages(data || []);
+    setChatLoading(false);
+  };
+
+  useEffect(() => {
+    if (!chatFriend?.id || !account?.id) return;
+    loadChatMessages();
+    const channel = supabase
+      .channel(`chat-${[account.id, chatFriend.id].sort().join("-")}`)
+      .on("postgres_changes", { event: "INSERT", schema: "public", table: "messages" }, (payload) => {
+        const m = payload.new;
+        const isThisConvo =
+          (m.sender_id === account.id && m.recipient_id === chatFriend.id) ||
+          (m.sender_id === chatFriend.id && m.recipient_id === account.id);
+        if (isThisConvo) setChatMessages((prev) => [...prev, m]);
+      })
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatFriend?.id, account?.id]);
+
+  const sendMessage = async () => {
+    const text = chatInput.trim();
+    if (!text || !account?.id || !chatFriend?.id) return;
+    setChatInput("");
+    const { error } = await supabase.from("messages").insert({ sender_id: account.id, recipient_id: chatFriend.id, content: text });
+    if (error) showToast("Message failed to send");
+  };
+
+  const loadFeed = async () => {
+    if (!account?.id) {
+      setPosts([]);
+      return;
+    }
+    setPostsLoading(true);
+    const ids = [account.id, ...friends.map((f) => f.id)];
+    const { data } = await supabase
+      .from("posts")
+      .select("*, author:author_id(username, profile_pic)")
+      .in("author_id", ids)
+      .order("created_at", { ascending: false })
+      .limit(50);
+    setPosts(data || []);
+    setPostsLoading(false);
+  };
+
+  useEffect(() => {
+    if (account?.id) loadFeed();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account?.id, friends.length]);
+
+  const createPost = async () => {
+    if (!account?.id) return openAuth("signup");
+    if (!postCaption.trim() && !postPhoto) return;
+    setPosting(true);
+    const { error } = await supabase
+      .from("posts")
+      .insert({ author_id: account.id, caption: postCaption.trim() || null, photo: postPhoto || null });
+    setPosting(false);
+    if (!error) {
+      setPostCaption("");
+      setPostPhoto(null);
+      showToast("Posted!");
+      loadFeed();
+    } else {
+      showToast("Couldn't post — try again");
+    }
+  };
+
+  const loadStories = async () => {
+    if (!account?.id) {
+      setStories([]);
+      return;
+    }
+    setStoriesLoading(true);
+    const ids = [account.id, ...friends.map((f) => f.id)];
+    const { data } = await supabase
+      .from("stories")
+      .select("*, author:author_id(username, profile_pic)")
+      .in("author_id", ids)
+      .order("created_at", { ascending: true });
+    const groups = {};
+    (data || []).forEach((s) => {
+      if (!groups[s.author_id]) {
+        groups[s.author_id] = { authorId: s.author_id, username: s.author?.username, profilePic: s.author?.profile_pic, items: [] };
+      }
+      groups[s.author_id].items.push(s);
+    });
+    const ordered = Object.values(groups).sort((a, b) => (a.authorId === account.id ? -1 : b.authorId === account.id ? 1 : 0));
+    setStories(ordered);
+    setStoriesLoading(false);
+  };
+
+  useEffect(() => {
+    if (account?.id) loadStories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account?.id, friends.length]);
+
+  const createStory = async () => {
+    if (!account?.id) return openAuth("signup");
+    if (!storyPhoto) return;
+    setPostingStory(true);
+    const { error } = await supabase.from("stories").insert({ author_id: account.id, photo: storyPhoto });
+    setPostingStory(false);
+    if (!error) {
+      setStoryPhoto(null);
+      showToast("Story added — visible for 24h");
+      loadStories();
+    } else {
+      showToast("Couldn't add story — try again");
+    }
+  };
+
+  const openStoryGroup = (group) => {
+    setActiveStoryGroup(group);
+    setActiveStoryIndex(0);
+  };
+  const closeStoryViewer = () => setActiveStoryGroup(null);
+  const nextStory = () => {
+    if (!activeStoryGroup) return;
+    if (activeStoryIndex < activeStoryGroup.items.length - 1) setActiveStoryIndex((i) => i + 1);
+    else closeStoryViewer();
+  };
+  const prevStory = () => {
+    if (activeStoryIndex > 0) setActiveStoryIndex((i) => i - 1);
+  };
+
   const loadImage = (src) =>
     new Promise((resolve, reject) => {
       const img = new Image();
@@ -937,6 +1184,18 @@ export function AppProvider({ children }) {
     openAuth, normalizeUsername, passwordStrength, isValidEmail,
     handleSignup, handleLogin, handleLogout, handleDeleteAccount,
     updateProfilePic, copyProfileLink,
+    // social: search, friend requests
+    searchQuery, searchResults, searching, searchUsers,
+    friends, incomingRequests, outgoingRequestIds, friendsLoading,
+    sendFriendRequest, respondToRequest,
+    // chat
+    chatFriend, setChatFriend, chatMessages, chatInput, setChatInput, chatLoading,
+    openChat, sendMessage,
+    // feed / posts
+    posts, postsLoading, postCaption, setPostCaption, postPhoto, setPostPhoto, posting, createPost, loadFeed,
+    // stories
+    stories, storiesLoading, storyPhoto, setStoryPhoto, postingStory, createStory,
+    activeStoryGroup, activeStoryIndex, openStoryGroup, closeStoryViewer, nextStory, prevStory,
     // shared constants exposed for convenience
     LEVELS, RELATIONS, COUNTRIES, NAV_ITEMS, LANGUAGES,
   };

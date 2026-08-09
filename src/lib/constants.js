@@ -11,6 +11,8 @@ export const COUNTRIES = [
 
 export const NAV_ITEMS = [
   { key: "home", labelKey: "navHome", icon: "home" },
+  { key: "feed", labelKey: "navFeed", icon: "image" },
+  { key: "friends", labelKey: "navFriends", icon: "userplus" },
   { key: "roast", labelKey: "navRoast", icon: "flame" },
   { key: "battle", labelKey: "navBattle", icon: "swords" },
   { key: "challenges", labelKey: "navChallenges", icon: "target" },
