@@ -1,4 +1,4 @@
-import { Camera, ChevronDown, Flame, Share2, RotateCcw } from "lucide-react";
+import { Camera, ChevronDown, Flame, Share2, RotateCcw, Heart } from "lucide-react";
 import { useApp } from "../context/AppContext";
 import TiltCard from "../components/TiltCard";
 import { LEVELS, RELATIONS } from "../lib/roasts";
@@ -134,12 +134,14 @@ export default function RoastPage() {
                   </div>
                   <p className="text-xs font-600 text-white/85 mb-2">Roast for {name}</p>
                   <p className="font-display font-600 text-lg leading-snug">"{roast}"</p>
-                  <p className="text-[10px] text-white/60 mt-3">
+                  <span className="inline-block text-[10px] bg-white/15 px-2.5 py-1 rounded-full mt-3">
                     {roastSource === "ai" ? "✨ AI generated" : "⚡ Generated offline (AI unreachable)"}
-                  </p>
+                  </span>
                 </div>
                 <div className="card-surface px-7 py-6">
-                  <p className="text-center text-xs c-text-text-2 mb-2">Friendship Score</p>
+                  <p className="flex items-center justify-center gap-1.5 text-center text-xs c-text-text-2 mb-2">
+                    <Heart size={12} className="text-[#FF3D1F]" fill="#FF3D1F" /> Friendship Score
+                  </p>
                   <p className="text-center font-display font-700 text-3xl mb-3 bg-gradient-to-r from-[#FF6A00] via-[#FF3D1F] to-[#B91C1C] bg-clip-text text-transparent">{score}%</p>
                   <div className="w-full h-2 rounded-full c-bg-border-10 overflow-hidden mb-2">
                     <div className="h-full flame-grad" style={{ width: `${score}%` }} />

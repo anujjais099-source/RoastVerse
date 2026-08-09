@@ -1,4 +1,4 @@
-import { Swords, Camera, Crown, RotateCcw } from "lucide-react";
+import { Swords, Camera, Crown, RotateCcw, Flame } from "lucide-react";
 import { useApp } from "../context/AppContext";
 import TiltCard from "../components/TiltCard";
 
@@ -124,7 +124,9 @@ export default function BattlePage() {
                       </div>
                     </div>
                     <div className="card-surface px-5 py-3 flex items-center justify-between">
-                      <span className="text-xs c-text-text-2">Savage Score</span>
+                      <span className="flex items-center gap-1.5 text-xs c-text-text-2">
+                        <Flame size={12} className="text-[#FF6A00]" fill="#FF6A00" /> Savage Score
+                      </span>
                       <span className="font-display font-700 text-lg bg-gradient-to-r from-[#FF6A00] via-[#FF3D1F] to-[#B91C1C] bg-clip-text text-transparent">{f.s}%</span>
                     </div>
                   </TiltCard>

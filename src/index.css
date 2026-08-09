@@ -33,9 +33,9 @@
   --border-25: rgba(21,18,28,0.16);
 }
 [data-theme="dark"] {
-  --bg-grad: radial-gradient(circle at 12% 8%, rgba(255,61,31,0.16), transparent 45%),
-    radial-gradient(circle at 88% 18%, rgba(185,28,28,0.20), transparent 45%),
-    radial-gradient(circle at 20% 85%, rgba(255,106,0,0.10), transparent 40%),
+  --bg-grad: radial-gradient(circle at 88% 8%, rgba(124,58,237,0.22), transparent 45%),
+    radial-gradient(circle at 72% 32%, rgba(255,61,31,0.14), transparent 42%),
+    radial-gradient(circle at 8% 92%, rgba(255,106,0,0.10), transparent 42%),
     linear-gradient(180deg, #0A0508 0%, #0F070A 35%, #0C0509 70%, #080304 100%);
   --surface: rgba(20,10,16,0.42);
   --surface-solid: rgba(14,8,12,0.90);
@@ -66,18 +66,6 @@ body { margin: 0; }
 .flame-grad { background: linear-gradient(135deg, #FF6A00 0%, #FF3D1F 50%, #B91C1C 100%); }
 .card-surface { background: var(--surface); backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); }
 
-/* movable fire-photo background layers (see BackgroundLayers.jsx) */
-.bg-photo {
-  background-image: url('/hero-bg.jpg');
-  background-size: cover;
-  background-position: center 60%;
-  filter: contrast(1.07) saturate(1.18) brightness(1.04);
-  transition: translate 0.6s cubic-bezier(0.22,1,0.36,1), rotate 0.6s cubic-bezier(0.22,1,0.36,1);
-  will-change: translate, rotate;
-}
-@keyframes bgBreathe { 0%,100% { transform: scale(1.02); } 50% { transform: scale(1.05); } }
-.bg-breathe { animation: bgBreathe 18s ease-in-out infinite; }
-.bg-wash { background: linear-gradient(180deg, rgba(5,2,4,0.38) 0%, rgba(5,2,4,0.05) 30%, rgba(5,2,4,0.10) 65%, rgba(5,2,4,0.42) 100%); }
 .parallax-drift { transition: translate 0.5s ease-out; will-change: translate; }
 @keyframes floaty { 0%,100%{ transform: translateY(0px) rotate(0deg);} 50%{ transform: translateY(-14px) rotate(3deg);} }
 .floaty { animation: floaty 6s ease-in-out infinite; }
@@ -129,6 +117,10 @@ body { margin: 0; }
 .orb-white {
   background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.95), rgba(224,216,240,0.55) 55%, rgba(224,216,240,0.10) 100%);
   box-shadow: 0 50px 100px -30px rgba(124,58,237,0.22), inset -14px -14px 40px rgba(150,120,200,0.14);
+}
+.orb-dark-glass {
+  background: radial-gradient(circle at 32% 28%, rgba(150,90,210,0.45), rgba(50,18,42,0.55) 55%, rgba(20,8,16,0.25) 100%);
+  box-shadow: 0 60px 120px -30px rgba(124,58,237,0.4), inset -14px -14px 40px rgba(90,30,70,0.35);
 }
 .orb-purple {
   background: radial-gradient(circle at 34% 28%, #D6C4FF 0%, #9F75F5 55%, #7C3AED 100%);

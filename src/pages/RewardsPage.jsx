@@ -18,13 +18,13 @@ export default function RewardsPage() {
 
             <div className="grid grid-cols-2 gap-3">
               {[
-                { day: "Day 1", reward: "Mild pack", icon: <Sparkles size={16} /> },
-                { day: "Day 2", reward: "1 Extra Roast", icon: <Flame size={16} /> },
-                { day: "Day 3", reward: "Savage unlock", icon: <Gem size={16} /> },
-                { day: "Day 4", reward: "Custom card", icon: <ImageIcon size={16} /> },
-                { day: "Day 5", reward: "Battle boost", icon: <Swords size={16} /> },
-                { day: "Day 6", reward: "Gold frame", icon: <Crown size={16} /> },
-                { day: "Day 7", reward: "Legendary roast", icon: <Trophy size={16} /> },
+                { day: "Day 1", reward: "Mild pack", icon: <Sparkles size={16} />, color: "#7C3AED" },
+                { day: "Day 2", reward: "1 Extra Roast", icon: <Flame size={16} />, color: "#FF6A00" },
+                { day: "Day 3", reward: "Savage unlock", icon: <Gem size={16} />, color: "#F59E0B" },
+                { day: "Day 4", reward: "Custom card", icon: <ImageIcon size={16} />, color: "#FF3D1F" },
+                { day: "Day 5", reward: "Battle boost", icon: <Swords size={16} />, color: "#7C3AED" },
+                { day: "Day 6", reward: "Gold frame", icon: <Crown size={16} />, color: "#F59E0B" },
+                { day: "Day 7", reward: "Legendary roast", icon: <Trophy size={16} />, color: "#FF6A00" },
               ].map((r, i) => {
                 const claimed = claimedDays.includes(i);
                 const locked = i > claimedDays.length;
@@ -41,7 +41,12 @@ export default function RewardsPage() {
                     }`}
                   >
                     <div className="flex items-center justify-between mb-3">
-                      <span className={claimed ? "text-white" : "text-[#FF6A00]"}>{locked ? <Lock size={16} /> : r.icon}</span>
+                      <span
+                        className={`w-7 h-7 rounded-lg flex items-center justify-center ${claimed ? "bg-white/20 text-white" : ""}`}
+                        style={claimed ? undefined : { backgroundColor: `${r.color}1c`, color: r.color }}
+                      >
+                        {locked ? <Lock size={15} className="c-text-text-2-50" /> : r.icon}
+                      </span>
                       {claimed && <Check size={14} />}
                     </div>
                     <p className={`text-xs font-600 ${claimed ? "text-white/85" : "c-text-text-2"}`}>{r.day}</p>

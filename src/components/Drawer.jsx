@@ -3,6 +3,17 @@ import { useApp } from "../context/AppContext";
 import { NAV_ITEMS } from "../lib/constants";
 import { LANGUAGES } from "../lib/i18n";
 
+const NAV_COLORS = {
+  home: "#FF6A00",
+  roast: "#FF3D1F",
+  battle: "#FF3D1F",
+  challenges: "#FF6A00",
+  leaderboard: "#F59E0B",
+  rewards: "#7C3AED",
+  profile: "#7C3AED",
+  settings: "#FF6A00",
+};
+
 export default function Drawer() {
   const { drawerOpen, setDrawerOpen, page, goPage, t, lang, setLang, darkMode, setDarkMode } = useApp();
 
@@ -31,16 +42,20 @@ export default function Drawer() {
             <div className="flex-1 overflow-y-auto py-3">
               {NAV_ITEMS.map((item) => {
                 const Icon = { home: Home, flame: Flame, swords: Swords, target: Target, trophy: Trophy, gift: Gift, settings: Settings, user: User }[item.icon];
+                const color = NAV_COLORS[item.key];
                 const active = page === item.key;
                 return (
                   <button
                     key={item.key}
                     onClick={() => goPage(item.key)}
                     className={`w-full flex items-center gap-3 px-5 py-3 text-sm font-600 transition ${
-                      active ? "bg-[#FF6A00]/10 text-[#FF3D1F]" : "c-text-text-1 hv-surface2"
+                      active ? "c-text-text-1" : "c-text-text-2 hv-surface2"
                     }`}
+                    style={active ? { backgroundColor: `${color}1a` } : undefined}
                   >
-                    <Icon size={17} className={active ? "text-[#FF6A00]" : "c-text-text-2"} />
+                    <span className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${color}${active ? "26" : "14"}` }}>
+                      <Icon size={16} style={{ color }} />
+                    </span>
                     {t(item.labelKey)}
                   </button>
                 );
